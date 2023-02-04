@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,13 +29,17 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  /* Subsystems */
+  Gripper Gripper;
+
   /* Controllers */
-  private final CommandPS4Controller controller = new CommandPS4Controller(0);
+  private final CommandPS4Controller driveController = new CommandPS4Controller(0);
+  private final CommandPS4Controller specialsController = new CommandPS4Controller(1);
 
   /* Driver Buttons */
-  private final Trigger zeroSwerve = controller.options();
+  private final Trigger zeroSwerve = driveController.options();
   
-  /* Subsystems */
+  /* Swerve Subsystem */
   public static final Swerve s_Swerve = new Swerve();
 
   //Auto Chooser
@@ -42,7 +47,9 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, controller, true));
+    Gripper = new Gripper();
+
+    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driveController, true));
     
     // Configure the button bindings
     configureButtonBindings();
@@ -61,7 +68,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    
+    specialsController.R2().onTrue(Gripper.toggleGripper());
+
     //Button to reset swerve odometry and angle
     zeroSwerve
       .onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(0))
