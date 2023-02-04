@@ -31,6 +31,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
   /* Subsystems */
   Gripper Gripper;
+  LiftArm liftSystem;
 
   /* Controllers */
   private final CommandPS4Controller driveController = new CommandPS4Controller(0);
@@ -48,6 +49,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     Gripper = new Gripper();
+    liftSystem = new LiftArm();
 
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driveController, true));
     
@@ -69,6 +71,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     specialsController.R2().onTrue(Gripper.toggleGripper());
+    specialsController.povUp().onTrue(liftSystem.winchPosition(0.3));
+    specialsController.povDown().onTrue(liftSystem.winchPosition(-0.3));
+    specialsController.povLeft().onTrue(liftSystem.pivotPosition(0.2));
+    specialsController.povRight().onTrue(liftSystem.pivotPosition(-0.2));
 
     //Button to reset swerve odometry and angle
     zeroSwerve
