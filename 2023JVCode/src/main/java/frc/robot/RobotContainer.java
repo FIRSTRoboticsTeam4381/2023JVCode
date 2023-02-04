@@ -22,6 +22,8 @@ import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
+
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -31,6 +33,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
   /* Subsystems */
   Gripper Gripper;
+  Extender Extender;
   LiftArm liftSystem;
 
   /* Controllers */
@@ -49,6 +52,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     Gripper = new Gripper();
+    Extender = new Extender();
     liftSystem = new LiftArm();
 
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driveController, true));
@@ -71,10 +75,15 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     specialsController.R2().onTrue(Gripper.toggleGripper());
+
+    specialsController.L2().whileTrue(new InstantCommand(() -> Extender.ExtendOut(true)));
+    specialsController.L1().whileTrue(new InstantCommand(() -> Extender.ExtendIn(true)));
+
     specialsController.povUp().onTrue(liftSystem.winchPosition(0.3));
     specialsController.povDown().onTrue(liftSystem.winchPosition(-0.3));
     specialsController.povLeft().onTrue(liftSystem.pivotPosition(0.2));
     specialsController.povRight().onTrue(liftSystem.pivotPosition(-0.2));
+
 
     //Button to reset swerve odometry and angle
     zeroSwerve
