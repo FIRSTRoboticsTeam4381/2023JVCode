@@ -18,9 +18,9 @@ public class LiftArm extends SubsystemBase {
 
   public Command winchPosition ( double winchDirection ) {
     return new StartEndCommand(() -> {
-      pivot.set(winchDirection);
+      winch.set(winchDirection);
     }, () -> {
-      pivot.set(0);
+      winch.set(0);
     });
   }
 

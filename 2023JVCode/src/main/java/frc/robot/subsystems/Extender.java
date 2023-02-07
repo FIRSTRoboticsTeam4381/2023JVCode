@@ -12,8 +12,10 @@ public class Extender extends SubsystemBase {
   CANSparkMax Extender2;
   
   public Extender() {
-    Extender1 = new CANSparkMax(4, CANSparkMax.MotorType.kBrushless);
-    Extender2 = new CANSparkMax(5, CANSparkMax.MotorType.kBrushless);
+    Extender1 = new CANSparkMax(6, CANSparkMax.MotorType.kBrushless);
+    Extender2 = new CANSparkMax(7, CANSparkMax.MotorType.kBrushless);
+
+    Extender2.follow(Extender1, true);
   }
 
   @Override
@@ -23,20 +25,16 @@ public class Extender extends SubsystemBase {
   public void ExtendOut(Boolean ButtonHeldOut){
     if (ButtonHeldOut){
       Extender1.set(0.3);
-      Extender2.set(0.3);
     }else{
       Extender1.set(0);
-      Extender2.set(0);
     }
     
   }
   public void ExtendIn(Boolean ButtonHeldIn){
     if (ButtonHeldIn){
       Extender1.set(-0.3);
-      Extender2.set(-0.3);
     }else{
       Extender1.set(0);
-      Extender2.set(0);
     }
   }
 }

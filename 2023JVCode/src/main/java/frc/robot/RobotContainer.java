@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -76,13 +77,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
     specialsController.R2().onTrue(Gripper.toggleGripper());
 
-    specialsController.L2().whileTrue(new InstantCommand(() -> Extender.ExtendOut(true)));
-    specialsController.L1().whileTrue(new InstantCommand(() -> Extender.ExtendIn(true)));
+    specialsController.L2().whileTrue(new StartEndCommand(() -> Extender.ExtendOut(true), ()-> Extender.ExtendOut(false)));
+    specialsController.L1().whileTrue(new StartEndCommand(() -> Extender.ExtendIn(true), ()-> Extender.ExtendIn(false)));
 
-    specialsController.povUp().onTrue(liftSystem.winchPosition(0.3));
-    specialsController.povDown().onTrue(liftSystem.winchPosition(-0.3));
-    specialsController.povLeft().onTrue(liftSystem.pivotPosition(0.2));
-    specialsController.povRight().onTrue(liftSystem.pivotPosition(-0.2));
+    specialsController.povUp().whileTrue(liftSystem.winchPosition(0.3));
+    specialsController.povDown().whileTrue(liftSystem.winchPosition(-0.3));
+    specialsController.povLeft().whileTrue(liftSystem.pivotPosition(0.2));
+    specialsController.povRight().whileTrue(liftSystem.pivotPosition(-0.2));
 
 
     //Button to reset swerve odometry and angle

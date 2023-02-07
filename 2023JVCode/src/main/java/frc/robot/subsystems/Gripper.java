@@ -5,14 +5,17 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Gripper extends SubsystemBase {
-  private TalonFX Gripper;
+  private TalonSRX Gripper;
   public boolean gripperOn;
 
   // public void GripperPower ( double gripPosition ) { 
@@ -24,7 +27,7 @@ public class Gripper extends SubsystemBase {
       gripperOn = !gripperOn;
 
       if (gripperOn) {
-        Gripper.set(ControlMode.Position, 100);
+        Gripper.set(ControlMode.Position, 10000);
       } else {
         Gripper.set(ControlMode.Position, 0);
       }
@@ -33,7 +36,12 @@ public class Gripper extends SubsystemBase {
 
   /** Creates a new Gripper. */
   public Gripper() {
-    Gripper = new TalonFX(3);
+    Gripper = new TalonSRX(3);
+
+    TalonSRXConfiguration gripperConfig = new TalonSRXConfiguration();
+    gripperConfig.slot0.kP = 1;
+    gripperConfig.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
+    Gripper.configAllSettings(gripperConfig);
   }
 
   @Override
