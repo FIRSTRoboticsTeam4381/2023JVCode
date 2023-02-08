@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -34,12 +35,14 @@ public class LiftArm extends SubsystemBase {
 
   /** Creates a new LiftArm. */
   public LiftArm() {
-    pivot = new CANSparkMax(4, MotorType.kBrushless);
-    winch = new CANSparkMax(5, MotorType.kBrushless);
+    pivot = new CANSparkMax(5, MotorType.kBrushless);
+    winch = new CANSparkMax(4, MotorType.kBrushless);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Pivot:", pivot.getEncoder().getPosition());
+    SmartDashboard.putNumber("Winch", winch.getEncoder().getPosition());
   }
 }

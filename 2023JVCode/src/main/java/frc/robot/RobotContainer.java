@@ -80,8 +80,8 @@ public class RobotContainer {
     specialsController.L2().whileTrue(new StartEndCommand(() -> Extender.ExtendOut(true), ()-> Extender.ExtendOut(false)));
     specialsController.L1().whileTrue(new StartEndCommand(() -> Extender.ExtendIn(true), ()-> Extender.ExtendIn(false)));
 
-    specialsController.povUp().whileTrue(liftSystem.winchPosition(0.3));
-    specialsController.povDown().whileTrue(liftSystem.winchPosition(-0.3));
+    specialsController.povUp().whileTrue(liftSystem.winchPosition(0.5));
+    specialsController.povDown().whileTrue(liftSystem.winchPosition(-0.5));
     specialsController.povLeft().whileTrue(liftSystem.pivotPosition(0.2));
     specialsController.povRight().whileTrue(liftSystem.pivotPosition(-0.2));
 
