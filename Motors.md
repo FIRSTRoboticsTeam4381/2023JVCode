@@ -17,13 +17,13 @@ Gripper:
 
 Human Led - CANivore
 
-**-- File Management --**
+**-- File Management --** 
 DriveTrain - Drive
 LiftExtender - Extenders
 LiftArm - 1 pivot + 1 winch
 Gripper - 1 775 Pro
 
-**-- Device Numbers --**
+**-- Device Numbers --** 
 1 - extender1
 2 - extender2
 3 - Gripper
