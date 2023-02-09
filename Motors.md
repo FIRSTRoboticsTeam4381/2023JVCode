@@ -1,4 +1,4 @@
-# **Info**
+# **Robot Information**
 
 **-- Motors --**
 How Many: 13
