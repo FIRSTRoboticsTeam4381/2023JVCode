@@ -32,12 +32,12 @@ Gripper - 1 775 Pro
 
 **-- Device Numbers --** 
 
-1 - extender1
-
-2 - extender2
-
 3 - Gripper
 
-4 - pivot
+4 - winch
 
-5 - winch
+5 - pivot
+
+6 - extender1
+
+7 - extender2
