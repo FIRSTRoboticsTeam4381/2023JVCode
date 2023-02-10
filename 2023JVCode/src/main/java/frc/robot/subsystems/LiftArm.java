@@ -14,35 +14,35 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LiftArm extends SubsystemBase {
-  private CANSparkMax pivot;
-  private CANSparkMax winch;
+  private CANSparkMax wristPivot;
+  private CANSparkMax armWinch;
 
-  public Command winchPosition ( double winchDirection ) {
+  public Command armPivotPosition ( double winchDirection ) {
     return new StartEndCommand(() -> {
-      winch.set(winchDirection);
+      armWinch.set(winchDirection);
     }, () -> {
-      winch.set(0);
+      armWinch.set(0);
     });
   }
 
-  public Command pivotPosition ( double pivotDirection ) {
+  public Command wristPivotPosition ( double pivotDirection ) {
     return new StartEndCommand(() -> {
-      pivot.set(pivotDirection);
+      wristPivot.set(pivotDirection);
     }, () -> {
-      pivot.set(0);
+      wristPivot.set(0);
     });
   }
 
   /** Creates a new LiftArm. */
   public LiftArm() {
-    pivot = new CANSparkMax(5, MotorType.kBrushless);
-    winch = new CANSparkMax(4, MotorType.kBrushless);
+    wristPivot = new CANSparkMax(5, MotorType.kBrushless);
+    armWinch = new CANSparkMax(4, MotorType.kBrushless);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Pivot:", pivot.getEncoder().getPosition());
-    SmartDashboard.putNumber("Winch", winch.getEncoder().getPosition());
+    SmartDashboard.putNumber("Pivot:", wristPivot.getEncoder().getPosition());
+    SmartDashboard.putNumber("Winch", armWinch.getEncoder().getPosition());
   }
 }
