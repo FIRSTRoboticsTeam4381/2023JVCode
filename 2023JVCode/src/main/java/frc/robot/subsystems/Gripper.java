@@ -29,8 +29,10 @@ public class Gripper extends SubsystemBase {
 
       if (gripperOn) {
         Gripper.set(ControlMode.Position, 10000);
+        
       } else {
         Gripper.set(ControlMode.Position, 0);
+        
       }
     });
   }
@@ -49,5 +51,21 @@ public class Gripper extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler 
     SmartDashboard.putNumber("Gripper: ", Gripper.getSelectedSensorPosition());
+  }
+  public void ControledGrab(boolean open){
+    if (open){
+      Gripper.set(ControlMode.PercentOutput, 0.3);
+      } else {
+      Gripper.set(ControlMode.PercentOutput, 0);
+    }
+
+  }
+  public void ControledClose(boolean close){
+    if (close){
+      Gripper.set(ControlMode.PercentOutput, -0.3);
+      } else {
+      Gripper.set(ControlMode.PercentOutput, 0);
+    }
+
   }
 }
