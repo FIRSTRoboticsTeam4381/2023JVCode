@@ -54,7 +54,7 @@ public class RobotContainer {
   public RobotContainer() {
     Gripper = new Gripper();
     Extender = new Extender();
-    liftSystem = new LiftArm();
+    liftSystem = new LiftArm(); // Pivots - Maybe change name
 
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driveController, true));
     
@@ -82,10 +82,10 @@ public class RobotContainer {
     specialsController.L2().whileTrue(new StartEndCommand(() -> Extender.ExtendOut(true), ()-> Extender.ExtendOut(false)));
     specialsController.L1().whileTrue(new StartEndCommand(() -> Extender.ExtendIn(true), ()-> Extender.ExtendIn(false)));
 
-    specialsController.povUp().whileTrue(liftSystem.winchPosition(0.5));
-    specialsController.povDown().whileTrue(liftSystem.winchPosition(-0.5));
-    specialsController.povLeft().whileTrue(liftSystem.pivotPosition(0.2));
-    specialsController.povRight().whileTrue(liftSystem.pivotPosition(-0.2));
+    specialsController.povUp().whileTrue(liftSystem.armPivotPosition(0.5));
+    specialsController.povDown().whileTrue(liftSystem.armPivotPosition(-0.5));
+    specialsController.povLeft().whileTrue(liftSystem.wristPivotPosition(0.2));
+    specialsController.povRight().whileTrue(liftSystem.wristPivotPosition(-0.2));
 
 
     //Button to reset swerve odometry and angle

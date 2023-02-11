@@ -1,4 +1,4 @@
-# **Info**
+# **Robot Information**
 
 **-- Motors --**
 How Many: 13
@@ -13,19 +13,31 @@ Arm:
 Gripper:
 1 775 Pro (TalonFX)
 
+
 **-- CANivores --**
 
 Human Led - CANivore
 
-**-- File Management --**
+
+**-- File Management --** 
+
 DriveTrain - Drive
+
 LiftExtender - Extenders
+
 LiftArm - 1 pivot + 1 winch
+
 Gripper - 1 775 Pro
 
-**-- Device Numbers --**
-1 - extender1
-2 - extender2
+
+**-- Device Numbers --** 
+
 3 - Gripper
-4 - pivot
-5 - winch
+
+4 - winch
+
+5 - pivot
+
+6 - extender1
+
+7 - extender2
