@@ -36,6 +36,7 @@ public class RobotContainer {
   Gripper Gripper;
   Extender Extender;
   LiftArm liftSystem;
+  Balance balanceRobot;
 
   /* Controllers */
   private final CommandPS4Controller driveController = new CommandPS4Controller(0);
@@ -55,6 +56,7 @@ public class RobotContainer {
     Gripper = new Gripper();
     Extender = new Extender();
     liftSystem = new LiftArm(); // Pivots - Maybe change name
+    balanceRobot = new Balance(s_Swerve); // Balancing in auto
 
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driveController, true));
     
@@ -66,12 +68,13 @@ public class RobotContainer {
     m_AutoChooser.addOption("PathPlanner Example", Autos.exampleAuto());
 
     SmartDashboard.putData(m_AutoChooser);
+    SmartDashboard.putData("Balance Robot", balanceRobot);
   }
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@linka
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
