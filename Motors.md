@@ -41,3 +41,27 @@ Gripper - 1 775 Pro
 6 - extender1
 
 7 - extender2
+
+**-- Controls --**
+
+*Drive*
+
+Left Joystick - Main Swerve Drive
+
+*Specials*
+
+Dpad up - Winch Up
+
+Dpad down - Witch Down
+
+Dpad left - Wrist Up
+
+Dpad right - Wrist Down
+
+Left bumper - Extender Out
+
+Right bumper - Extender In
+
+Right Trigger - Gripper Close
+
+Left Trigger - Gripper Open
