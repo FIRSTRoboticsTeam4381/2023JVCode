@@ -28,10 +28,10 @@ public class Gripper extends SubsystemBase {
       gripperOn = !gripperOn;
 
       if (gripperOn) {
-        Gripper.set(ControlMode.Position, 10000);
+        Gripper.set(ControlMode.Position, 4000);
         
       } else {
-        Gripper.set(ControlMode.Position, 0);
+        Gripper.set(ControlMode.Position, -500);
         
       }
     });
