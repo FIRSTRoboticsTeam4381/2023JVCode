@@ -44,6 +44,7 @@ public class Gripper extends SubsystemBase {
     TalonSRXConfiguration gripperConfig = new TalonSRXConfiguration();
     gripperConfig.slot0.kP = 1;
     gripperConfig.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
+    gripperConfig.clearPositionOnLimitR = true;
     Gripper.configAllSettings(gripperConfig);
   }
 
@@ -51,6 +52,9 @@ public class Gripper extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler 
     SmartDashboard.putNumber("Gripper: ", Gripper.getSelectedSensorPosition());
+    SmartDashboard.putNumber("isGripperForward", Gripper.isFwdLimitSwitchClosed());
+    SmartDashboard.putNumber("isGripperReverse", Gripper.isRevLimitSwitchClosed());
+
   }
   public void ControledGrab(boolean open){
     if (open){
