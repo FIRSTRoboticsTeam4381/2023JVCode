@@ -48,20 +48,20 @@ Gripper - 1 775 Pro
 
 Left Joystick - Main Swerve Drive
 
+Right Joystick - Rotation
+
+Options Button - Reset Field Oriented Drive
+
 *Specials*
 
-Dpad up - Winch Up
+Left Joystick - Winch/Angle
 
-Dpad down - Witch Down
+Right Joystick - Extender
 
-Dpad left - Wrist Up
+L2 - Wrist In
 
-Dpad right - Wrist Down
+R2 - Wrist Out
 
-Left bumper - Extender Out
+L1 - Grab/Release Cube
 
-Right bumper - Extender In
-
-Right Trigger - Gripper Close
-
-Left Trigger - Gripper Open
+R1 - Grab/Release Cone
