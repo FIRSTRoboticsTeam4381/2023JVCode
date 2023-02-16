@@ -8,14 +8,13 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -36,7 +35,9 @@ public class RobotContainer {
   Gripper Gripper;
   Extender Extender;
   LiftArm liftSystem;
+  Wrist wrist;
   Balance balanceRobot;
+  Medic m;
 
   /* Controllers */
   private final CommandPS4Controller driveController = new CommandPS4Controller(0);
@@ -56,9 +57,11 @@ public class RobotContainer {
     Gripper = new Gripper();
     Extender = new Extender();
     liftSystem = new LiftArm(); // Pivots - Maybe change name
+    wrist = new Wrist();
     balanceRobot = new Balance(s_Swerve); // Balancing in auto
 
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driveController, true));
+    
     
     // Configure the button bindings
     configureButtonBindings();
@@ -69,6 +72,15 @@ public class RobotContainer {
 
     SmartDashboard.putData(m_AutoChooser);
     SmartDashboard.putData("Balance Robot", balanceRobot);
+
+    SmartDashboard.putData(CommandScheduler.getInstance());
+    SmartDashboard.putData(Gripper);
+    SmartDashboard.putData(Extender);
+    SmartDashboard.putData(liftSystem);
+    SmartDashboard.putData(wrist);
+
+    m = new Medic(s_Swerve);
+    SmartDashboard.putData("Medic!", m);
   }
 
   /**
@@ -78,19 +90,31 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //specialsController.R2().onTrue(Gripper.toggleGripper());
-    specialsController.L2().whileTrue(new StartEndCommand (() -> Gripper.ControledGrab(true), ()-> Gripper.ControledGrab(false)));
-    specialsController.R2().whileTrue(new StartEndCommand (() -> Gripper.ControledClose(true), ()-> Gripper.ControledClose(false)));
+    // Grabbing
+    specialsController.R1().onTrue(Gripper.toggleGripperCone());
+    specialsController.L1().onTrue(Gripper.toggleGripperCube());
+
+    // Extender joystick
+    Extender.setDefaultCommand(Extender.extenderJoystick(specialsController::getRightY));
     
-    specialsController.R1().whileTrue(new StartEndCommand(() -> Extender.ExtendOut(true), ()-> Extender.ExtendOut(false)));
-    specialsController.L1().whileTrue(new StartEndCommand(() -> Extender.ExtendIn(true), ()-> Extender.ExtendIn(false)));
+    // Winch angle
+    liftSystem.setDefaultCommand(liftSystem.winchJoystick(specialsController::getLeftY));
 
-    specialsController.povUp().whileTrue(liftSystem.armPivotPosition(0.5));
-    specialsController.povDown().whileTrue(liftSystem.armPivotPosition(-0.5));
-    specialsController.povLeft().whileTrue(liftSystem.wristPivotPosition(0.2));
-    specialsController.povRight().whileTrue(liftSystem.wristPivotPosition(-0.2));
+    // Wrist/Knuckle Angle
+    wrist.setDefaultCommand(wrist.wristJoystick(specialsController::getL2Axis, specialsController::getR2Axis));
+    //specialsController.L2().whileTrue(new StartEndCommand (() -> Gripper.ControledGrab(true), ()-> Gripper.ControledGrab(false)));
+    //specialsController.R2().whileTrue(new StartEndCommand (() -> Gripper.ControledClose(true), ()-> Gripper.ControledClose(false)));
+    
+    //specialsController.R1().whileTrue(new StartEndCommand(() -> Extender.ExtendOut(true), ()-> Extender.ExtendOut(false)));
+    //specialsController.L1().whileTrue(new StartEndCommand(() -> Extender.ExtendIn(true), ()-> Extender.ExtendIn(false)));
 
+    //specialsController.povUp().whileTrue(liftSystem.armPivotPosition(0.5));
+    //specialsController.povDown().whileTrue(liftSystem.armPivotPosition(-0.5));
+    
+    //specialsController.povUp().whileTrue(wrist.wristPivotPosition(0.2));
+    //specialsController.povDown().whileTrue(wrist.wristPivotPosition(-0.2));
 
+    
     //Button to reset swerve odometry and angle
     zeroSwerve
       .onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(0))
