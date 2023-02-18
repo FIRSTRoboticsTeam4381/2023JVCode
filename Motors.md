@@ -25,7 +25,9 @@ DriveTrain - Drive
 
 LiftExtender - Extenders
 
-LiftArm - 1 pivot + 1 winch
+Winch - Which
+
+Pivot - Pivot
 
 Gripper - 1 775 Pro
 
@@ -65,3 +67,11 @@ Right bumper - Extender In
 Right Trigger - Gripper Close
 
 Left Trigger - Gripper Open
+
+**Robot Dimensions**
+
+*Bumpers -*
+
+Length = 34.75in - METERS = 0.88265m
+
+Width = 32.7in - METERS = 0.83058m
