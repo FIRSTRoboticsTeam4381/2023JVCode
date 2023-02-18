@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.SparkMaxPosition;
 
 public class Wrist extends SubsystemBase {
   private CANSparkMax wristPivot;
@@ -47,11 +48,19 @@ public class Wrist extends SubsystemBase {
     wristPivot.setSoftLimit(SoftLimitDirection.kReverse, 0);
     wristPivot.enableSoftLimit(SoftLimitDirection.kForward, true);
     wristPivot.enableSoftLimit(SoftLimitDirection.kReverse, true);
+
+    wristPivot.getPIDController().setP(1, 1);
+    wristPivot.getPIDController().setI(0,1);
+    wristPivot.getPIDController().setD(0, 1);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Wrist Pivot:", wristPivot.getEncoder().getPosition());
+  }
+
+  public SparkMaxPosition goToPosition (double pos, double err) {
+    return new SparkMaxPosition(wristPivot, pos, 1, err, this);
   }
 }

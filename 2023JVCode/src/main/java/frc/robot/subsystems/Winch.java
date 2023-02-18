@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.SparkMaxPosition;
 
 public class Winch extends SubsystemBase {
   private CANSparkMax armWinch;
@@ -45,11 +46,19 @@ public class Winch extends SubsystemBase {
     armWinch.setSoftLimit(SoftLimitDirection.kReverse, 0);
     armWinch.enableSoftLimit(SoftLimitDirection.kForward, true);
     armWinch.enableSoftLimit(SoftLimitDirection.kReverse, true);
+
+    armWinch.getPIDController().setP(1, 1);
+    armWinch.getPIDController().setI(0,1);
+    armWinch.getPIDController().setD(0, 1);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Winch", armWinch.getEncoder().getPosition());
+  }
+
+  public SparkMaxPosition goToPosition( double pos, double err) {
+    return new SparkMaxPosition(armWinch, pos, 1, err, this);
   }
 }

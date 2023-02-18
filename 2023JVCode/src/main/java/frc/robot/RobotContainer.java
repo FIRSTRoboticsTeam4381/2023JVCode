@@ -37,12 +37,13 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   /* Subsystems */
-  Gripper Gripper;
-  Extender Extender;
-  Winch Winch;
-  Wrist Wrist;
-  Balance balanceRobot;
-
+  public static Gripper Gripper;
+  public static Extender Extender;
+  public static Winch Winch;
+  public static Wrist Wrist;
+  public static Balance balanceRobot;
+  public static SparkMaxPosition testPosition;
+  
 
   /* Controllers */
   private final CommandPS4Controller driveController = new CommandPS4Controller(0);
@@ -76,6 +77,9 @@ public class RobotContainer {
 
     SmartDashboard.putData(m_AutoChooser);
     SmartDashboard.putData("Balance Robot", balanceRobot);
+    testPosition = Winch.goToPosition(250, 5);
+    SmartDashboard.putData("PositionTest", testPosition);
+
   }
 
   /**
@@ -87,7 +91,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     specialsController.L1().onTrue(Gripper.cubeGripper());
     specialsController.R1().onTrue(Gripper.coneGripper());
-
+    specialsController.circle().onTrue(SpecialistPositions.topPlacement());
+    specialsController.share().onTrue(SpecialistPositions.zero());
     Extender.setDefaultCommand(Extender.JoystickElevator(specialsController::getRightY));
 
     Winch.setDefaultCommand(Winch.JoystickWinch(specialsController::getLeftY));

@@ -17,6 +17,7 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.SparkMaxPosition;
 
 public class Extender extends SubsystemBase {
   /** Creates a new Extender. */
@@ -24,7 +25,7 @@ public class Extender extends SubsystemBase {
   CANSparkMax Extender2;
   DigitalInput digitalExtenderInputTop;
   DigitalInput digitalExtenderInputBottom;
-  Boolean extenderDeadzone;
+  boolean extenderDeadzone;
 
   public Command JoystickElevator ( Supplier <Double> joystickPower ) {
     return new RunCommand(() -> {
@@ -74,6 +75,10 @@ public class Extender extends SubsystemBase {
     Extender1.getPIDController().setIMaxAccum(0.05, 0);
     Extender1.getPIDController().setIZone(100, 0);
 
+    Extender1.getPIDController().setP(1, 1);
+    Extender1.getPIDController().setI(0,1);
+    Extender1.getPIDController().setD(0, 1);
+
     Extender1.setClosedLoopRampRate(0.1);
   }
 
@@ -112,4 +117,7 @@ public class Extender extends SubsystemBase {
       
     }
   }
+  public SparkMaxPosition goToPosition(double pos, double err) {
+    return new SparkMaxPosition(Extender1, pos, 1, err, this);
   }
+ }
