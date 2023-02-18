@@ -31,7 +31,7 @@ public class Extender extends SubsystemBase {
     return new RunCommand(() -> {
       Double power = joystickPower.get() * -5600;
       // Deadzone
-      if (Math.abs(power) < 0.05) {
+      if (Math.abs(power) < 0.05 * 5600) {
         Extender1.getPIDController().setReference(0, ControlType.kVelocity, 0);
         extenderDeadzone = true;
       } else {
