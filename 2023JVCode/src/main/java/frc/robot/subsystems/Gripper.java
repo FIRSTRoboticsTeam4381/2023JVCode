@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
@@ -23,15 +24,29 @@ public class Gripper extends SubsystemBase {
   //   Gripper.set(ControlMode.Position, gripPosition);
   // }
 
-  public Command toggleGripper () {
+  public Command coneGripper () {
     return new InstantCommand(() -> {
       gripperOn = !gripperOn;
 
       if (gripperOn) {
-        Gripper.set(ControlMode.Position, 4000);
+        Gripper.set(ControlMode.Position, 1300);
         
       } else {
-        Gripper.set(ControlMode.Position, -500);
+        Gripper.set(ControlMode.Position, -100);
+        
+      }
+    });
+  }
+
+  public Command cubeGripper () {
+    return new InstantCommand(() -> {
+      gripperOn = !gripperOn;
+
+      if (gripperOn) {
+        Gripper.set(ControlMode.Position, 1300);
+        
+      } else {
+        Gripper.set(ControlMode.Disabled, 0);
         
       }
     });
@@ -45,7 +60,13 @@ public class Gripper extends SubsystemBase {
     gripperConfig.slot0.kP = 1;
     gripperConfig.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
     gripperConfig.clearPositionOnLimitR = true;
+    gripperConfig.continuousCurrentLimit = 5;
+    gripperConfig.peakCurrentLimit = 10;
+    gripperConfig.peakCurrentDuration = 10;
+    gripperConfig.peakOutputReverse = -1;
     Gripper.configAllSettings(gripperConfig);
+
+    Gripper.setNeutralMode(NeutralMode.Coast);
   }
 
   @Override

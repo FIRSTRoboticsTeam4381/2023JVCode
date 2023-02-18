@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
@@ -35,8 +39,10 @@ public class RobotContainer {
   /* Subsystems */
   Gripper Gripper;
   Extender Extender;
-  LiftArm liftSystem;
+  Winch Winch;
+  Wrist Wrist;
   Balance balanceRobot;
+
 
   /* Controllers */
   private final CommandPS4Controller driveController = new CommandPS4Controller(0);
@@ -55,7 +61,8 @@ public class RobotContainer {
   public RobotContainer() {
     Gripper = new Gripper();
     Extender = new Extender();
-    liftSystem = new LiftArm(); // Pivots - Maybe change name
+    Winch = new Winch(); // Arm Winch/Arm Pivot
+    Wrist = new Wrist();
     balanceRobot = new Balance(s_Swerve); // Balancing in auto
 
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driveController, true));
@@ -78,19 +85,29 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //specialsController.R2().onTrue(Gripper.toggleGripper());
-    specialsController.L2().whileTrue(new StartEndCommand (() -> Gripper.ControledGrab(true), ()-> Gripper.ControledGrab(false)));
-    specialsController.R2().whileTrue(new StartEndCommand (() -> Gripper.ControledClose(true), ()-> Gripper.ControledClose(false)));
+    specialsController.L1().onTrue(Gripper.cubeGripper());
+    specialsController.R1().onTrue(Gripper.coneGripper());
+
+    Extender.setDefaultCommand(Extender.JoystickElevator(specialsController::getRightY));
+
+    Winch.setDefaultCommand(Winch.JoystickWinch(specialsController::getLeftY));
+    Wrist.setDefaultCommand(Wrist.JoystickWrist(specialsController::getL2Axis, specialsController::getR2Axis));
+
+    /* OLD CONTROLS - Don't go beyond*/
+
+    //specialsController.L1().whileTrue(new StartEndCommand (() -> Gripper.ControledGrab(true), ()-> Gripper.ControledGrab(false))); Old - for driver controlled grabbing
+    //specialsController.R2().whileTrue(new StartEndCommand (() -> Gripper.ControledClose(true), ()-> Gripper.ControledClose(false))); - ^
     
-    specialsController.R1().whileTrue(new StartEndCommand(() -> Extender.ExtendOut(true), ()-> Extender.ExtendOut(false)));
-    specialsController.L1().whileTrue(new StartEndCommand(() -> Extender.ExtendIn(true), ()-> Extender.ExtendIn(false)));
+    // specialsController.R1().whileTrue(new StartEndCommand(() -> Extender.ExtendOut(true), ()-> Extender.ExtendOut(false)));
+    // specialsController.L1().whileTrue(new StartEndCommand(() -> Extender.ExtendIn(true), ()-> Extender.ExtendIn(false)));
 
-    specialsController.povUp().whileTrue(liftSystem.armPivotPosition(0.5));
-    specialsController.povDown().whileTrue(liftSystem.armPivotPosition(-0.5));
-    specialsController.povLeft().whileTrue(liftSystem.wristPivotPosition(0.2));
-    specialsController.povRight().whileTrue(liftSystem.wristPivotPosition(-0.2));
+    // specialsController.povUp().whileTrue(Winch.armPivotPosition(0.5));
+    // specialsController.povDown().whileTrue(Winch.armPivotPosition(-0.5));
+    // specialsController.R2().whileTrue(Wrist.wristPivotPosition(0.2));
+    // specialsController.L2().whileTrue(Wrist.wristPivotPosition(-0.2));
 
-
+    /* Now you can go you are safe */
+    
     //Button to reset swerve odometry and angle
     zeroSwerve
       .onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(0))
