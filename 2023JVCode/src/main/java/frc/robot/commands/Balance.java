@@ -27,16 +27,17 @@ public class Balance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double robotPitch = swerveDrive.gyro.getPitch();
+    double robotPitch = swerveDrive.gyro.getPitch(); // (Previous )For Forward to Back
+    double robotRoll = swerveDrive.gyro.getRoll(); // Sideways Balancing
 
-    if (robotPitch > 13) {
+    if (robotPitch > 12.5) {
       swerveDrive.drive(new Translation2d(-0.6,0), 0, false, true);
-    } else if (robotPitch < -13) {
+    } else if (robotPitch < -12.5) {
       swerveDrive.drive(new Translation2d(0.6,0), 0, false, true);
-    } else if (robotPitch > 8) {
-      swerveDrive.drive(new Translation2d(-0.5,0), 0, false, true);
-    } else if (robotPitch < -8) {
-      swerveDrive.drive(new Translation2d(0.5,0), 0, false, true);
+    } else if (robotPitch > 8.25) {
+      swerveDrive.drive(new Translation2d(-0.55,0), 0, false, true);
+    } else if (robotPitch < -8.25) {
+      swerveDrive.drive(new Translation2d(0.55,0), 0, false, true);
     } else {
       swerveDrive.drive(new Translation2d(0,0), 0, false, true);
     }

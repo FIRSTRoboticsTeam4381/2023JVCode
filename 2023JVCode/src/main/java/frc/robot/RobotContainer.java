@@ -74,6 +74,8 @@ public class RobotContainer {
     //Add autonoumous options to chooser
     m_AutoChooser.setDefaultOption("None", Autos.none());
     m_AutoChooser.addOption("PathPlanner Example", Autos.exampleAuto());
+    m_AutoChooser.addOption("TopPlacementAuto", Autos.TopPlacementAuto());
+    m_AutoChooser.addOption("TopPlacementBalance", Autos.TopPlacementBalance());
 
     SmartDashboard.putData(m_AutoChooser);
     SmartDashboard.putData("Balance Robot", balanceRobot);

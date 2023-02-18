@@ -143,6 +143,8 @@ public class Swerve extends SubsystemBase {
         }
 
         SmartDashboard.putNumber("Gyro Pitch", gyro.getPitch());
+        SmartDashboard.putNumber("Gyro Roll", gyro.getRoll());
+        SmartDashboard.putNumber("Gyro Yaw", gyro.getYaw());
         SmartDashboard.putString("XY Coord", "(" + getPose().getX() + ", " + getPose().getY() + ")");
 
     }
