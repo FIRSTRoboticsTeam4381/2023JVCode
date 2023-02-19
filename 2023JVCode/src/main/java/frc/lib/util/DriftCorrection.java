@@ -20,7 +20,7 @@ public class DriftCorrection {
     
     public static void configPID()
     {
-        rotationCorrection.enableContinuousInput(0, 360);
+        //rotationCorrection.enableContinuousInput(0, 2*Math.PI); //0-360
     }
 
     public static ChassisSpeeds driftCorrection(ChassisSpeeds speeds, Pose2d pose)
@@ -37,14 +37,14 @@ public class DriftCorrection {
             if(locked)
             {
                 // Angle already locked on
-                speeds.omegaRadiansPerSecond = rotationCorrection.calculate(pose.getRotation().getDegrees());
+                speeds.omegaRadiansPerSecond = rotationCorrection.calculate(pose.getRotation().getRadians()); //PathPlanner uses radians
                 SmartDashboard.putNumber("Rotation Correction", speeds.omegaRadiansPerSecond);
                 return speeds;
             }
             else
             {
                 // No angle locked, acquire lock
-                lockAngle = pose.getRotation().getDegrees() % 360;
+                lockAngle = pose.getRotation().getRadians();// % 2*Math.PI;//% 360;
                 rotationCorrection.setSetpoint(lockAngle);
                 locked = true;
                 return speeds;
