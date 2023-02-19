@@ -59,7 +59,7 @@ public class Gripper extends SubsystemBase {
     TalonSRXConfiguration gripperConfig = new TalonSRXConfiguration();
     gripperConfig.slot0.kP = 1;
     gripperConfig.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
-    gripperConfig.clearPositionOnLimitR = true;
+    gripperConfig.clearPositionOnLimitR = false;
     gripperConfig.continuousCurrentLimit = 5;
     gripperConfig.peakCurrentLimit = 10;
     gripperConfig.peakCurrentDuration = 10;
