@@ -3,6 +3,7 @@ package frc.lib.util;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriftCorrection {
     
@@ -12,7 +13,51 @@ public class DriftCorrection {
      * @param pose Current pose from odometry
      * @return Updated Chassis Speeds
      */
-    public static ChassisSpeeds driftCorrection(ChassisSpeeds speeds, Pose2d pose) {
+
+    private static double lockAngle = 0;
+    private static boolean locked = false;
+    private static PIDController rotationCorrection = new PIDController(1.0, 0, 0);
+    
+    public static void configPID()
+    {
+        rotationCorrection.enableContinuousInput(-Math.PI, Math.PI); //0-360
+    }
+
+    public static ChassisSpeeds driftCorrection(ChassisSpeeds speeds, Pose2d pose)
+    {
+        SmartDashboard.putBoolean("Rotation Locked", locked);
+        SmartDashboard.putNumber("Lock Angle", lockAngle);
+        SmartDashboard.putNumber("Current Angle", pose.getRotation().getRadians());
+
+        SmartDashboard.putNumber("Rotation Natural Target", speeds.omegaRadiansPerSecond);
+
+        if(speeds.omegaRadiansPerSecond == 0.0)
+        {
+            // Not trying to rotate, attempt to maintain angle
+            if(locked)
+            {
+                // Angle already locked on
+                speeds.omegaRadiansPerSecond = rotationCorrection.calculate(pose.getRotation().getRadians()); //PathPlanner uses radians
+                SmartDashboard.putNumber("Rotation Correction", speeds.omegaRadiansPerSecond);
+                return speeds;
+            }
+            else
+            {
+                // No angle locked, acquire lock
+                lockAngle = pose.getRotation().getRadians();// % 2*Math.PI;//% 360;
+                rotationCorrection.setSetpoint(lockAngle);
+                locked = true;
+                return speeds;
+            }
+        }
+        else
+        {
+            locked = false;
+            return speeds;
+        }
+    }
+
+    /*public static ChassisSpeeds driftCorrection(ChassisSpeeds speeds, Pose2d pose) {
         PIDController driftCorrectionPID = new PIDController(0.07, 0.00, 0.004);
         double desiredHeading= 0;
         double pXY = 0;
@@ -29,6 +74,6 @@ public class DriftCorrection {
         pXY = xy;
 
         return newSpeeds;
-    }
+    }*/
 
 }

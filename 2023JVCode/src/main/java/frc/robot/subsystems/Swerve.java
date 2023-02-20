@@ -36,6 +36,8 @@ public class Swerve extends SubsystemBase {
         };
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getPositions());
+
+        DriftCorrection.configPID();
     }
 
     /**

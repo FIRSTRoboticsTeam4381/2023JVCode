@@ -1,0 +1,20 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "SPARK MAX [6]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Balance Robot": "Command",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/PositionTest": "Command",
+      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+    }
+  }
+}
