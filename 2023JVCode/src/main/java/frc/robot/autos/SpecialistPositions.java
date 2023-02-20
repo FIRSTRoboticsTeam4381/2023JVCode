@@ -27,7 +27,7 @@ public class SpecialistPositions {
             new ParallelDeadlineGroup(new WaitCommand(.5), RobotContainer.Winch.goToPosition(0, 1)),
             new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(0, 1),
-            RobotContainer.Winch.goToPosition(0, 2),
+            RobotContainer.Winch.goToPosition(0, 5),
             RobotContainer.Wrist.goToPosition(0, 1)
             )
         );

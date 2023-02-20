@@ -13,11 +13,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -43,6 +46,8 @@ public class RobotContainer {
   public static Wrist Wrist;
   public static Balance balanceRobot;
   public static SparkMaxPosition testPosition;
+
+  public static PowerDistribution pdp;
   
 
   /* Controllers */
@@ -65,6 +70,7 @@ public class RobotContainer {
     Winch = new Winch(); // Arm Winch/Arm Pivot
     Wrist = new Wrist();
     balanceRobot = new Balance(s_Swerve); // Balancing in auto
+    pdp = new PowerDistribution(1, ModuleType.kRev);
 
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driveController, true));
     
@@ -81,6 +87,17 @@ public class RobotContainer {
     SmartDashboard.putData("Balance Robot", balanceRobot);
     testPosition = Winch.goToPosition(250, 5);
     SmartDashboard.putData("PositionTest", testPosition);
+
+
+    SmartDashboard.putData(Gripper);
+    SmartDashboard.putData(Wrist);
+    SmartDashboard.putData(Extender);
+    SmartDashboard.putData("Winch Sub", Winch);
+    SmartDashboard.putData(s_Swerve);
+
+    SmartDashboard.putData(CommandScheduler.getInstance());
+
+    SmartDashboard.putData(pdp);
 
   }
 
@@ -119,6 +136,22 @@ public class RobotContainer {
     zeroSwerve
       .onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(0))
       .alongWith(new InstantCommand(() -> s_Swerve.resetOdometry(new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0))))));
+
+    // Reset scheduled commands that may be stuck
+    //CommandScheduler cs = CommandScheduler.getInstance();
+    specialsController.PS().onTrue(new InstantCommand(() -> {
+      try
+      {
+        Extender.getCurrentCommand().cancel();
+        //Gripper.getCurrentCommand().cancel();
+        Winch.getCurrentCommand().cancel();
+        Wrist.getCurrentCommand().cancel();
+      }
+      catch(NullPointerException e)
+      {
+        // This is OK, getCurrentCommand() will be null if there isn't anything running
+      }
+    }));
   }
 
   /**
