@@ -75,7 +75,7 @@ public class Extender extends SubsystemBase {
     Extender1.getPIDController().setIMaxAccum(0.05, 0);
     Extender1.getPIDController().setIZone(100, 0);
 
-    Extender1.getPIDController().setP(1, 1);
+    Extender1.getPIDController().setP(0.2, 1);
     Extender1.getPIDController().setI(0,1);
     Extender1.getPIDController().setD(0, 1);
 

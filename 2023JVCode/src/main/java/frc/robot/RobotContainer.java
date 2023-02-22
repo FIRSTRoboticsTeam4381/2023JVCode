@@ -112,6 +112,8 @@ public class RobotContainer {
     specialsController.R1().onTrue(Gripper.coneGripper());
     specialsController.circle().onTrue(SpecialistPositions.topPlacement());
     specialsController.share().onTrue(SpecialistPositions.zero());
+    specialsController.povRight().onTrue(SpecialistPositions.autoGrabCone());
+    specialsController.povLeft().onTrue(SpecialistPositions.autoGrabCube());
     Extender.setDefaultCommand(Extender.JoystickElevator(specialsController::getRightY));
 
     Winch.setDefaultCommand(Winch.JoystickWinch(specialsController::getLeftY));

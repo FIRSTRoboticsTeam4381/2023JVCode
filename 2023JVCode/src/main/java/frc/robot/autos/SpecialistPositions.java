@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 /** Add your docs here. */
@@ -32,5 +33,34 @@ public class SpecialistPositions {
             )
         );
     }
-    
+    public static Command autoGrabCone(){
+        return new SequentialCommandGroup(
+            RobotContainer.Extender.goToPosition(39, .2),
+            RobotContainer.Gripper.coneGripper(),
+            new WaitCommand(.5),
+            new ParallelCommandGroup(
+                RobotContainer.Wrist.goToPosition(9.5, .2),
+                RobotContainer.Winch.goToPosition(17.4, .2)
+            ),
+            RobotContainer.Extender.goToPosition(14, .2),
+            RobotContainer.Gripper.coneGripper(),
+            new WaitCommand(.5),
+            RobotContainer.Winch.goToPosition(0, 1),
+            RobotContainer.Wrist.goToPosition(0, 1),
+            RobotContainer.Extender.goToPosition(0, 1)
+        );
+    }
+    public static Command autoGrabCube(){
+        return new SequentialCommandGroup(
+            RobotContainer.Extender.goToPosition(39, .2),
+            RobotContainer.Gripper.cubeGripper(),
+            new WaitCommand(.5),
+            RobotContainer.Winch.goToPosition(36, .2),
+            RobotContainer.Extender.goToPosition(22, .2),
+            RobotContainer.Gripper.cubeGripper(),
+            new WaitCommand(1.5),
+            RobotContainer.Winch.goToPosition(0, 1)
+            
+        );
+    }
 }
