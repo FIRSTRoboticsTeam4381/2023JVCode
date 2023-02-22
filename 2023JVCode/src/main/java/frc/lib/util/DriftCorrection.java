@@ -16,22 +16,23 @@ public class DriftCorrection {
 
     private static double lockAngle = 0;
     private static boolean locked = false;
-    private static PIDController rotationCorrection = new PIDController(1.0, 0, 0);
+    private static PIDController rotationCorrection = new PIDController(2.5, 0, 0);
     
     public static void configPID()
     {
         rotationCorrection.enableContinuousInput(-Math.PI, Math.PI); //0-360
     }
 
-    public static ChassisSpeeds driftCorrection(ChassisSpeeds speeds, Pose2d pose)
+    public static ChassisSpeeds driftCorrection(ChassisSpeeds speeds, Pose2d pose, boolean enabled)
     {
+        
         SmartDashboard.putBoolean("Rotation Locked", locked);
         SmartDashboard.putNumber("Lock Angle", lockAngle);
         SmartDashboard.putNumber("Current Angle", pose.getRotation().getRadians());
 
         SmartDashboard.putNumber("Rotation Natural Target", speeds.omegaRadiansPerSecond);
 
-        if(speeds.omegaRadiansPerSecond == 0.0)
+        if(enabled && speeds.omegaRadiansPerSecond == 0.0)
         {
             // Not trying to rotate, attempt to maintain angle
             if(locked)
