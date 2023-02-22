@@ -4,6 +4,8 @@
 
 package frc.robot.autos;
 
+import javax.naming.PartialResultException;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -61,6 +63,20 @@ public class SpecialistPositions {
             new WaitCommand(1.5),
             RobotContainer.Winch.goToPosition(0, 1)
             
+        );
+    }
+    public static Command midPlacement(){
+        return new ParallelCommandGroup(
+            RobotContainer.Extender.goToPosition(43.7, .2),
+            RobotContainer.Winch.goToPosition(128, .2),
+            RobotContainer.Wrist.goToPosition(18, .2)
+        );
+    }
+    public static Command offGround(){
+        return new ParallelCommandGroup(
+            RobotContainer.Extender.goToPosition(0, 1),
+            RobotContainer.Winch.goToPosition(206.8, .2),
+            RobotContainer.Wrist.goToPosition(17.5, .2)
         );
     }
 }
