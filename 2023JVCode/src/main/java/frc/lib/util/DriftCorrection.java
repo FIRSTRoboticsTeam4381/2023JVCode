@@ -17,6 +17,7 @@ public class DriftCorrection {
     private static double lockAngle = 0;
     private static boolean locked = false;
     private static PIDController rotationCorrection = new PIDController(2.5, 0, 0);
+    public static boolean enabled = false;
     
     public static void configPID()
     {
@@ -25,35 +26,42 @@ public class DriftCorrection {
 
     public static ChassisSpeeds driftCorrection(ChassisSpeeds speeds, Pose2d pose, boolean enabled)
     {
-        
-        SmartDashboard.putBoolean("Rotation Locked", locked);
-        SmartDashboard.putNumber("Lock Angle", lockAngle);
-        SmartDashboard.putNumber("Current Angle", pose.getRotation().getRadians());
-
-        SmartDashboard.putNumber("Rotation Natural Target", speeds.omegaRadiansPerSecond);
-
-        if(enabled && speeds.omegaRadiansPerSecond == 0.0)
+        if(enabled)
         {
-            // Not trying to rotate, attempt to maintain angle
-            if(locked)
+
+            SmartDashboard.putBoolean("Rotation Locked", locked);
+            SmartDashboard.putNumber("Lock Angle", lockAngle);
+            SmartDashboard.putNumber("Current Angle", pose.getRotation().getRadians());
+
+            SmartDashboard.putNumber("Rotation Natural Target", speeds.omegaRadiansPerSecond);
+
+            if(enabled && speeds.omegaRadiansPerSecond == 0.0)
             {
-                // Angle already locked on
-                speeds.omegaRadiansPerSecond = rotationCorrection.calculate(pose.getRotation().getRadians()); //PathPlanner uses radians
-                SmartDashboard.putNumber("Rotation Correction", speeds.omegaRadiansPerSecond);
-                return speeds;
+                // Not trying to rotate, attempt to maintain angle
+                if(locked)
+                {
+                    // Angle already locked on
+                    speeds.omegaRadiansPerSecond = rotationCorrection.calculate(pose.getRotation().getRadians()); //PathPlanner uses radians
+                    SmartDashboard.putNumber("Rotation Correction", speeds.omegaRadiansPerSecond);
+                    return speeds;
+                }
+                else
+                {
+                    // No angle locked, acquire lock
+                    lockAngle = pose.getRotation().getRadians();// % 2*Math.PI;//% 360;
+                    rotationCorrection.setSetpoint(lockAngle);
+                    locked = true;
+                    return speeds;
+                }
             }
             else
             {
-                // No angle locked, acquire lock
-                lockAngle = pose.getRotation().getRadians();// % 2*Math.PI;//% 360;
-                rotationCorrection.setSetpoint(lockAngle);
-                locked = true;
+                locked = false;
                 return speeds;
             }
         }
         else
         {
-            locked = false;
             return speeds;
         }
     }
