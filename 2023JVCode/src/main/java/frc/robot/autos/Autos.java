@@ -28,16 +28,21 @@ public final class Autos {
         //Turns on Limelight Leds, good indicator of step working
         Map.entry("lime", new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3))),
         //Stops robot from drifting when stopped at stop point
-        Map.entry("stop", new InstantCommand(() -> RobotContainer.s_Swerve.drive(new Translation2d(0,0), 0, true, true))),
+        Map.entry("stop", new InstantCommand(() -> RobotContainer.s_Swerve.drive(new Translation2d(0,0), 0, false, true))),
 
         Map.entry("placeTop", new SequentialCommandGroup(
             SpecialistPositions.topPlacement(),
-            RobotContainer.Gripper.coneGripper(),
+            RobotContainer.Gripper.cubeGripper(),
             new WaitCommand(0.5),
             SpecialistPositions.zero()
         )),
         Map.entry("balance", RobotContainer.balanceRobot),
-        Map.entry("lowerArm", RobotContainer.Winch.goToPosition(100, 1))
+        Map.entry("lowerArm", RobotContainer.Winch.goToPosition(100, 1)),
+        Map.entry("grabCONE", new SequentialCommandGroup(
+            SpecialistPositions.offGround(),
+            RobotContainer.Gripper.coneGripper(),
+            new WaitCommand(0.75),
+            SpecialistPositions.zero()))
     ));
 
     /**
@@ -69,6 +74,10 @@ public final class Autos {
     }
     public static Command TopPlacementBalance(){
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("TopPlacementBalance", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command PlaceCubeandCone(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("PlaceCube&Cone", 
             new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
     /**
