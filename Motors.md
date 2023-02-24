@@ -16,7 +16,7 @@ Gripper:
 
 **-- CANivores --**
 
-Human Led - CANivore
+Human Led - CANifier
 
 
 **-- File Management --** 
@@ -75,3 +75,40 @@ Left Trigger - Gripper Open
 Length = 34.75in - METERS = 0.88265m
 
 Width = 32.7in - METERS = 0.83058m
+
+**CAN ID's**
+
+*Drive Subsystem*
+
+FLDrive = 10
+FLAngle = 20
+FLCANCoder = 30
+
+FRDrive = 11
+FRAngle = 21
+FRCANCoder = 31
+
+BLDrive = 12
+BLAngle = 22
+BLCANCoder = 32
+
+BRDrive = 13
+BRAngle = 23
+BRCANCoder = 33
+
+*Extender Subsystem*
+
+Extender1 = 6
+Extender2 = 7
+
+*Gripper Subsystem*
+
+Gripper = 3
+
+*Winch Subsystem*
+
+armWinch = 4
+
+*Wrist Subsystem*
+
+wristPivot = 5
