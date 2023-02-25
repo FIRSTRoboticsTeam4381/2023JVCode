@@ -24,7 +24,7 @@ public class DriftCorrection {
         rotationCorrection.enableContinuousInput(-Math.PI, Math.PI); //0-360
     }
 
-    public static ChassisSpeeds driftCorrection(ChassisSpeeds speeds, Pose2d pose, boolean enabled)
+    public static ChassisSpeeds driftCorrection(ChassisSpeeds speeds, Pose2d pose)
     {
         if(enabled)
         {
