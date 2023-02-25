@@ -91,6 +91,8 @@ public class RobotContainer {
       new WaitCommand(0.5),
       SpecialistPositions.zero()
     ));
+    m_AutoChooser.addOption("Back Cube Reverse", Autos.BackCubeReverse());
+    m_AutoChooser.addOption("Back Cone Reverse", Autos.BackConeReverse());
 
     SmartDashboard.putData(m_AutoChooser);
     SmartDashboard.putData("Balance Robot", balanceRobot);

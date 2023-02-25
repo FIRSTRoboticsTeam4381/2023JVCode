@@ -81,6 +81,14 @@ public final class Autos {
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("PlaceCube&Cone", 
             new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
+    public static Command BackCubeReverse(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackCubeReverse", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command BackConeReverse(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackConeReverse", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
     /**
      * Blank Autonomous to be used as default dashboard option
      * @return Autonomous command
