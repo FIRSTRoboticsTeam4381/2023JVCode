@@ -34,8 +34,9 @@ public final class Autos {
             SpecialistPositions.topPlacement(),
             RobotContainer.Gripper.cubeGripper(),
             new WaitCommand(0.5),
-            SpecialistPositions.zero()
+            RobotContainer.Winch.goToPosition(120, 1) // ERROR is the RANGE -- THis is for John because he cant remember what it is.
         )),
+        Map.entry("zero", SpecialistPositions.zero()),
         Map.entry("balance", RobotContainer.balanceRobot),
         Map.entry("lowerArm", RobotContainer.Winch.goToPosition(100, 1)),
         Map.entry("grabCONE", new SequentialCommandGroup(

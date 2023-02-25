@@ -22,7 +22,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -79,10 +81,16 @@ public class RobotContainer {
     
     //Add autonoumous options to chooser
     m_AutoChooser.setDefaultOption("None", Autos.none());
-    m_AutoChooser.addOption("PathPlanner Example", Autos.exampleAuto());
-    m_AutoChooser.addOption("TopPlacementAuto", Autos.TopPlacementAuto());
-    m_AutoChooser.addOption("TopPlacementBalance", Autos.TopPlacementBalance());
-    m_AutoChooser.addOption("PlaceCube&Cone", Autos.PlaceCubeandCone());
+    //m_AutoChooser.addOption("PathPlanner Example", Autos.exampleAuto());
+    //m_AutoChooser.addOption("TopPlacementAuto", Autos.TopPlacementAuto());
+    m_AutoChooser.addOption("Place & Balance", Autos.TopPlacementBalance());
+    //m_AutoChooser.addOption("PlaceCube&Cone", Autos.PlaceCubeandCone());
+    m_AutoChooser.addOption("Place Only", new SequentialCommandGroup(
+      SpecialistPositions.topPlacement(),
+      Gripper.cubeGripper(),
+      new WaitCommand(0.5),
+      SpecialistPositions.zero()
+    ));
 
     SmartDashboard.putData(m_AutoChooser);
     SmartDashboard.putData("Balance Robot", balanceRobot);

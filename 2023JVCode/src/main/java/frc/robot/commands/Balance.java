@@ -34,9 +34,9 @@ public class Balance extends CommandBase {
       swerveDrive.drive(new Translation2d(-0.6,0), 0, false, true);
     } else if (robotPitch < -12.5) {
       swerveDrive.drive(new Translation2d(0.6,0), 0, false, true);
-    } else if (robotPitch > 8.25) {
+    } else if (robotPitch > 8) {
       swerveDrive.drive(new Translation2d(-0.55,0), 0, false, true);
-    } else if (robotPitch < -8.25) {
+    } else if (robotPitch < -8) {
       swerveDrive.drive(new Translation2d(0.55,0), 0, false, true);
     } else {
       swerveDrive.drive(new Translation2d(0,0), 0, false, true);
