@@ -91,6 +91,8 @@ public class RobotContainer {
       new WaitCommand(0.5),
       SpecialistPositions.zero()
     ));
+    m_AutoChooser.addOption("Front Place Cone and Reverse", Autos.FrontConeReverse());
+    m_AutoChooser.addOption("Front Place Cube and Reverse", Autos.FrontCubeReverse());
 
     SmartDashboard.putData(m_AutoChooser);
     SmartDashboard.putData("Balance Robot", balanceRobot);
