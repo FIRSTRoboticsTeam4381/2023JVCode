@@ -44,6 +44,7 @@ public final class Autos {
             RobotContainer.Gripper.coneGripper(),
             new WaitCommand(0.75),
             SpecialistPositions.zero()))
+        
     ));
 
     /**
@@ -87,6 +88,14 @@ public final class Autos {
     }
     public static Command BackConeReverse(){
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackConeReverse", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command FrontConeReverse(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("FrontConeReverse", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command FrontCubeReverse(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("FrontCubeReverse", 
             new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
     /**
