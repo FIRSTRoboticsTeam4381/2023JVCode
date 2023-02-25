@@ -48,6 +48,7 @@ public class RobotContainer {
   public static Wrist Wrist;
   public static Balance balanceRobot;
   public static SparkMaxPosition testPosition;
+  public static LEDs leds;
 
   public static PowerDistribution pdp;
   
@@ -72,6 +73,7 @@ public class RobotContainer {
     Winch = new Winch(); // Arm Winch/Arm Pivot
     Wrist = new Wrist();
     balanceRobot = new Balance(s_Swerve); // Balancing in auto
+    leds = new LEDs();
     pdp = new PowerDistribution(1, ModuleType.kRev);
 
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driveController, true));
@@ -113,6 +115,13 @@ public class RobotContainer {
 
     SmartDashboard.putData(pdp);
 
+    SmartDashboard.putNumber("red", 0);
+    SmartDashboard.putNumber("green", 0);
+    SmartDashboard.putNumber("blue", 0);
+
+    SmartDashboard.putData("set colors", new InstantCommand( () -> {
+      leds.setColors(SmartDashboard.getNumber("red", 0), SmartDashboard.getNumber("green", 0), SmartDashboard.getNumber("blue", 0));
+    }));
   }
 
   /**
@@ -130,6 +139,9 @@ public class RobotContainer {
     specialsController.povRight().onTrue(SpecialistPositions.autoGrabCone());
     specialsController.povLeft().onTrue(SpecialistPositions.autoGrabCube());
     specialsController.povDown().onTrue(SpecialistPositions.offGround());
+    specialsController.square().onTrue(leds.setColorsCommand(0.8, 0, 1));
+    specialsController.triangle().onTrue(leds.setColorsCommand(1, 0.12, 0));
+    specialsController.options().onTrue(leds.setColorsCommand(0, 0, 0));
     Extender.setDefaultCommand(Extender.JoystickElevator(specialsController::getRightY));
 
     Winch.setDefaultCommand(Winch.JoystickWinch(specialsController::getLeftY));
