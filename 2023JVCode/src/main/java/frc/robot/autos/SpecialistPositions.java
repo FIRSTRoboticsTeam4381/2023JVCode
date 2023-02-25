@@ -42,16 +42,18 @@ public class SpecialistPositions {
             RobotContainer.Extender.goToPosition(42, .2),
             RobotContainer.Gripper.coneGripper(),
             new WaitCommand(.5),
-            /*new ParallelCommandGroup(
-                RobotContainer.Wrist.goToPosition(9.5, .2),
-                RobotContainer.Winch.goToPosition(17.4, .2)
-            ),*/
+            new ParallelCommandGroup(
+                //RobotContainer.Wrist.goToPosition(9.5, .2),
+                RobotContainer.Winch.goToPosition(25, .2)
+            ),
             RobotContainer.Extender.goToPosition(14, .2),
             RobotContainer.Gripper.coneGripper(),
             new WaitCommand(.5),
             RobotContainer.Winch.goToPosition(0, 1),
-            RobotContainer.Wrist.goToPosition(0, 1),
-            RobotContainer.Extender.goToPosition(25, 1)
+            new ParallelCommandGroup(
+                RobotContainer.Wrist.goToPosition(0, 1),
+                RobotContainer.Extender.goToPosition(25, 1)
+            )
         );
     }
     public static Command autoGrabCube(){
