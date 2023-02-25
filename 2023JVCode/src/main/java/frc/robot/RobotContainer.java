@@ -95,6 +95,7 @@ public class RobotContainer {
     m_AutoChooser.addOption("Back Cone Reverse", Autos.BackConeReverse());
     m_AutoChooser.addOption("Front Place Cone and Reverse", Autos.FrontConeReverse());
     m_AutoChooser.addOption("Front Place Cube and Reverse", Autos.FrontCubeReverse());
+    m_AutoChooser.addOption("Back Cube Pickup", Autos.BackCubePickup());
 
     SmartDashboard.putData(m_AutoChooser);
     SmartDashboard.putData("Balance Robot", balanceRobot);

@@ -43,7 +43,14 @@ public final class Autos {
             SpecialistPositions.offGround(),
             RobotContainer.Gripper.coneGripper(),
             new WaitCommand(0.75),
-            SpecialistPositions.zero()))
+            SpecialistPositions.zero())),
+        Map.entry("readyGrab", SpecialistPositions.offGround()),
+        Map.entry("grabCube", new SequentialCommandGroup(
+            RobotContainer.Winch.goToPosition(290, 1),
+            RobotContainer.Gripper.cubeGripper(),
+            new WaitCommand(2),
+            RobotContainer.Winch.goToPosition(250, 1)
+        ))
         
     ));
 
@@ -96,6 +103,10 @@ public final class Autos {
     }
     public static Command FrontCubeReverse(){
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("FrontCubeReverse", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command BackCubePickup(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackCubePickup", 
             new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
     /**
