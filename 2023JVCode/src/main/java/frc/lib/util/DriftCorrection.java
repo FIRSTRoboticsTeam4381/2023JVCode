@@ -1,9 +1,15 @@
 package frc.lib.util;
 
+import javax.lang.model.util.ElementScanner14;
+
+import com.ctre.phoenix.sensors.Pigeon2;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RobotContainer;
 
 public class DriftCorrection {
     
@@ -19,12 +25,14 @@ public class DriftCorrection {
     private static PIDController rotationCorrection = new PIDController(2.5, 0, 0);
     public static boolean enabled = false;
     
+    private static double[] rawGyro = new double[3];
+
     public static void configPID()
     {
         rotationCorrection.enableContinuousInput(-Math.PI, Math.PI); //0-360
     }
 
-    public static ChassisSpeeds driftCorrection(ChassisSpeeds speeds, Pose2d pose)
+    public static ChassisSpeeds driftCorrection(ChassisSpeeds speeds, Pose2d pose, Pigeon2 gyro)
     {
         if(enabled)
         {
@@ -35,9 +43,10 @@ public class DriftCorrection {
 
             SmartDashboard.putNumber("Rotation Natural Target", speeds.omegaRadiansPerSecond);
 
-            if(enabled && speeds.omegaRadiansPerSecond == 0.0)
+            if(speeds.omegaRadiansPerSecond == 0.0)
             {
                 // Not trying to rotate, attempt to maintain angle
+                gyro.getRawGyro(rawGyro);
                 if(locked)
                 {
                     // Angle already locked on
@@ -45,12 +54,16 @@ public class DriftCorrection {
                     SmartDashboard.putNumber("Rotation Correction", speeds.omegaRadiansPerSecond);
                     return speeds;
                 }
-                else
+                else if(Math.abs(rawGyro[2]) < 100)
                 {
                     // No angle locked, acquire lock
                     lockAngle = pose.getRotation().getRadians();// % 2*Math.PI;//% 360;
                     rotationCorrection.setSetpoint(lockAngle);
                     locked = true;
+                    return speeds;
+                }
+                else
+                {
                     return speeds;
                 }
             }

@@ -56,6 +56,13 @@ public class TeleopSwerve extends CommandBase {
         xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis; // Return 0 if less than deadband : reutrn Axis if more
         rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
+        if(controller.getHID().getR1Button())
+        {
+            yAxis /= 10;
+            xAxis /= 10;
+            rAxis /= 10;
+        }
+
         /* Calculates inputs for swerve subsytem */
         translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed); // bassicly Drives the robot (x,y)
         rotation = rAxis * Constants.Swerve.maxAngularVelocity;

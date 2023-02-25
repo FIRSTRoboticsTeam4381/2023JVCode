@@ -61,7 +61,7 @@ public class Swerve extends SubsystemBase {
                                     translation.getX(), 
                                     translation.getY(), 
                                     rotation), 
-                                swerveOdometry.getPoseMeters())
+                                swerveOdometry.getPoseMeters(), gyro)
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
@@ -148,6 +148,12 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber("Gyro Roll", gyro.getRoll());
         SmartDashboard.putNumber("Gyro Yaw", gyro.getYaw());
         SmartDashboard.putString("XY Coord", "(" + getPose().getX() + ", " + getPose().getY() + ")");
+
+        double[] rawgyro = new double[3];
+        gyro.getRawGyro(rawgyro);
+        SmartDashboard.putNumber("Raw gyro 0", rawgyro[0]);
+        SmartDashboard.putNumber("Raw gyro 1", rawgyro[1]);
+        SmartDashboard.putNumber("Raw gyro 2", rawgyro[2]);
 
     }
 }

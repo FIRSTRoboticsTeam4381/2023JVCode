@@ -54,8 +54,8 @@ public class RobotContainer {
   
 
   /* Controllers */
-  private final CommandPS4Controller driveController = new CommandPS4Controller(0);
-  private final CommandPS4Controller specialsController = new CommandPS4Controller(1);
+  public static final CommandPS4Controller driveController = new CommandPS4Controller(0);
+  public static final CommandPS4Controller specialsController = new CommandPS4Controller(1);
 
   /* Driver Buttons */
   private final Trigger zeroSwerve = driveController.options();
@@ -146,7 +146,6 @@ public class RobotContainer {
 
     Winch.setDefaultCommand(Winch.JoystickWinch(specialsController::getLeftY));
     Wrist.setDefaultCommand(Wrist.JoystickWrist(specialsController::getL2Axis, specialsController::getR2Axis));
-
     /* OLD CONTROLS - Don't go beyond*/
 
     //specialsController.L1().whileTrue(new StartEndCommand (() -> Gripper.ControledGrab(true), ()-> Gripper.ControledGrab(false))); Old - for driver controlled grabbing
