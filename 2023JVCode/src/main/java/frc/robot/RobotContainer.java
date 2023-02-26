@@ -83,21 +83,27 @@ public class RobotContainer {
     
     //Add autonoumous options to chooser
     m_AutoChooser.setDefaultOption("None", Autos.none());
+    
     //m_AutoChooser.addOption("PathPlanner Example", Autos.exampleAuto());
     //m_AutoChooser.addOption("TopPlacementAuto", Autos.TopPlacementAuto());
-    m_AutoChooser.addOption("Place & Balance", Autos.TopPlacementBalance());
+
+    m_AutoChooser.addOption("1 Place & Balance", Autos.TopPlacementBalance());
+    m_AutoChooser.addOption("2 Back Cube Pickup", Autos.BackCubePickup());
+
     //m_AutoChooser.addOption("PlaceCube&Cone", Autos.PlaceCubeandCone());
-    m_AutoChooser.addOption("Place Only", new SequentialCommandGroup(
+        
+    m_AutoChooser.addOption("3 Front Cube Reverse", Autos.FrontCubeReverse());
+    m_AutoChooser.addOption("4 Front Cone Reverse", Autos.FrontConeReverse());
+    m_AutoChooser.addOption("5 Back Cube Reverse", Autos.BackCubeReverse());
+    m_AutoChooser.addOption("6 Back Cone Reverse", Autos.BackConeReverse());
+    
+    m_AutoChooser.addOption("7 Place Only", new SequentialCommandGroup(
       SpecialistPositions.topPlacement(),
       Gripper.cubeGripper(),
       new WaitCommand(0.5),
       SpecialistPositions.zero()
     ));
-    m_AutoChooser.addOption("Back Cube Reverse", Autos.BackCubeReverse());
-    m_AutoChooser.addOption("Back Cone Reverse", Autos.BackConeReverse());
-    m_AutoChooser.addOption("Front Place Cone and Reverse", Autos.FrontConeReverse());
-    m_AutoChooser.addOption("Front Place Cube and Reverse", Autos.FrontCubeReverse());
-    m_AutoChooser.addOption("Back Cube Pickup", Autos.BackCubePickup());
+
 
     SmartDashboard.putData(m_AutoChooser);
     SmartDashboard.putData("Balance Robot", balanceRobot);
