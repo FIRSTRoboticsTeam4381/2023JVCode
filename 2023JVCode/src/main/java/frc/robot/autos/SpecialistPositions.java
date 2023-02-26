@@ -37,8 +37,8 @@ public class SpecialistPositions {
     }
     public static Command autoGrabCone(){
         return new SequentialCommandGroup(
-            RobotContainer.Wrist.goToPosition(0, .2),
-            RobotContainer.Winch.goToPosition(0, .2),    
+            RobotContainer.Wrist.goToPosition(0, 10),
+            RobotContainer.Winch.goToPosition(0, 10),    
             RobotContainer.Extender.goToPosition(42, .2),
             RobotContainer.Gripper.coneGripper(),
             new WaitCommand(.5),

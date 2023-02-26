@@ -156,4 +156,12 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber("Raw gyro 2", rawgyro[2]);
 
     }
+
+    public void resetToCANCoders()
+    {
+        for(SwerveModule mod: mSwerveMods)
+        {
+            mod.resetToAbsolute();
+        }
+    }
 }

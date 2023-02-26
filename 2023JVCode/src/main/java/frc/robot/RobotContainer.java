@@ -172,6 +172,7 @@ public class RobotContainer {
       .onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(0))
       .alongWith(new InstantCommand(() -> s_Swerve.resetOdometry(new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0))))));
 
+    driveController.share().onTrue(new InstantCommand(() -> s_Swerve.resetToCANCoders()));
     // Reset scheduled commands that may be stuck
     //CommandScheduler cs = CommandScheduler.getInstance();
     specialsController.PS().onTrue(new InstantCommand(() -> {
