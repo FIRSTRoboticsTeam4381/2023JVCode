@@ -31,17 +31,17 @@ public class Balance extends CommandBase {
     double robotRoll = swerveDrive.gyro.getRoll(); // Sideways Balancing
 
     if (robotPitch > 12.5) {
-      swerveDrive.drive(new Translation2d(-0.6,0), 0, false, true);
+      swerveDrive.drive(new Translation2d(-0.56381557247154503043246556639484,-0.20521208599540123982645976880936), 0, false, true);//-0.6,
     } else if (robotPitch < -12.5) {
-      swerveDrive.drive(new Translation2d(0.6,0), 0, false, true);
+      swerveDrive.drive(new Translation2d(0.56381557247154503043246556639484,0.20521208599540123982645976880936), 0, false, true);//0.6
     } else if (robotPitch > 8) {
-      swerveDrive.drive(new Translation2d(-0.5,0), 0, false, true);
+      swerveDrive.drive(new Translation2d(-0.46984631039295419202705463866237, -0.17101007166283436652204980734113), 0, false, true);//-0.5
     } else if (robotPitch < -8) {
-      swerveDrive.drive(new Translation2d(0.5,0), 0, false, true);
+      swerveDrive.drive(new Translation2d(0.46984631039295419202705463866237,0.17101007166283436652204980734113), 0, false, true);//0.5
     } else if (robotPitch > 3.5) {
-      swerveDrive.drive(new Translation2d(-0.3,0), 0, false, true);
+      swerveDrive.drive(new Translation2d(-0.2819077862357725152162327831974,-0.10260604299770061991322988440468), 0, false, true);//-0.3
     } else if (robotPitch < -3.5) {
-      swerveDrive.drive(new Translation2d(0.3,0), 0, false, true);
+      swerveDrive.drive(new Translation2d(0.28190778623577251521623278319742,0.102606042997700619913229884404680), 0, false, true);//0.3
     } else {
       swerveDrive.drive(new Translation2d(0,0), 0, false, true);
     }
