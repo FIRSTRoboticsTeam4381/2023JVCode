@@ -7,6 +7,7 @@ package frc.robot.commands;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
@@ -43,4 +44,5 @@ public class SparkMaxPosition extends CommandBase {
   public boolean isFinished() {
     return Math.abs(position - motor.getEncoder().getPosition()) < error;
   }
+
 }

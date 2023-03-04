@@ -55,7 +55,13 @@ public class Winch extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Winch", armWinch.getEncoder().getPosition());
+    SmartDashboard.putNumber("winch/position", armWinch.getEncoder().getPosition());
+    SmartDashboard.putNumber("winch/velocity", armWinch.getEncoder().getVelocity());
+    SmartDashboard.putNumber("winch/setspeed", armWinch.get());
+    SmartDashboard.putNumber("winch/appliedoutput", armWinch.getAppliedOutput());
+    SmartDashboard.putNumber("winch/temperature", armWinch.getMotorTemperature());
+    SmartDashboard.putNumber("winch/outputcurrent", armWinch.getOutputCurrent());
+    
   }
 
   public SparkMaxPosition goToPosition( double pos, double err) {

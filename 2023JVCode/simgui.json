@@ -1,8 +1,20 @@
 {
   "HALProvider": {
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK MAX [6]": {
         "header": {
+          "open": true
+        }
+      }
+    },
+    "PowerDistributions": {
+      "1": {
+        "PowerDistribution[1]": {
           "open": true
         }
       }
@@ -12,9 +24,16 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Balance Robot": "Command",
+      "/SmartDashboard/Extender": "Subsystem",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/Gripper": "Subsystem",
       "/SmartDashboard/PositionTest": "Command",
-      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+      "/SmartDashboard/Scheduler": "Scheduler",
+      "/SmartDashboard/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/Swerve": "Subsystem",
+      "/SmartDashboard/Winch Sub": "Subsystem",
+      "/SmartDashboard/Wrist": "Subsystem",
+      "/SmartDashboard/set colors": "Command"
     }
   }
 }

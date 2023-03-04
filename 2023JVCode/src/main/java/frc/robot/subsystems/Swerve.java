@@ -4,6 +4,8 @@ import frc.robot.SwerveModule;
 import frc.lib.util.DriftCorrection;
 import frc.robot.Constants;
 
+import java.io.ObjectInputFilter.Status;
+
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -135,14 +137,31 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.update(getYaw(), getPositions());
         SmartDashboard.putNumber("Gyro Angle", getYaw().getDegrees());
 
+        SwerveModuleState[] currentStatus = new SwerveModuleState[4];
+        double[] targetSpeeds = new double[4];
+        double[] targetAngles = new double[4];
+        
         for(SwerveModule mod : mSwerveMods){
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Drive Temp", mod.getTemp(1));
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle Temp", mod.getTemp(2));
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Setpoint", mod.getDesired());
+            mod.sendTelemetry();
+            currentStatus[mod.moduleNumber] = mod.getState();
+            targetSpeeds[mod.moduleNumber] = mod.getDesiredSpeed();
+            targetAngles[mod.moduleNumber] = mod.getDesiredAngle();
         }
+
+        // Compile swerve status for AdvantageScope
+        double[] targetStateAdv = new double[8];
+        double[] currentStateAdv = new double[8];
+        for(int i=0; i<4;i++)
+        {
+            targetStateAdv[2*i] = targetAngles[i];
+            targetStateAdv[2*i+1] = targetSpeeds[i];
+            
+            currentStateAdv[2*i] = currentStatus[i].angle.getDegrees();
+            currentStateAdv[2*i+1] = currentStatus[i].speedMetersPerSecond;
+        }
+
+        SmartDashboard.putNumberArray("swerve/status", currentStateAdv);
+        SmartDashboard.putNumberArray("swerve/target", targetStateAdv);
 
         SmartDashboard.putNumber("Gyro Pitch", gyro.getPitch());
         SmartDashboard.putNumber("Gyro Roll", gyro.getRoll());

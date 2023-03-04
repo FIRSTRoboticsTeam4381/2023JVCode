@@ -4,7 +4,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
 import frc.lib.util.SwerveModuleConstants;
@@ -23,6 +23,7 @@ public class SwerveModule {
     private double lastAngle;
 
     private double desiredAngle;
+    private double lastSpeed;
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
@@ -52,10 +53,12 @@ public class SwerveModule {
         if(isOpenLoop){
             double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
             mDriveMotor.set(ControlMode.PercentOutput, percentOutput);
+            lastSpeed = percentOutput;
         }
         else {
             double velocity = Conversions.MPSToFalcon(desiredState.speedMetersPerSecond, Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio);
             mDriveMotor.set(ControlMode.Velocity, velocity, DemandType.ArbitraryFeedForward, feedforward.calculate(desiredState.speedMetersPerSecond));
+            lastSpeed = velocity;
         }
 
         double angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) ? lastAngle : desiredState.angle.getDegrees(); //Prevent rotating module if speed is less then 1%. Prevents Jittering.
@@ -98,8 +101,12 @@ public class SwerveModule {
         return (motor == 1)?mDriveMotor.getTemperature():mAngleMotor.getTemperature();
     }
 
-    public double getDesired(){
+    public double getDesiredAngle(){
         return desiredAngle;
+    }
+
+    public double getDesiredSpeed(){
+        return lastSpeed;
     }
 
     public SwerveModuleState getState(){
@@ -112,5 +119,25 @@ public class SwerveModule {
         double distance = Conversions.falconToMeters(mDriveMotor.getSelectedSensorPosition(), Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio);
         Rotation2d angle = Rotation2d.fromDegrees(Conversions.falconToDegrees(mAngleMotor.getSelectedSensorPosition(), Constants.Swerve.angleGearRatio));
         return new SwerveModulePosition(distance, angle);
+    }
+
+
+    public void sendTelemetry() {
+        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/cancoder", getCanCoder().getDegrees());
+        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/integratedposition", getState().angle.getDegrees());
+        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/drive/velocity", getState().speedMetersPerSecond);    
+        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/drive/temperature", getTemp(1));
+        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/temperature", getTemp(2));
+        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/setpoint", desiredAngle);
+        SmartDashboard.putNumber("Swerve/m" + moduleNumber + "/drive/setpoint", lastSpeed);
+        
+        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/statorcurrent", mAngleMotor.getStatorCurrent());
+        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/supplycurrent", mAngleMotor.getSupplyCurrent());
+
+        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/drive/statorcurrent", mDriveMotor.getStatorCurrent());
+        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/drive/supplycurrent", mDriveMotor.getSupplyCurrent());
+
+        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/drive/outputvoltage", mDriveMotor.getMotorOutputVoltage());
+        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/outputvoltage", mAngleMotor.getMotorOutputVoltage());
     }
 }

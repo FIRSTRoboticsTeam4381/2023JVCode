@@ -10,6 +10,7 @@ import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxLimitSwitch.Type;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -57,7 +58,14 @@ public class Wrist extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Wrist Pivot:", wristPivot.getEncoder().getPosition());
+    SmartDashboard.putNumber("wrist/position", wristPivot.getEncoder().getPosition());
+    SmartDashboard.putNumber("wrist/velocity", wristPivot.getEncoder().getVelocity());
+    SmartDashboard.putNumber("wrist/setspeed", wristPivot.get());
+    SmartDashboard.putNumber("wrist/appliedoutput", wristPivot.getAppliedOutput());
+    SmartDashboard.putNumber("wrist/temperature", wristPivot.getMotorTemperature());
+    SmartDashboard.putNumber("wrist/outputcurrent", wristPivot.getOutputCurrent());
+
+    SmartDashboard.putBoolean("wrist/reverselimit", wristPivot.getReverseLimitSwitch(Type.kNormallyOpen).isPressed());
   }
 
   public SparkMaxPosition goToPosition (double pos, double err) {

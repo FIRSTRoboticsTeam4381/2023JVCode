@@ -72,9 +72,19 @@ public class Gripper extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler 
-    SmartDashboard.putNumber("Gripper: ", Gripper.getSelectedSensorPosition());
-    SmartDashboard.putNumber("isGripperForward", Gripper.isFwdLimitSwitchClosed());
-    SmartDashboard.putNumber("isGripperReverse", Gripper.isRevLimitSwitchClosed());
+    SmartDashboard.putNumber("gripper/position", Gripper.getSelectedSensorPosition());
+    SmartDashboard.putBoolean("gripper/reverselimit", Gripper.isRevLimitSwitchClosed()==1);
+    SmartDashboard.putNumber("gripper/looperror",Gripper.getClosedLoopError());
+    SmartDashboard.putNumber("gripper/target",Gripper.getClosedLoopTarget());
+    SmartDashboard.putNumber("gripper/derivative",Gripper.getErrorDerivative());
+    SmartDashboard.putNumber("gripper/iaccum",Gripper.getIntegralAccumulator());
+    SmartDashboard.putNumber("gripper/outpercent",Gripper.getMotorOutputPercent());
+    SmartDashboard.putNumber("gripper/outvoltage",Gripper.getMotorOutputVoltage());
+    SmartDashboard.putNumber("gripper/velocity",Gripper.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("gripper/statorcurrent",Gripper.getStatorCurrent());
+    SmartDashboard.putNumber("gripper/supplycurrent",Gripper.getSupplyCurrent());
+    SmartDashboard.putNumber("gripper/controllertemp",Gripper.getTemperature());
+
 
   }
   public void ControledGrab(boolean open){
