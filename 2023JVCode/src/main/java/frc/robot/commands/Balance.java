@@ -28,7 +28,7 @@ public class Balance extends CommandBase {
   @Override
   public void execute() {
     double robotPitch = swerveDrive.gyro.getPitch(); // (Previous )For Forward to Back
-    double robotRoll = swerveDrive.gyro.getRoll(); // Sideways Balancing
+    //double robotRoll = swerveDrive.gyro.getRoll(); // Sideways Balancing
 
     if (robotPitch > 12.5) {
       swerveDrive.drive(new Translation2d(-0.56381557247154503043246556639484,-0.20521208599540123982645976880936), 0, false, true);//-0.6,

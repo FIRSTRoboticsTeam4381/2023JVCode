@@ -4,8 +4,6 @@ import frc.robot.SwerveModule;
 import frc.lib.util.DriftCorrection;
 import frc.robot.Constants;
 
-import java.io.ObjectInputFilter.Status;
-
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
