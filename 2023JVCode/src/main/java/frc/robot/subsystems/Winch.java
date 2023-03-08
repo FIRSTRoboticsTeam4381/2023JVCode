@@ -39,7 +39,7 @@ public class Winch extends SubsystemBase {
   /** Creates a new LiftArm. */
   public Winch() {
     armWinch = new CANSparkMax(4, MotorType.kBrushless);
-    armWinch2 = new CANSparkMax(0, MotorType.kBrushless);
+    armWinch2 = new CANSparkMax(8, MotorType.kBrushless);
     
     armWinch2.follow(armWinch);
 
