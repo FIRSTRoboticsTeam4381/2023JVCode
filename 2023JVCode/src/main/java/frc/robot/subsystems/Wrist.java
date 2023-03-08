@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import java.util.function.Supplier;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxAbsoluteEncoder;
+import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxLimitSwitch.Type;
@@ -64,6 +66,8 @@ public class Wrist extends SubsystemBase {
     SmartDashboard.putNumber("wrist/outputcurrent", wristPivot.getOutputCurrent());
 
     SmartDashboard.putBoolean("wrist/reverselimit", wristPivot.getReverseLimitSwitch(Type.kNormallyOpen).isPressed());
+
+    SmartDashboard.putNumber("wrist/absoluteencoder", wristPivot.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle).getPosition());
   }
 
   public SparkMaxPosition goToPosition (double pos, double err) {

@@ -44,6 +44,8 @@ Gripper - 1 775 Pro
 
 7 - extender2
 
+8 - winch2
+
 **-- Controls --**
 
 *Drive*

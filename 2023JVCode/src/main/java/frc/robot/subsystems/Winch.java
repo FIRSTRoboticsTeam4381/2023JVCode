@@ -19,6 +19,7 @@ import frc.robot.commands.SparkMaxPosition;
 
 public class Winch extends SubsystemBase {
   private CANSparkMax armWinch;
+  private CANSparkMax armWinch2;
 
   public Command JoystickWinch ( Supplier <Double> joystickPower ) {
     return new RunCommand(() -> {
@@ -38,6 +39,9 @@ public class Winch extends SubsystemBase {
   /** Creates a new LiftArm. */
   public Winch() {
     armWinch = new CANSparkMax(4, MotorType.kBrushless);
+    armWinch2 = new CANSparkMax(0, MotorType.kBrushless);
+    
+    armWinch2.follow(armWinch);
 
     armWinch.enableVoltageCompensation(12);
     armWinch.setSmartCurrentLimit(20);
@@ -45,6 +49,12 @@ public class Winch extends SubsystemBase {
     armWinch.setSoftLimit(SoftLimitDirection.kReverse, 0);
     armWinch.enableSoftLimit(SoftLimitDirection.kForward, true);
     armWinch.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    armWinch2.enableVoltageCompensation(12);
+    armWinch2.setSmartCurrentLimit(20);
+    armWinch2.setSoftLimit(SoftLimitDirection.kForward, 325);
+    armWinch2.setSoftLimit(SoftLimitDirection.kReverse, 0);
+    armWinch2.enableSoftLimit(SoftLimitDirection.kForward, true);
+    armWinch2.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
     armWinch.getPIDController().setP(1, 1);
     armWinch.getPIDController().setI(0,1);
@@ -60,6 +70,12 @@ public class Winch extends SubsystemBase {
     SmartDashboard.putNumber("winch/appliedoutput", armWinch.getAppliedOutput());
     SmartDashboard.putNumber("winch/temperature", armWinch.getMotorTemperature());
     SmartDashboard.putNumber("winch/outputcurrent", armWinch.getOutputCurrent());
+    SmartDashboard.putNumber("winch2/position", armWinch2.getEncoder().getPosition());
+    SmartDashboard.putNumber("winch2/velocity", armWinch2.getEncoder().getVelocity());
+    SmartDashboard.putNumber("winch2/setspeed", armWinch2.get());
+    SmartDashboard.putNumber("winch2/appliedoutput", armWinch2.getAppliedOutput());
+    SmartDashboard.putNumber("winch2/temperature", armWinch2.getMotorTemperature());
+    SmartDashboard.putNumber("winch2/outputcurrent", armWinch2.getOutputCurrent());
     
   }
 
