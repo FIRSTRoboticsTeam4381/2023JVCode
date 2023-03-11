@@ -31,21 +31,6 @@ Pivot - Pivot
 
 Gripper - 1 775 Pro
 
-
-**-- Device Numbers --** 
-
-3 - Gripper
-
-4 - winch
-
-5 - pivot
-
-6 - extender1
-
-7 - extender2
-
-8 - winch2
-
 **-- Controls --**
 
 *Drive*
@@ -110,6 +95,7 @@ Gripper = 3
 *Winch Subsystem*
 
 armWinch = 4
+armWinch2 = 8
 
 *Wrist Subsystem*
 
