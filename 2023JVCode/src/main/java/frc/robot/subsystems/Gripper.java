@@ -66,6 +66,7 @@ public class Gripper extends SubsystemBase {
     Gripper.configAllSettings(gripperConfig);
 
     Gripper.setNeutralMode(NeutralMode.Coast);
+    //Gripper.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
   }
 
   @Override
@@ -74,7 +75,7 @@ public class Gripper extends SubsystemBase {
     SmartDashboard.putNumber("gripper/position", Gripper.getSelectedSensorPosition());
     SmartDashboard.putBoolean("gripper/reverselimit", Gripper.isRevLimitSwitchClosed()==1);
     SmartDashboard.putNumber("gripper/looperror",Gripper.getClosedLoopError());
-    SmartDashboard.putNumber("gripper/target",Gripper.getClosedLoopTarget());
+    //SmartDashboard.putNumber("gripper/target",Gripper.getClosedLoopTarget());
     SmartDashboard.putNumber("gripper/derivative",Gripper.getErrorDerivative());
     SmartDashboard.putNumber("gripper/iaccum",Gripper.getIntegralAccumulator());
     SmartDashboard.putNumber("gripper/outpercent",Gripper.getMotorOutputPercent());

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -41,8 +42,8 @@ public class RobotContainer {
   public static Winch Winch;
   public static Wrist Wrist;
   public static Balance balanceRobot;
-  public static SparkMaxPosition testPosition;
   public static LEDs leds;
+  public static CommandBase PIDTest;
 
   public static PowerDistribution pdp;
   
@@ -101,8 +102,7 @@ public class RobotContainer {
 
     SmartDashboard.putData(m_AutoChooser);
     SmartDashboard.putData("Balance Robot", balanceRobot);
-    testPosition = Winch.goToPosition(250, 5);
-    SmartDashboard.putData("PositionTest", testPosition);
+  
 
 
     SmartDashboard.putData(Gripper);
@@ -122,6 +122,8 @@ public class RobotContainer {
     SmartDashboard.putData("set colors", new InstantCommand( () -> {
       leds.setColors(SmartDashboard.getNumber("red", 0), SmartDashboard.getNumber("green", 0), SmartDashboard.getNumber("blue", 0));
     }));
+    PIDTest = Winch.goToPosition(100000, 100);
+    SmartDashboard.putData("PIDTester", PIDTest);
   }
 
   /**

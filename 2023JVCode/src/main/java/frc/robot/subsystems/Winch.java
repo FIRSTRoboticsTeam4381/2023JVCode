@@ -6,6 +6,11 @@ package frc.robot.subsystems;
 
 import java.util.function.Supplier;
 
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -16,70 +21,74 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.SparkMaxPosition;
+import frc.robot.commands.TalonSRXPosition;
 
 public class Winch extends SubsystemBase {
-  private CANSparkMax armWinch;
-  private CANSparkMax armWinch2;
+  private TalonSRX armWinch;
+  private TalonSRX armWinch2;
 
   public Command JoystickWinch ( Supplier <Double> joystickPower ) {
     return new RunCommand(() -> {
       double power = joystickPower.get();
-      armWinch.set(power);
+      armWinch.set(TalonSRXControlMode.PercentOutput, power);
     }, this);
   }
 
-  public Command armPivotPosition ( double winchDirection ) {
-    return new StartEndCommand(() -> {
-      armWinch.set(winchDirection);
-    }, () -> {
-      armWinch.set(0);
-    });
-  }
+
 
   /** Creates a new LiftArm. */
   public Winch() {
-    armWinch = new CANSparkMax(4, MotorType.kBrushless);
-    armWinch2 = new CANSparkMax(8, MotorType.kBrushless);
+    armWinch = new TalonSRX(4);
+    armWinch2 = new TalonSRX(8);
     
     armWinch2.follow(armWinch);
+    armWinch.setInverted(InvertType.InvertMotorOutput);
+    armWinch2.setInverted(InvertType.FollowMaster);
+    TalonSRXConfiguration winchConfig = new TalonSRXConfiguration();
+    
+    //armWinch.enableVoltageCompensation(12); //Can't figure out voltage comp for talon
+    winchConfig.continuousCurrentLimit = 20;
+    armWinch2.configAllSettings(winchConfig);
 
-    armWinch.enableVoltageCompensation(12);
-    armWinch.setSmartCurrentLimit(20);
-    armWinch.setSoftLimit(SoftLimitDirection.kForward, 325);
-    armWinch.setSoftLimit(SoftLimitDirection.kReverse, 0);
-    armWinch.enableSoftLimit(SoftLimitDirection.kForward, true);
-    armWinch.enableSoftLimit(SoftLimitDirection.kReverse, true);
-    armWinch2.enableVoltageCompensation(12);
-    armWinch2.setSmartCurrentLimit(20);
-    armWinch2.setSoftLimit(SoftLimitDirection.kForward, 325);
-    armWinch2.setSoftLimit(SoftLimitDirection.kReverse, 0);
-    armWinch2.enableSoftLimit(SoftLimitDirection.kForward, true);
-    armWinch2.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    winchConfig.forwardSoftLimitEnable = true;
+    winchConfig.reverseSoftLimitEnable = true;
+    winchConfig.forwardSoftLimitThreshold = 220000;
+    winchConfig.reverseSoftLimitThreshold = 0;
 
-    armWinch.getPIDController().setP(1, 1);
-    armWinch.getPIDController().setI(0,1);
-    armWinch.getPIDController().setD(0, 1);
+    winchConfig.slot0.kP = 1;
+    winchConfig.slot0.kI = 0;
+    winchConfig.slot0.kD = 0;
+    armWinch.configAllSettings(winchConfig);
+
+    armWinch.enableVoltageCompensation(true);
+    armWinch2.enableVoltageCompensation(true);
+    armWinch.setNeutralMode(NeutralMode.Brake);
+    armWinch2.setNeutralMode(NeutralMode.Brake);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("winch/position", armWinch.getEncoder().getPosition());
-    SmartDashboard.putNumber("winch/velocity", armWinch.getEncoder().getVelocity());
-    SmartDashboard.putNumber("winch/setspeed", armWinch.get());
-    SmartDashboard.putNumber("winch/appliedoutput", armWinch.getAppliedOutput());
-    SmartDashboard.putNumber("winch/temperature", armWinch.getMotorTemperature());
-    SmartDashboard.putNumber("winch/outputcurrent", armWinch.getOutputCurrent());
-    SmartDashboard.putNumber("winch2/position", armWinch2.getEncoder().getPosition());
-    SmartDashboard.putNumber("winch2/velocity", armWinch2.getEncoder().getVelocity());
-    SmartDashboard.putNumber("winch2/setspeed", armWinch2.get());
-    SmartDashboard.putNumber("winch2/appliedoutput", armWinch2.getAppliedOutput());
-    SmartDashboard.putNumber("winch2/temperature", armWinch2.getMotorTemperature());
-    SmartDashboard.putNumber("winch2/outputcurrent", armWinch2.getOutputCurrent());
+    SmartDashboard.putNumber("winch/m1/position", armWinch.getSelectedSensorPosition());
+    SmartDashboard.putNumber("winch/m1/velocity", armWinch.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("winch/m1/setspeed", armWinch.getMotorOutputPercent());
+    SmartDashboard.putNumber("winch/m1/temperature", armWinch.getTemperature());
+    SmartDashboard.putNumber("winch/m1/statorcurrent", armWinch.getStatorCurrent());
+    SmartDashboard.putNumber("winch/m1/supplycurrent", armWinch.getSupplyCurrent()); 
+    SmartDashboard.putNumber("winch/m1/looperror",armWinch.getClosedLoopError());
+  //  SmartDashboard.putNumber("winch/m1/target",armWinch.getClosedLoopTarget());
+    SmartDashboard.putNumber("winch/m1/derivative",armWinch.getErrorDerivative());
+    SmartDashboard.putNumber("winch/m1/iaccum",armWinch.getIntegralAccumulator());
+    SmartDashboard.putNumber("winch/m2/position", armWinch2.getSelectedSensorPosition());
+    SmartDashboard.putNumber("winch/m2/velocity", armWinch2.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("winch/m2/setspeed", armWinch2.getMotorOutputPercent());
+    SmartDashboard.putNumber("winch/m2/temperature", armWinch2.getTemperature());
+    SmartDashboard.putNumber("winch/m2/statorcurrent", armWinch2.getStatorCurrent());
+    SmartDashboard.putNumber("winch/m2/supplycurrent", armWinch2.getSupplyCurrent());
     
   }
 
-  public SparkMaxPosition goToPosition( double pos, double err) {
-    return new SparkMaxPosition(armWinch, pos, 1, err, this);
+  public TalonSRXPosition goToPosition( double pos, double err) {
+    return new TalonSRXPosition(armWinch, pos, 1, err, this);
   }
 }

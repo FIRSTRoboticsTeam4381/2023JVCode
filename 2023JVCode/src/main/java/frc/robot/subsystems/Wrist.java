@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import java.util.function.Supplier;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.MotorFeedbackSensor;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
@@ -45,10 +46,12 @@ public class Wrist extends SubsystemBase {
 
     wristPivot.enableVoltageCompensation(12);
     wristPivot.setSmartCurrentLimit(20);
-    wristPivot.setSoftLimit(SoftLimitDirection.kForward, 50);
-    wristPivot.setSoftLimit(SoftLimitDirection.kReverse, 0);
+    wristPivot.setSoftLimit(SoftLimitDirection.kForward, 0.5f);
+    wristPivot.setSoftLimit(SoftLimitDirection.kReverse, 0.05f);
     wristPivot.enableSoftLimit(SoftLimitDirection.kForward, true);
     wristPivot.enableSoftLimit(SoftLimitDirection.kReverse, true);
+
+    wristPivot.getPIDController().setFeedbackDevice(wristPivot.getAbsoluteEncoder(com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle));
 
     wristPivot.getPIDController().setP(1, 1);
     wristPivot.getPIDController().setI(0,1);
@@ -68,6 +71,8 @@ public class Wrist extends SubsystemBase {
     SmartDashboard.putBoolean("wrist/reverselimit", wristPivot.getReverseLimitSwitch(Type.kNormallyOpen).isPressed());
 
     SmartDashboard.putNumber("wrist/absoluteencoder", wristPivot.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle).getPosition());
+    //SmartDashboard.putNumber("wrist/alternateencoder", wristPivot.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192).getPosition());
+
   }
 
   public SparkMaxPosition goToPosition (double pos, double err) {
