@@ -43,7 +43,7 @@ public class RobotContainer {
   public static Wrist Wrist;
   public static Balance balanceRobot;
   public static LEDs leds;
-  public static CommandBase PIDTest;
+  public static SparkMaxPosition PIDTest;
 
   public static PowerDistribution pdp;
   
@@ -122,7 +122,7 @@ public class RobotContainer {
     SmartDashboard.putData("set colors", new InstantCommand( () -> {
       leds.setColors(SmartDashboard.getNumber("red", 0), SmartDashboard.getNumber("green", 0), SmartDashboard.getNumber("blue", 0));
     }));
-    PIDTest = Winch.goToPosition(100000, 100);
+    PIDTest = Wrist.goToPosition(0.25, 0.01);
     SmartDashboard.putData("PIDTester", PIDTest);
   }
 

@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 
@@ -16,14 +18,23 @@ public class SparkMaxPosition extends CommandBase {
   private double position;
   private int slotNumber;
   private double error;
+  private Supplier<Double> feedback;
+
   public SparkMaxPosition(CANSparkMax m, double pos, int slot, double err , Subsystem s) {
     // Use addRequirements() here to declare subsystem dependencies.
     motor = m;
     position = pos;
     slotNumber = slot;
     error = err;
+    feedback = (motor.getEncoder())::getPosition;
     addRequirements(s);
   }
+
+  public SparkMaxPosition(CANSparkMax m, double pos, int slot, double err , Subsystem s, Supplier<Double> feedback) {
+    this(m, pos, slot, err, s);
+    this.feedback = feedback;
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -41,7 +52,7 @@ public class SparkMaxPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(position - motor.getEncoder().getPosition()) < error;
+    return Math.abs(position - feedback.get()) < error;
   }
 
 }

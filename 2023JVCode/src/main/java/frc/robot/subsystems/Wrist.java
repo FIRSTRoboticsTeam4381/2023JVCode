@@ -46,14 +46,14 @@ public class Wrist extends SubsystemBase {
 
     wristPivot.enableVoltageCompensation(12);
     wristPivot.setSmartCurrentLimit(20);
-    wristPivot.setSoftLimit(SoftLimitDirection.kForward, 0.5f);
+    wristPivot.setSoftLimit(SoftLimitDirection.kForward, 0.4f);
     wristPivot.setSoftLimit(SoftLimitDirection.kReverse, 0.05f);
     wristPivot.enableSoftLimit(SoftLimitDirection.kForward, true);
     wristPivot.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
     wristPivot.getPIDController().setFeedbackDevice(wristPivot.getAbsoluteEncoder(com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle));
 
-    wristPivot.getPIDController().setP(1, 1);
+    wristPivot.getPIDController().setP(15, 1);
     wristPivot.getPIDController().setI(0,1);
     wristPivot.getPIDController().setD(0, 1);
   }
@@ -76,6 +76,6 @@ public class Wrist extends SubsystemBase {
   }
 
   public SparkMaxPosition goToPosition (double pos, double err) {
-    return new SparkMaxPosition(wristPivot, pos, 1, err, this);
+    return new SparkMaxPosition(wristPivot, pos, 1, err, this, wristPivot.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle)::getPosition);
   }
 }
