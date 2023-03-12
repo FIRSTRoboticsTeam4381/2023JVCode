@@ -19,7 +19,7 @@ public class SpecialistPositions {
             new ParallelDeadlineGroup(new WaitCommand(.2), RobotContainer.Extender.goToPosition(49.9, .2)),
             new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(49.9, .2),
-            RobotContainer.Winch.goToPosition(90000, 500),
+            RobotContainer.Winch.goToPosition(12857, 200),
             RobotContainer.Wrist.goToPosition(0.324, 0.003)
         ));
     }
@@ -29,7 +29,7 @@ public class SpecialistPositions {
             new ParallelDeadlineGroup(new WaitCommand(.5), RobotContainer.Winch.goToPosition(0, 1)),
             new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(0, 1), 
-            RobotContainer.Winch.goToPosition(0, 500),
+            RobotContainer.Winch.goToPosition(0, 200),
             RobotContainer.Wrist.goToPosition(0.05, 0.04)
             )
         );
@@ -74,17 +74,17 @@ public class SpecialistPositions {
         return new SequentialCommandGroup(
             
             RobotContainer.Wrist.goToPosition(0, 10),
-            RobotContainer.Winch.goToPosition(0, 10),    
+            RobotContainer.Winch.goToPosition(0, 200),    
             RobotContainer.Extender.goToPosition(42, .2),
             new WaitCommand(.5),
             new ParallelCommandGroup(
                 //RobotContainer.Wrist.goToPosition(9.5, .2),
-                RobotContainer.Winch.goToPosition(26300, 500),
+                RobotContainer.Winch.goToPosition(3757, 200),
                 RobotContainer.Extender.goToPosition(20, .2)
             ),
             RobotContainer.Gripper.coneGripper(),
             new WaitCommand(.3),
-            RobotContainer.Winch.goToPosition(0, 500),
+            RobotContainer.Winch.goToPosition(0, 200),
             new ParallelCommandGroup(
                 RobotContainer.Wrist.goToPosition(0, 1),
                 RobotContainer.Extender.goToPosition(25, 1)
@@ -96,7 +96,7 @@ public class SpecialistPositions {
             RobotContainer.Extender.goToPosition(39, .2),
             RobotContainer.Gripper.cubeGripper(),
             new WaitCommand(.5),
-            RobotContainer.Winch.goToPosition(25000, 300),
+            RobotContainer.Winch.goToPosition(3571, 200),
             RobotContainer.Extender.goToPosition(21, .2),
             RobotContainer.Gripper.cubeGripper(),
             new WaitCommand(1.5),
@@ -107,14 +107,14 @@ public class SpecialistPositions {
     public static Command midPlacement(){
         return new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(38.166, 0.2),
-            RobotContainer.Winch.goToPosition(66664, 500),
+            RobotContainer.Winch.goToPosition(9523, 200),
             RobotContainer.Wrist.goToPosition(0.1695, .003)
         );
     }
     public static Command offGround(){
         return new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(0, 1),
-            RobotContainer.Winch.goToPosition(149683, 500),
+            RobotContainer.Winch.goToPosition(21380, 200),
             RobotContainer.Wrist.goToPosition(0.1842, 0.003)
         );
     }

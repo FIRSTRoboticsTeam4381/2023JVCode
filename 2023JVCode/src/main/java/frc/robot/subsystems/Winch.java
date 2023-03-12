@@ -33,8 +33,8 @@ public class Winch extends SubsystemBase {
 
   public Command JoystickWinch ( Supplier <Double> joystickPower ) {
     return new RunCommand(() -> {
-      double power = joystickPower.get() * 52773;
-      if(Math.abs(power) < 0.025 * 52733)
+      double power = joystickPower.get() * 6773;
+      if(Math.abs(power) < 0.025 * 6773)
         power = 0;
 
       armWinch.set(TalonSRXControlMode.Velocity, power);
@@ -69,15 +69,17 @@ public class Winch extends SubsystemBase {
 
     winchConfig.forwardSoftLimitEnable = true;
     winchConfig.reverseSoftLimitEnable = true;
-    winchConfig.forwardSoftLimitThreshold = 200000;
+    winchConfig.forwardSoftLimitThreshold = 28570;
     winchConfig.reverseSoftLimitThreshold = 0;
+
+    winchConfig.closedloopRamp = 0.05;
 
     winchConfig.slot0.kP = 0.4;
     winchConfig.slot0.kI = 0;
     winchConfig.slot0.kD = 0;
 
-    winchConfig.slot1.kP = 0.1;
-    winchConfig.slot1.kI = 0.0002;
+    winchConfig.slot1.kP = 0.6;
+    winchConfig.slot1.kI = 0.0015;
     winchConfig.slot1.kD = 0;
     winchConfig.slot1.integralZone = 500;
     winchConfig.slot1.maxIntegralAccumulator = 10000000;
@@ -131,6 +133,7 @@ public class Winch extends SubsystemBase {
       RobotContainer.leds.setColors(0, 1, 0);
       armWinch.set(ControlMode.PercentOutput, 0);
       armWinch.setSelectedSensorPosition(0);
+      armWinch.configReverseSoftLimitEnable(true);
     }, () -> {return false;}, this);
   }
 }
