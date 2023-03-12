@@ -99,7 +99,7 @@ public class Extender extends SubsystemBase {
     SmartDashboard.putNumber("extender/m2/appliedoutput", Extender2.getAppliedOutput());
     SmartDashboard.putNumber("extender/m2/temperature", Extender2.getMotorTemperature());
     SmartDashboard.putNumber("extender/m2/outputcurrent", Extender2.getOutputCurrent());
-
+    
     SmartDashboard.putBoolean("extender/top", digitalExtenderInputTop.get());
     SmartDashboard.putBoolean("extender/bottom", digitalExtenderInputBottom.get());
     //SmartDashboard.putBoolean("Extender Deadzone", extenderDeadzone);

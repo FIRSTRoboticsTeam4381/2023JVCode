@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import java.util.function.Supplier;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
@@ -17,9 +18,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.commands.SparkMaxPosition;
 import frc.robot.commands.TalonSRXPosition;
 
@@ -112,5 +116,21 @@ public class Winch extends SubsystemBase {
 
   public TalonSRXPosition goToPosition( double pos, double err) {
     return new TalonSRXPosition(armWinch, pos, 1, err, this);
+  }
+
+  public FunctionalCommand WinchResetOverride()
+  {
+    return new FunctionalCommand(() -> {
+      RobotContainer.leds.setColors(1, 0, 0);
+      armWinch.configReverseSoftLimitEnable(false);
+      armWinch.set(ControlMode.PercentOutput, -0.1);
+      
+    }, 
+    () -> {},
+    interruped -> {
+      RobotContainer.leds.setColors(0, 1, 0);
+      armWinch.set(ControlMode.PercentOutput, 0);
+      armWinch.setSelectedSensorPosition(0);
+    }, () -> {return false;}, this);
   }
 }

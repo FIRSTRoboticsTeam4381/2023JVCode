@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -46,6 +47,8 @@ public class RobotContainer {
   public static SparkMaxPosition PIDTest;
 
   public static PowerDistribution pdp;
+
+  public static FunctionalCommand forceRetractWinch;
   
 
   /* Controllers */
@@ -124,6 +127,10 @@ public class RobotContainer {
     }));
     PIDTest = Wrist.goToPosition(0.25, 0.01);
     SmartDashboard.putData("PIDTester", PIDTest);
+
+    forceRetractWinch = Winch.WinchResetOverride();
+    SmartDashboard.putData("Force Retract Winch", forceRetractWinch);
+
   }
 
   /**
