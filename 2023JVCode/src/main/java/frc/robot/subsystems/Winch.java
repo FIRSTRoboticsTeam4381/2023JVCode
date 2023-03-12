@@ -29,12 +29,25 @@ public class Winch extends SubsystemBase {
 
   public Command JoystickWinch ( Supplier <Double> joystickPower ) {
     return new RunCommand(() -> {
-      double power = joystickPower.get();
-      armWinch.set(TalonSRXControlMode.PercentOutput, power);
+      double power = joystickPower.get() * 52773;
+      if(Math.abs(power) < 0.025 * 52733)
+        power = 0;
+
+      armWinch.set(TalonSRXControlMode.Velocity, power);
+      
+      //armWinch.set(TalonSRXControlMode.PercentOutput, power);
     }, this);
   }
 
-
+// 482 RPM
+// 8096 ticks/revolution
+// Need target change per 100ms
+// 6476
+// 5.33 before
+// 4300
+// 99830 rpm
+// 5.88 rev/100ms
+// 52773
 
   /** Creates a new LiftArm. */
   public Winch() {
@@ -58,12 +71,21 @@ public class Winch extends SubsystemBase {
     winchConfig.slot0.kP = 0.4;
     winchConfig.slot0.kI = 0;
     winchConfig.slot0.kD = 0;
+
+    winchConfig.slot1.kP = 0.1;
+    winchConfig.slot1.kI = 0.0002;
+    winchConfig.slot1.kD = 0;
+    winchConfig.slot1.integralZone = 500;
+    winchConfig.slot1.maxIntegralAccumulator = 10000000;
+    
     armWinch.configAllSettings(winchConfig);
 
     armWinch.enableVoltageCompensation(true);
     armWinch2.enableVoltageCompensation(true);
     armWinch.setNeutralMode(NeutralMode.Brake);
     armWinch2.setNeutralMode(NeutralMode.Brake);
+
+    armWinch.selectProfileSlot(1, 0);
   }
 
   @Override
