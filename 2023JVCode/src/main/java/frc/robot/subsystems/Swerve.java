@@ -132,7 +132,7 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
-        swerveOdometry.update(getYaw(), getPositions());
+        //swerveOdometry.update(getYaw(), getPositions());
         SmartDashboard.putNumber("Gyro Angle", getYaw().getDegrees());
 
         SwerveModuleState[] currentStatus = new SwerveModuleState[4];
@@ -180,5 +180,10 @@ public class Swerve extends SubsystemBase {
         {
             mod.resetToAbsolute();
         }
+    }
+
+    public void trackOdometry()
+    {
+        swerveOdometry.update(getYaw(), getPositions());
     }
 }

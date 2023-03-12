@@ -18,7 +18,7 @@ public final class Constants {
         /* Drivetrain Constants */
         public static final double trackWidth = Units.inchesToMeters(19.5); 
         public static final double wheelBase = Units.inchesToMeters(22.5);
-        public static final double wheelDiameter = Units.inchesToMeters(4);
+        public static final double wheelDiameter = Units.inchesToMeters(3.9);
         public static final double wheelCircumference = wheelDiameter * Math.PI;
 
         public static final double openLoopRamp = 0.25;
@@ -121,7 +121,7 @@ public final class Constants {
 
     public static final class AutoConstants {
         public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 2;
         //public static final double kMaxAngularSpeedRadiansPerSecond = 2.5*Math.PI;
         //public static final double kMaxAngularSpeedRadiansPerSecondSquared = 2*Math.PI;
     
