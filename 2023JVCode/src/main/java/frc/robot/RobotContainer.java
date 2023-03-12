@@ -44,6 +44,7 @@ public class RobotContainer {
   public static Wrist Wrist;
   public static Balance balanceRobot;
   public static LEDs leds;
+  public static Limelight lime;
   public static TalonSRXPosition PIDTest;
 
   public static PowerDistribution pdp;
@@ -73,6 +74,7 @@ public class RobotContainer {
     balanceRobot = new Balance(s_Swerve); // Balancing in auto
     leds = new LEDs();
     pdp = new PowerDistribution(1, ModuleType.kRev);
+    lime = new Limelight();
 
     s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driveController, true));
     
@@ -176,6 +178,8 @@ public class RobotContainer {
       .alongWith(new InstantCommand(() -> s_Swerve.resetOdometry(new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0))))));
 
     driveController.share().onTrue(new InstantCommand(() -> s_Swerve.resetToCANCoders()));
+
+    driveController.povDown().onTrue(lime.toggleCameraMode());
     // Reset scheduled commands that may be stuck
     //CommandScheduler cs = CommandScheduler.getInstance();
     specialsController.PS().onTrue(new InstantCommand(() -> {
