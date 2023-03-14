@@ -46,7 +46,7 @@ public final class Autos {
             SpecialistPositions.zero())),
         Map.entry("readyGrab", SpecialistPositions.offGround()),
         Map.entry("grabCube", new SequentialCommandGroup(
-            RobotContainer.Winch.goToPosition(28000, 200),
+            RobotContainer.Winch.goToPosition(28500, 200),
             RobotContainer.Gripper.cubeGripper(),
             new WaitCommand(2),
             RobotContainer.Winch.goToPosition(23000, 200)

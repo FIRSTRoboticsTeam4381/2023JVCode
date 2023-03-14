@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.SwerveModule;
+import frc.robot.commands.TeleopSwerve;
 import frc.lib.util.DriftCorrection;
 import frc.robot.Constants;
 
@@ -171,6 +172,8 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber("Raw gyro 0", rawgyro[0]);
         SmartDashboard.putNumber("Raw gyro 1", rawgyro[1]);
         SmartDashboard.putNumber("Raw gyro 2", rawgyro[2]);
+
+        ((TeleopSwerve) this.getDefaultCommand()).updateField(getPose());
 
     }
 

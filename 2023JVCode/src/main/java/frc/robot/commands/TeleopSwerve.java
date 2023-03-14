@@ -68,6 +68,11 @@ public class TeleopSwerve extends CommandBase {
         rotation = rAxis * Constants.Swerve.maxAngularVelocity;
         s_Swerve.drive(translation, rotation, true, openLoop);
 
-        m_field.setRobotPose(s_Swerve.getPose());        
+        //m_field.setRobotPose(s_Swerve.getPose());        
+    }
+
+    public void updateField(Pose2d pose)
+    {
+        m_field.setRobotPose(pose);
     }
 }
