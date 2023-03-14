@@ -73,6 +73,7 @@ public class Wrist extends SubsystemBase {
     SmartDashboard.putNumber("wrist/absoluteencoder", wristPivot.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle).getPosition());
     //SmartDashboard.putNumber("wrist/alternateencoder", wristPivot.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192).getPosition());
 
+    SmartDashboard.putNumber("wrist/faults", wristPivot.getFaults());
   }
 
   public SparkMaxPosition goToPosition (double pos, double err) {

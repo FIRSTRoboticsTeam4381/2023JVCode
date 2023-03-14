@@ -5,11 +5,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.Faults;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -85,7 +87,21 @@ public class Gripper extends SubsystemBase {
     SmartDashboard.putNumber("gripper/supplycurrent",Gripper.getSupplyCurrent());
     SmartDashboard.putNumber("gripper/controllertemp",Gripper.getTemperature());
 
+    // Fault detection
+    Faults f = new Faults();
+    Gripper.getFaults(f);
 
+    if(f.hasAnyFault())
+    {
+      SmartDashboard.putString("gripper/faults", f.toString());
+    }
+
+
+    // Check for reboot
+    if(Gripper.hasResetOccurred())
+    {
+        DriverStation.reportError("ALERT: Gripper motor has crashed!", false);
+    }
   }
   public void ControledGrab(boolean open){
     if (open){

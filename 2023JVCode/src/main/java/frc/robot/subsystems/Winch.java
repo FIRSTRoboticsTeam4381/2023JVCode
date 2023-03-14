@@ -7,15 +7,18 @@ package frc.robot.subsystems;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.Faults;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -92,6 +95,8 @@ public class Winch extends SubsystemBase {
     armWinch2.setNeutralMode(NeutralMode.Brake);
 
     armWinch.selectProfileSlot(1, 0);
+
+    armWinch.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Relative, 0, 1000);
   }
 
   @Override
@@ -114,6 +119,30 @@ public class Winch extends SubsystemBase {
     SmartDashboard.putNumber("winch/m2/statorcurrent", armWinch2.getStatorCurrent());
     SmartDashboard.putNumber("winch/m2/supplycurrent", armWinch2.getSupplyCurrent());
     
+    // Fault detection
+    Faults f = new Faults();
+    armWinch.getFaults(f);
+
+    if(f.hasAnyFault())
+    {
+      SmartDashboard.putString("winch/m1/faults", f.toString());
+    }
+
+    armWinch2.getFaults(f);
+    if(f.hasAnyFault())
+    {
+        SmartDashboard.putString("winch/m2/faults", f.toString());
+    }
+
+    // Reboot detection
+    if(armWinch.hasResetOccurred())
+    {
+        DriverStation.reportError("ALERT: Winch motor 1 has crashed!", false);
+    }
+    if(armWinch2.hasResetOccurred())
+    {
+        DriverStation.reportError("ALERT: Winch motor 2 has crashed!", false);
+    }
   }
 
   public TalonSRXPosition goToPosition( double pos, double err) {

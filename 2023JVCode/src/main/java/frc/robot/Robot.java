@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    this.addPeriodic(() -> m_robotContainer.s_Swerve.trackOdometry(), 0.001, 0.0005);
+    this.addPeriodic(() -> m_robotContainer.s_Swerve.trackOdometry(), 0.002, 0.0005);
   }
 
   /**

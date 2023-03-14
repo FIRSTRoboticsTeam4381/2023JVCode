@@ -104,7 +104,10 @@ public class Extender extends SubsystemBase {
     SmartDashboard.putBoolean("extender/bottom", digitalExtenderInputBottom.get());
     //SmartDashboard.putBoolean("Extender Deadzone", extenderDeadzone);
 
+    SmartDashboard.putNumber("extender/m1/faults", Extender1.getFaults());
+    SmartDashboard.putNumber("extender/m2/faults", Extender2.getFaults());
 
+    
 
     if (Extender1.get() > 0 && digitalExtenderInputTop.get() == false || Extender1.get() < 0 && digitalExtenderInputBottom.get() == false) {
       Extender1.set(0.0);

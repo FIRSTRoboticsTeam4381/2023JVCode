@@ -4,6 +4,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
@@ -11,8 +12,11 @@ import frc.lib.util.SwerveModuleConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.Faults;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.CANCoderStatusFrame;
 
 public class SwerveModule {
     public int moduleNumber;
@@ -42,6 +46,11 @@ public class SwerveModule {
         /* Drive Motor Config */
         mDriveMotor = new TalonFX(moduleConstants.driveMotorID, "DriveTrain");
         configDriveMotor();
+
+        mDriveMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 2);
+        mAngleMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 2);
+
+        angleEncoder.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 2);
         
 
         lastAngle = getState().angle.getDegrees();
@@ -139,5 +148,38 @@ public class SwerveModule {
 
         SmartDashboard.putNumber("swerve/m" + moduleNumber + "/drive/outputvoltage", mDriveMotor.getMotorOutputVoltage());
         SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/outputvoltage", mAngleMotor.getMotorOutputVoltage());
+    
+        // Check for faults
+        Faults f = new Faults();
+        mDriveMotor.getFaults(f);
+
+        if(f.hasAnyFault())
+        {
+            SmartDashboard.putString("swerve/m" + moduleNumber + "/drive/faults", f.toString());
+        }
+
+        mAngleMotor.getFaults(f);
+        if(f.hasAnyFault())
+        {
+            SmartDashboard.putString("swerve/m" + moduleNumber + "/angle/faults", f.toString());
+        }
+
+        // Check for reboots
+        if(mDriveMotor.hasResetOccurred())
+        {
+            DriverStation.reportError("ALERT: Drive Motor "+moduleNumber+" has crashed!", false);
+        }
+
+        if(mAngleMotor.hasResetOccurred())
+        {
+            DriverStation.reportError("ALERT: Angle Motor "+moduleNumber+" has crashed!", false);
+        }
+
+        if(angleEncoder.hasResetOccurred())
+        {
+            DriverStation.reportError("ALERT: CANCoder "+moduleNumber+" has crashed!", false);
+        }
+
+        
     }
 }
