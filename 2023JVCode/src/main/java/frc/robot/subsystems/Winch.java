@@ -34,16 +34,21 @@ public class Winch extends SubsystemBase {
   private TalonSRX armWinch;
   private TalonSRX armWinch2;
 
-  public Command JoystickWinch ( Supplier <Double> joystickPower ) {
+  public Command JoystickWinch ( Supplier <Double> joystickPower, Supplier <Boolean> buttonStatus ) {
     return new RunCommand(() -> {
       double power = joystickPower.get() * 6773;
-      if(Math.abs(power) < 0.025 * 6773)
+      if(Math.abs(power) < 0.025 * 6773) {
         power = 0;
+      }
 
+      if(buttonStatus.get() == false) {
+        power = power/5;
+      }
       armWinch.set(TalonSRXControlMode.Velocity, power);
       
       //armWinch.set(TalonSRXControlMode.PercentOutput, power);
     }, this);
+
   }
 
 // 482 RPM

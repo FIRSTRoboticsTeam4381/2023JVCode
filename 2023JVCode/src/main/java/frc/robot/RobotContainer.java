@@ -155,7 +155,7 @@ public class RobotContainer {
     specialsController.options().onTrue(leds.setColorsCommand(0, 0, 0));
     Extender.setDefaultCommand(Extender.JoystickElevator(specialsController::getRightY));
 
-    Winch.setDefaultCommand(Winch.JoystickWinch(specialsController::getLeftY));
+    Winch.setDefaultCommand(Winch.JoystickWinch(specialsController::getLeftY, specialsController.getHID()::getL3Button));
     Wrist.setDefaultCommand(Wrist.JoystickWrist(specialsController::getL2Axis, specialsController::getR2Axis));
     /* OLD CONTROLS - Don't go beyond*/
 
