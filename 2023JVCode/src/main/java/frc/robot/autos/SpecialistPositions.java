@@ -26,7 +26,7 @@ public class SpecialistPositions {
     public static Command zero(){
         
         return new SequentialCommandGroup(
-            new ParallelDeadlineGroup(new WaitCommand(.5), RobotContainer.Winch.goToPosition(0, 1)),
+            new ParallelDeadlineGroup(new WaitCommand(.2), RobotContainer.Winch.goToPosition(0, 1)),
             new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(0, 1), 
             RobotContainer.Winch.goToPosition(0, 200),
@@ -94,7 +94,7 @@ public class SpecialistPositions {
     public static Command autoGrabCube(){
         return new SequentialCommandGroup(
             RobotContainer.Extender.goToPosition(39, .2),
-            RobotContainer.Gripper.cubeGripper(),
+            //RobotContainer.Gripper.cubeGripper(),
             new WaitCommand(.5),
             RobotContainer.Winch.goToPosition(3571, 200),
             RobotContainer.Extender.goToPosition(21, .2),
@@ -115,7 +115,7 @@ public class SpecialistPositions {
         return new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(0, 1),
             RobotContainer.Winch.goToPosition(21380, 200),
-            RobotContainer.Wrist.goToPosition(0.1842, 0.003)
+            RobotContainer.Wrist.goToPosition(0.1842, 0.006)
         );
     }
 

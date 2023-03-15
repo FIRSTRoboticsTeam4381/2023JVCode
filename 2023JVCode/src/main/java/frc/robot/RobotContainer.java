@@ -103,6 +103,8 @@ public class RobotContainer {
       new WaitCommand(0.5),
       SpecialistPositions.zero()
     ));
+    //m_AutoChooser.addOption("Cube Over Balance", Autos.CubeOverBalance());
+    m_AutoChooser.addOption("Back Cone Cube Pickup", Autos.BackConeCubePickup());
 
 
     SmartDashboard.putData(m_AutoChooser);

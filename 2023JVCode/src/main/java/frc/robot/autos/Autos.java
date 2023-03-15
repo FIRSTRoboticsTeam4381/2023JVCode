@@ -33,14 +33,14 @@ public final class Autos {
         Map.entry("placeTop", new SequentialCommandGroup(
             SpecialistPositions.topPlacement(),
             RobotContainer.Gripper.cubeGripper(),
-            new WaitCommand(0.5),
-            RobotContainer.Winch.goToPosition(10000, 200) // ERROR is the RANGE -- THis is for John because he cant remember what it is.
+            new WaitCommand(0.5)
+            //RobotContainer.Winch.goToPosition(10000, 200) // ERROR is the RANGE -- THis is for John because he cant remember what it is.
         )),
         Map.entry("placeMid", new SequentialCommandGroup(
             SpecialistPositions.midPlacement(),
             RobotContainer.Gripper.cubeGripper(),
-            new WaitCommand(0.5),
-            RobotContainer.Winch.goToPosition(10000, 200) // ERROR is the RANGE -- THis is for John because he cant remember what it is.
+            new WaitCommand(0.5)
+            //RobotContainer.Winch.goToPosition(10000, 200) // ERROR is the RANGE -- THis is for John because he cant remember what it is.
         )),
         Map.entry("zero", SpecialistPositions.zero()),
         Map.entry("balance", RobotContainer.balanceRobot),
@@ -54,8 +54,8 @@ public final class Autos {
         Map.entry("grabCube", new SequentialCommandGroup(
             RobotContainer.Winch.goToPosition(28500, 200),
             RobotContainer.Gripper.cubeGripper(),
-            new WaitCommand(2),
-            RobotContainer.Winch.goToPosition(23000, 200)
+            new WaitCommand(1),
+            RobotContainer.Winch.goToPosition(25000, 200)
         ))
         
     ));
@@ -113,6 +113,14 @@ public final class Autos {
     }
     public static Command BackCubePickup(){
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackCubePickup", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command CubeOverBalance(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("CubeOverBalance", 
+            new PathConstraints(1.5, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command BackConeCubePickup(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackConeCubePickup", 
             new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
     /**
