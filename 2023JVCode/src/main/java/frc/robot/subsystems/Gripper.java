@@ -31,7 +31,7 @@ public class Gripper extends SubsystemBase {
       gripperOn = !gripperOn;
 
       if (gripperOn) {
-        Gripper.set(ControlMode.Position, 1400);
+        Gripper.set(ControlMode.Position, 1600);
         
       } else {
         Gripper.set(ControlMode.Position, -100);
@@ -45,7 +45,7 @@ public class Gripper extends SubsystemBase {
       gripperOn = !gripperOn;
 
       if (gripperOn) {
-        Gripper.set(ControlMode.Position, 1400);
+        Gripper.set(ControlMode.Position, 1600);
         
       } else {
         Gripper.set(ControlMode.Disabled, 0);
