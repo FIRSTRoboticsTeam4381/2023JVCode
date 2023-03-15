@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LogOrDash;
 import frc.robot.commands.SparkMaxPosition;
 
 public class Wrist extends SubsystemBase {
@@ -62,18 +63,18 @@ public class Wrist extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     //putNumber("wrist/position", wristPivot.getEncoder().getPosition());
-    SmartDashboard.putNumber("wrist/velocity", wristPivot.getEncoder().getVelocity());
-    SmartDashboard.putNumber("wrist/setspeed", wristPivot.get());
-    SmartDashboard.putNumber("wrist/appliedoutput", wristPivot.getAppliedOutput());
-    SmartDashboard.putNumber("wrist/temperature", wristPivot.getMotorTemperature());
-    SmartDashboard.putNumber("wrist/outputcurrent", wristPivot.getOutputCurrent());
+    LogOrDash.logNumber("wrist/velocity", wristPivot.getEncoder().getVelocity());
+    LogOrDash.logNumber("wrist/setspeed", wristPivot.get());
+    LogOrDash.logNumber("wrist/appliedoutput", wristPivot.getAppliedOutput());
+    LogOrDash.logNumber("wrist/temperature", wristPivot.getMotorTemperature());
+    LogOrDash.logNumber("wrist/outputcurrent", wristPivot.getOutputCurrent());
 
-    SmartDashboard.putBoolean("wrist/reverselimit", wristPivot.getReverseLimitSwitch(Type.kNormallyOpen).isPressed());
+    LogOrDash.logBoolean("wrist/reverselimit", wristPivot.getReverseLimitSwitch(Type.kNormallyOpen).isPressed());
 
-    SmartDashboard.putNumber("wrist/absoluteencoder", wristPivot.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle).getPosition());
+    LogOrDash.logNumber("wrist/absoluteencoder", wristPivot.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle).getPosition());
     //SmartDashboard.putNumber("wrist/alternateencoder", wristPivot.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192).getPosition());
 
-    SmartDashboard.putNumber("wrist/faults", wristPivot.getFaults());
+    LogOrDash.logNumber("wrist/faults", wristPivot.getFaults());
   }
 
   public SparkMaxPosition goToPosition (double pos, double err) {

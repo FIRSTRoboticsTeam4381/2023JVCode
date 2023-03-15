@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LogOrDash;
 import frc.robot.RobotContainer;
 import frc.robot.commands.SparkMaxPosition;
 import frc.robot.commands.TalonSRXPosition;
@@ -107,22 +108,22 @@ public class Winch extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("winch/m1/position", armWinch.getSelectedSensorPosition());
-    SmartDashboard.putNumber("winch/m1/velocity", armWinch.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("winch/m1/setspeed", armWinch.getMotorOutputPercent());
-    SmartDashboard.putNumber("winch/m1/temperature", armWinch.getTemperature());
-    SmartDashboard.putNumber("winch/m1/statorcurrent", armWinch.getStatorCurrent());
-    SmartDashboard.putNumber("winch/m1/supplycurrent", armWinch.getSupplyCurrent()); 
-    SmartDashboard.putNumber("winch/m1/looperror",armWinch.getClosedLoopError());
+    LogOrDash.logNumber("winch/m1/position", armWinch.getSelectedSensorPosition());
+    LogOrDash.logNumber("winch/m1/velocity", armWinch.getSelectedSensorVelocity());
+    LogOrDash.logNumber("winch/m1/setspeed", armWinch.getMotorOutputPercent());
+    LogOrDash.logNumber("winch/m1/temperature", armWinch.getTemperature());
+    LogOrDash.logNumber("winch/m1/statorcurrent", armWinch.getStatorCurrent());
+    LogOrDash.logNumber("winch/m1/supplycurrent", armWinch.getSupplyCurrent()); 
+    LogOrDash.logNumber("winch/m1/looperror",armWinch.getClosedLoopError());
   //  SmartDashboard.putNumber("winch/m1/target",armWinch.getClosedLoopTarget());
-    SmartDashboard.putNumber("winch/m1/derivative",armWinch.getErrorDerivative());
-    SmartDashboard.putNumber("winch/m1/iaccum",armWinch.getIntegralAccumulator());
-    SmartDashboard.putNumber("winch/m2/position", armWinch2.getSelectedSensorPosition());
-    SmartDashboard.putNumber("winch/m2/velocity", armWinch2.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("winch/m2/setspeed", armWinch2.getMotorOutputPercent());
-    SmartDashboard.putNumber("winch/m2/temperature", armWinch2.getTemperature());
-    SmartDashboard.putNumber("winch/m2/statorcurrent", armWinch2.getStatorCurrent());
-    SmartDashboard.putNumber("winch/m2/supplycurrent", armWinch2.getSupplyCurrent());
+    LogOrDash.logNumber("winch/m1/derivative",armWinch.getErrorDerivative());
+    LogOrDash.logNumber("winch/m1/iaccum",armWinch.getIntegralAccumulator());
+    LogOrDash.logNumber("winch/m2/position", armWinch2.getSelectedSensorPosition());
+    LogOrDash.logNumber("winch/m2/velocity", armWinch2.getSelectedSensorVelocity());
+    LogOrDash.logNumber("winch/m2/setspeed", armWinch2.getMotorOutputPercent());
+    LogOrDash.logNumber("winch/m2/temperature", armWinch2.getTemperature());
+    LogOrDash.logNumber("winch/m2/statorcurrent", armWinch2.getStatorCurrent());
+    LogOrDash.logNumber("winch/m2/supplycurrent", armWinch2.getSupplyCurrent());
     
     // Fault detection
     Faults f = new Faults();
@@ -130,13 +131,13 @@ public class Winch extends SubsystemBase {
 
     if(f.hasAnyFault())
     {
-      SmartDashboard.putString("winch/m1/faults", f.toString());
+      LogOrDash.logString("winch/m1/faults", f.toString());
     }
 
     armWinch2.getFaults(f);
     if(f.hasAnyFault())
     {
-        SmartDashboard.putString("winch/m2/faults", f.toString());
+        LogOrDash.logString("winch/m2/faults", f.toString());
     }
 
     // Reboot detection

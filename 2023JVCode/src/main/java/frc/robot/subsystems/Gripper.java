@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LogOrDash;
 
 public class Gripper extends SubsystemBase {
   private TalonSRX Gripper;
@@ -74,18 +75,18 @@ public class Gripper extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler 
-    SmartDashboard.putNumber("gripper/position", Gripper.getSelectedSensorPosition());
-    SmartDashboard.putBoolean("gripper/reverselimit", Gripper.isRevLimitSwitchClosed()==1);
-    SmartDashboard.putNumber("gripper/looperror",Gripper.getClosedLoopError());
+    LogOrDash.logNumber("gripper/position", Gripper.getSelectedSensorPosition());
+    LogOrDash.logBoolean("gripper/reverselimit", Gripper.isRevLimitSwitchClosed()==1);
+    LogOrDash.logNumber("gripper/looperror",Gripper.getClosedLoopError());
     //SmartDashboard.putNumber("gripper/target",Gripper.getClosedLoopTarget());
-    SmartDashboard.putNumber("gripper/derivative",Gripper.getErrorDerivative());
-    SmartDashboard.putNumber("gripper/iaccum",Gripper.getIntegralAccumulator());
-    SmartDashboard.putNumber("gripper/outpercent",Gripper.getMotorOutputPercent());
-    SmartDashboard.putNumber("gripper/outvoltage",Gripper.getMotorOutputVoltage());
-    SmartDashboard.putNumber("gripper/velocity",Gripper.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("gripper/statorcurrent",Gripper.getStatorCurrent());
-    SmartDashboard.putNumber("gripper/supplycurrent",Gripper.getSupplyCurrent());
-    SmartDashboard.putNumber("gripper/controllertemp",Gripper.getTemperature());
+    LogOrDash.logNumber("gripper/derivative",Gripper.getErrorDerivative());
+    LogOrDash.logNumber("gripper/iaccum",Gripper.getIntegralAccumulator());
+    LogOrDash.logNumber("gripper/outpercent",Gripper.getMotorOutputPercent());
+    LogOrDash.logNumber("gripper/outvoltage",Gripper.getMotorOutputVoltage());
+    LogOrDash.logNumber("gripper/velocity",Gripper.getSelectedSensorVelocity());
+    LogOrDash.logNumber("gripper/statorcurrent",Gripper.getStatorCurrent());
+    LogOrDash.logNumber("gripper/supplycurrent",Gripper.getSupplyCurrent());
+    LogOrDash.logNumber("gripper/controllertemp",Gripper.getTemperature());
 
     // Fault detection
     Faults f = new Faults();
@@ -93,7 +94,7 @@ public class Gripper extends SubsystemBase {
 
     if(f.hasAnyFault())
     {
-      SmartDashboard.putString("gripper/faults", f.toString());
+      LogOrDash.logString("gripper/faults", f.toString());
     }
 
 

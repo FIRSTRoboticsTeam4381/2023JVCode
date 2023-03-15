@@ -132,22 +132,22 @@ public class SwerveModule {
 
 
     public void sendTelemetry() {
-        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/cancoder", getCanCoder().getDegrees());
-        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/integratedposition", getState().angle.getDegrees());
-        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/drive/velocity", getState().speedMetersPerSecond);    
-        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/drive/temperature", getTemp(1));
-        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/temperature", getTemp(2));
-        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/setpoint", desiredAngle);
-        SmartDashboard.putNumber("Swerve/m" + moduleNumber + "/drive/setpoint", lastSpeed);
+        LogOrDash.logNumber("swerve/m" + moduleNumber + "/cancoder", getCanCoder().getDegrees());
+        LogOrDash.logNumber("swerve/m" + moduleNumber + "/angle/integratedposition", getState().angle.getDegrees());
+        LogOrDash.logNumber("swerve/m" + moduleNumber + "/drive/velocity", getState().speedMetersPerSecond);    
+        LogOrDash.logNumber("swerve/m" + moduleNumber + "/drive/temperature", getTemp(1));
+        LogOrDash.logNumber("swerve/m" + moduleNumber + "/angle/temperature", getTemp(2));
+        LogOrDash.logNumber("swerve/m" + moduleNumber + "/angle/setpoint", desiredAngle);
+        LogOrDash.logNumber("Swerve/m" + moduleNumber + "/drive/setpoint", lastSpeed);
         
-        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/statorcurrent", mAngleMotor.getStatorCurrent());
-        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/supplycurrent", mAngleMotor.getSupplyCurrent());
+        LogOrDash.logNumber("swerve/m" + moduleNumber + "/angle/statorcurrent", mAngleMotor.getStatorCurrent());
+        LogOrDash.logNumber("swerve/m" + moduleNumber + "/angle/supplycurrent", mAngleMotor.getSupplyCurrent());
 
-        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/drive/statorcurrent", mDriveMotor.getStatorCurrent());
-        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/drive/supplycurrent", mDriveMotor.getSupplyCurrent());
+        LogOrDash.logNumber("swerve/m" + moduleNumber + "/drive/statorcurrent", mDriveMotor.getStatorCurrent());
+        LogOrDash.logNumber("swerve/m" + moduleNumber + "/drive/supplycurrent", mDriveMotor.getSupplyCurrent());
 
-        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/drive/outputvoltage", mDriveMotor.getMotorOutputVoltage());
-        SmartDashboard.putNumber("swerve/m" + moduleNumber + "/angle/outputvoltage", mAngleMotor.getMotorOutputVoltage());
+        LogOrDash.logNumber("swerve/m" + moduleNumber + "/drive/outputvoltage", mDriveMotor.getMotorOutputVoltage());
+        LogOrDash.logNumber("swerve/m" + moduleNumber + "/angle/outputvoltage", mAngleMotor.getMotorOutputVoltage());
     
         // Check for faults
         Faults f = new Faults();
@@ -155,13 +155,13 @@ public class SwerveModule {
 
         if(f.hasAnyFault())
         {
-            SmartDashboard.putString("swerve/m" + moduleNumber + "/drive/faults", f.toString());
+            LogOrDash.logString("swerve/m" + moduleNumber + "/drive/faults", f.toString());
         }
 
         mAngleMotor.getFaults(f);
         if(f.hasAnyFault())
         {
-            SmartDashboard.putString("swerve/m" + moduleNumber + "/angle/faults", f.toString());
+            LogOrDash.logString("swerve/m" + moduleNumber + "/angle/faults", f.toString());
         }
 
         // Check for reboots

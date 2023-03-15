@@ -4,6 +4,7 @@ import frc.robot.SwerveModule;
 import frc.robot.commands.TeleopSwerve;
 import frc.lib.util.DriftCorrection;
 import frc.robot.Constants;
+import frc.robot.LogOrDash;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
@@ -134,7 +135,7 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic(){
         //swerveOdometry.update(getYaw(), getPositions());
-        SmartDashboard.putNumber("Gyro Angle", getYaw().getDegrees());
+        LogOrDash.logNumber("Gyro Angle", getYaw().getDegrees());
 
         SwerveModuleState[] currentStatus = new SwerveModuleState[4];
         double[] targetSpeeds = new double[4];
@@ -162,16 +163,16 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumberArray("swerve/status", currentStateAdv);
         SmartDashboard.putNumberArray("swerve/target", targetStateAdv);
 
-        SmartDashboard.putNumber("Gyro Pitch", gyro.getPitch());
-        SmartDashboard.putNumber("Gyro Roll", gyro.getRoll());
-        SmartDashboard.putNumber("Gyro Yaw", gyro.getYaw());
-        SmartDashboard.putString("XY Coord", "(" + getPose().getX() + ", " + getPose().getY() + ")");
+        LogOrDash.logNumber("Gyro Pitch", gyro.getPitch());
+        LogOrDash.logNumber("Gyro Roll", gyro.getRoll());
+        LogOrDash.logNumber("Gyro Yaw", gyro.getYaw());
+        LogOrDash.logString("XY Coord", "(" + getPose().getX() + ", " + getPose().getY() + ")");
 
         double[] rawgyro = new double[3];
         gyro.getRawGyro(rawgyro);
-        SmartDashboard.putNumber("Raw gyro 0", rawgyro[0]);
-        SmartDashboard.putNumber("Raw gyro 1", rawgyro[1]);
-        SmartDashboard.putNumber("Raw gyro 2", rawgyro[2]);
+        LogOrDash.logNumber("Raw gyro 0", rawgyro[0]);
+        LogOrDash.logNumber("Raw gyro 1", rawgyro[1]);
+        LogOrDash.logNumber("Raw gyro 2", rawgyro[2]);
 
         ((TeleopSwerve) this.getDefaultCommand()).updateField(getPose());
 

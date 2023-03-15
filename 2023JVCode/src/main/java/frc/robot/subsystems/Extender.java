@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LogOrDash;
 import frc.robot.commands.SparkMaxPosition;
 
 public class Extender extends SubsystemBase {
@@ -30,7 +31,7 @@ public class Extender extends SubsystemBase {
       // Deadzone
       if (Math.abs(power) < 0.05 * 5600) {
         Extender1.getPIDController().setReference(0, ControlType.kVelocity, 0);
-        SmartDashboard.putNumber("extender/m1/velocitysetpoint", 0);
+        LogOrDash.logNumber("extender/m1/velocitysetpoint", 0);
         extenderDeadzone = true;
       } else {
         extenderDeadzone = false;
@@ -85,27 +86,27 @@ public class Extender extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     
-    SmartDashboard.putNumber("extender/m1/position",Extender1.getEncoder().getPosition());
-    SmartDashboard.putNumber("extender/m1/setspeed", Extender1.get());
-    SmartDashboard.putNumber("extender/m1/velocity", Extender1.getEncoder().getVelocity());
-    SmartDashboard.putNumber("extender/m1/appliedoutput", Extender1.getAppliedOutput());
-    SmartDashboard.putNumber("extender/m1/temperature", Extender1.getMotorTemperature());
-    SmartDashboard.putNumber("extender/m1/outputcurrent", Extender1.getOutputCurrent());
-    SmartDashboard.putNumber("extender/m1/iaccum", Extender1.getPIDController().getIAccum());
+    LogOrDash.logNumber("extender/m1/position",Extender1.getEncoder().getPosition());
+    LogOrDash.logNumber("extender/m1/setspeed", Extender1.get());
+    LogOrDash.logNumber("extender/m1/velocity", Extender1.getEncoder().getVelocity());
+    LogOrDash.logNumber("extender/m1/appliedoutput", Extender1.getAppliedOutput());
+    LogOrDash.logNumber("extender/m1/temperature", Extender1.getMotorTemperature());
+    LogOrDash.logNumber("extender/m1/outputcurrent", Extender1.getOutputCurrent());
+    LogOrDash.logNumber("extender/m1/iaccum", Extender1.getPIDController().getIAccum());
 
-    SmartDashboard.putNumber("extender/m2/position",Extender2.getEncoder().getPosition());
-    SmartDashboard.putNumber("extender/m2/setspeed", Extender2.get());
-    SmartDashboard.putNumber("extender/m2/velocity", Extender2.getEncoder().getVelocity());
-    SmartDashboard.putNumber("extender/m2/appliedoutput", Extender2.getAppliedOutput());
-    SmartDashboard.putNumber("extender/m2/temperature", Extender2.getMotorTemperature());
-    SmartDashboard.putNumber("extender/m2/outputcurrent", Extender2.getOutputCurrent());
+    LogOrDash.logNumber("extender/m2/position",Extender2.getEncoder().getPosition());
+    LogOrDash.logNumber("extender/m2/setspeed", Extender2.get());
+    LogOrDash.logNumber("extender/m2/velocity", Extender2.getEncoder().getVelocity());
+    LogOrDash.logNumber("extender/m2/appliedoutput", Extender2.getAppliedOutput());
+    LogOrDash.logNumber("extender/m2/temperature", Extender2.getMotorTemperature());
+    LogOrDash.logNumber("extender/m2/outputcurrent", Extender2.getOutputCurrent());
     
-    SmartDashboard.putBoolean("extender/top", digitalExtenderInputTop.get());
-    SmartDashboard.putBoolean("extender/bottom", digitalExtenderInputBottom.get());
+    LogOrDash.logBoolean("extender/top", digitalExtenderInputTop.get());
+    LogOrDash.logBoolean("extender/bottom", digitalExtenderInputBottom.get());
     //SmartDashboard.putBoolean("Extender Deadzone", extenderDeadzone);
 
-    SmartDashboard.putNumber("extender/m1/faults", Extender1.getFaults());
-    SmartDashboard.putNumber("extender/m2/faults", Extender2.getFaults());
+    LogOrDash.logNumber("extender/m1/faults", Extender1.getFaults());
+    LogOrDash.logNumber("extender/m2/faults", Extender2.getFaults());
 
     
 

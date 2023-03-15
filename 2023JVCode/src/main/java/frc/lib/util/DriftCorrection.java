@@ -6,6 +6,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.LogOrDash;
 
 public class DriftCorrection {
     
@@ -33,9 +34,9 @@ public class DriftCorrection {
         if(enabled)
         {
 
-            SmartDashboard.putBoolean("Rotation Locked", locked);
-            SmartDashboard.putNumber("Lock Angle", lockAngle);
-            SmartDashboard.putNumber("Current Angle", pose.getRotation().getRadians());
+            LogOrDash.logBoolean("Rotation Locked", locked);
+            LogOrDash.logNumber("Lock Angle", lockAngle);
+            LogOrDash.logNumber("Current Angle", pose.getRotation().getRadians());
 
             SmartDashboard.putNumber("Rotation Natural Target", speeds.omegaRadiansPerSecond);
 
@@ -47,7 +48,7 @@ public class DriftCorrection {
                 {
                     // Angle already locked on
                     speeds.omegaRadiansPerSecond = rotationCorrection.calculate(pose.getRotation().getRadians()); //PathPlanner uses radians
-                    SmartDashboard.putNumber("Rotation Correction", speeds.omegaRadiansPerSecond);
+                    LogOrDash.logNumber("Rotation Correction", speeds.omegaRadiansPerSecond);
                     return speeds;
                 }
                 else if(Math.abs(rawGyro[2]) < 100)

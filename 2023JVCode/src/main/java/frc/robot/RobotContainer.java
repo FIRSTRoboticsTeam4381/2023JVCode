@@ -90,21 +90,23 @@ public class RobotContainer {
     m_AutoChooser.addOption("1 Place & Balance", Autos.TopPlacementBalance());
     m_AutoChooser.addOption("2 Back Cube Pickup", Autos.BackCubePickup());
 
+    m_AutoChooser.addOption("3 Back Cone Cube Pickup", Autos.BackConeCubePickup());
+
     //m_AutoChooser.addOption("PlaceCube&Cone", Autos.PlaceCubeandCone());
         
-    m_AutoChooser.addOption("3 Front Cube Reverse", Autos.FrontCubeReverse());
-    m_AutoChooser.addOption("4 Front Cone Reverse", Autos.FrontConeReverse());
-    m_AutoChooser.addOption("5 Back Cube Reverse", Autos.BackCubeReverse());
-    m_AutoChooser.addOption("6 Back Cone Reverse", Autos.BackConeReverse());
+    m_AutoChooser.addOption("4 Front Cube Reverse", Autos.FrontCubeReverse());
+    m_AutoChooser.addOption("5 Front Cone Reverse", Autos.FrontConeReverse());
+    m_AutoChooser.addOption("6 Back Cube Reverse", Autos.BackCubeReverse());
+    m_AutoChooser.addOption("7 Back Cone Reverse", Autos.BackConeReverse());
     
-    m_AutoChooser.addOption("7 Place Only", new SequentialCommandGroup(
+    m_AutoChooser.addOption("8 Place Only", new SequentialCommandGroup(
       SpecialistPositions.topPlacement(),
       Gripper.cubeGripper(),
       new WaitCommand(0.5),
       SpecialistPositions.zero()
     ));
     //m_AutoChooser.addOption("Cube Over Balance", Autos.CubeOverBalance());
-    m_AutoChooser.addOption("Back Cone Cube Pickup", Autos.BackConeCubePickup());
+    
 
 
     SmartDashboard.putData(m_AutoChooser);
@@ -134,6 +136,8 @@ public class RobotContainer {
 
     forceRetractWinch = Winch.WinchResetOverride();
     SmartDashboard.putData("Force Retract Winch", forceRetractWinch);
+
+    SmartDashboard.putData("Toggle Debug Dashboards", LogOrDash.toggleDashboard());
 
   }
 
