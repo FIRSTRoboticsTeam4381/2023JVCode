@@ -54,8 +54,8 @@ public class Wrist extends SubsystemBase {
 
     wristPivot.getPIDController().setFeedbackDevice(wristPivot.getAbsoluteEncoder(com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle));
 
-    wristPivot.getPIDController().setP(15, 1);
-    wristPivot.getPIDController().setI(0,1);
+    wristPivot.getPIDController().setP(12, 1);
+    wristPivot.getPIDController().setI(0, 1);
     wristPivot.getPIDController().setD(0, 1);
   }
 

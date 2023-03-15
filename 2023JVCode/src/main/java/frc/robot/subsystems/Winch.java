@@ -43,7 +43,7 @@ public class Winch extends SubsystemBase {
       }
 
       if(buttonStatus.get() == false) {
-        power = power/5;
+        power = power/4;
       }
       armWinch.set(TalonSRXControlMode.Velocity, power);
       
