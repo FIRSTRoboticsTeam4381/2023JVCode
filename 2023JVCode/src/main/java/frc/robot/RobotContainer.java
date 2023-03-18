@@ -43,6 +43,7 @@ public class RobotContainer {
   public static Winch Winch;
   public static Wrist Wrist;
   public static Balance balanceRobot;
+  public static UpRamp upRamp;
   public static LEDs leds;
   public static Limelight lime;
   public static SparkMaxPosition PIDTest;
@@ -72,6 +73,7 @@ public class RobotContainer {
     Winch = new Winch(); // Arm Winch/Arm Pivot
     Wrist = new Wrist();
     balanceRobot = new Balance(s_Swerve); // Balancing in auto
+    upRamp = new UpRamp(s_Swerve);
     leds = new LEDs();
     pdp = new PowerDistribution(1, ModuleType.kRev);
     lime = new Limelight();
@@ -105,6 +107,14 @@ public class RobotContainer {
       new WaitCommand(0.5),
       SpecialistPositions.zero()
     ));
+
+    m_AutoChooser.addOption("99 BetterBalance", new SequentialCommandGroup(
+      Autos.eventMap.get("placeTop"),
+      SpecialistPositions.zero(),
+      upRamp,
+      Autos.eventMap.get("lowerArm"),
+      balanceRobot
+      ));
     //m_AutoChooser.addOption("Cube Over Balance", Autos.CubeOverBalance());
     
 

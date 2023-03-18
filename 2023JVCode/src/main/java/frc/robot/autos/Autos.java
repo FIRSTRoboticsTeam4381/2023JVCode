@@ -24,7 +24,7 @@ public final class Autos {
     /**
      * Events to be used in all autos built with pathplanner
      */
-    private static final Map<String, Command> eventMap = new HashMap<>(Map.ofEntries(
+    public static final Map<String, Command> eventMap = new HashMap<>(Map.ofEntries(
         //Turns on Limelight Leds, good indicator of step working
         Map.entry("lime", new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3))),
         //Stops robot from drifting when stopped at stop point
