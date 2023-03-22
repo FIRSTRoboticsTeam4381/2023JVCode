@@ -7,7 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Swerve;
 
 public class UpRamp extends CommandBase {
@@ -16,7 +20,7 @@ public class UpRamp extends CommandBase {
 
   boolean direction;
   double time;
-
+  boolean retry;
   /** Creates a new Balance. */
   public UpRamp(Swerve mainDrive) {
     swerveDrive = mainDrive;
@@ -28,9 +32,10 @@ public class UpRamp extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    time = 2+Timer.getFPGATimestamp();
+    time = 1+Timer.getFPGATimestamp();
     direction = false;
-    swerveDrive.drive(new Translation2d(4.5,0), 0, false, true);
+    swerveDrive.drive(new Translation2d(-4.5,0), 0, false, true);
+    retry = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,11 +47,12 @@ public class UpRamp extends CommandBase {
       if (direction) {
         time = 1+Timer.getFPGATimestamp();
 
-        swerveDrive.drive(new Translation2d(-3,0), 0, false, true);
-      } else {
-        time = 2+Timer.getFPGATimestamp();
+        swerveDrive.drive(new Translation2d(1,0), 0, false, true);
 
-        swerveDrive.drive(new Translation2d(4.5,0), 0, false, true);
+        retry = true;
+      } else {
+        time = 1+Timer.getFPGATimestamp();
+        swerveDrive.drive(new Translation2d(-4.5,0), 0, false, true);
       }
     }
   }
@@ -60,6 +66,19 @@ public class UpRamp extends CommandBase {
   public boolean isFinished() {
     double robotPitch = swerveDrive.gyro.getPitch(); // (Previous )For Forward to Back
 
-    return robotPitch >= 8;
+    return robotPitch >= 10;
+  }
+
+  public ConditionalCommand overAndBack(){
+    return new ConditionalCommand(
+      new WaitCommand(0),
+      new SequentialCommandGroup(
+      new RunCommand(() -> swerveDrive.drive(new Translation2d(-1.5,0), 0, false, true), swerveDrive).until(() -> swerveDrive.gyro.getPitch() < 1),
+      new RunCommand(() -> swerveDrive.drive(new Translation2d(-1.5,0), 0, false, true), swerveDrive).until(() -> swerveDrive.gyro.getPitch() < -8),
+      new RunCommand(() -> swerveDrive.drive(new Translation2d(-1.5,0), 0, false, true), swerveDrive).until(() -> swerveDrive.gyro.getPitch() > -1),
+      new WaitCommand(.5),
+      new RunCommand(() -> swerveDrive.drive(new Translation2d(3.5,0), 0, false, true), swerveDrive).until(() -> swerveDrive.gyro.getPitch() < -8)  
+    ),
+    () -> retry); 
   }
 }

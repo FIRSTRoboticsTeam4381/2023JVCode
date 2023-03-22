@@ -112,6 +112,7 @@ public class RobotContainer {
       Autos.eventMap.get("placeTop"),
       SpecialistPositions.zero(),
       upRamp,
+      upRamp.overAndBack(),
       Autos.eventMap.get("lowerArm"),
       balanceRobot
       ));
