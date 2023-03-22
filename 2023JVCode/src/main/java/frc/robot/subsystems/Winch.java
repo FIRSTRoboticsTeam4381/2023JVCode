@@ -78,7 +78,7 @@ public class Winch extends SubsystemBase {
 
     winchConfig.forwardSoftLimitEnable = true;
     winchConfig.reverseSoftLimitEnable = true;
-    winchConfig.forwardSoftLimitThreshold = 28570;
+    winchConfig.forwardSoftLimitThreshold = 33000;
     winchConfig.reverseSoftLimitThreshold = 0;
 
     winchConfig.closedloopRamp = 0.05;
