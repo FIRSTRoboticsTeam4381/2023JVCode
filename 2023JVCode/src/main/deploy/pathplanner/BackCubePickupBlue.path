@@ -52,16 +52,16 @@
     },
     {
       "anchorPoint": {
-        "x": 7.3,
-        "y": 5.55
+        "x": 7.25,
+        "y": 5.4
       },
       "prevControl": {
-        "x": 6.3,
-        "y": 5.55
+        "x": 6.25,
+        "y": 5.4
       },
       "nextControl": {
-        "x": 8.3,
-        "y": 5.55
+        "x": 8.249999999999996,
+        "y": 5.4
       },
       "holonomicAngle": -90.0,
       "isReversal": false,
