@@ -166,6 +166,10 @@ public final class Autos {
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackVisionPickup", 
             new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
+    public static Command FrontVisionPickUp(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("FrontVisionPickup", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
     /**
      * Blank Autonomous to be used as default dashboard option
      * @return Autonomous command

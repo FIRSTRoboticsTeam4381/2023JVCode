@@ -107,6 +107,7 @@ public class RobotContainer {
       new WaitCommand(0.5),
       SpecialistPositions.zero()
     ));
+    m_AutoChooser.addOption("95 Front Vision Pickup", Autos.FrontVisionPickUp());
     m_AutoChooser.addOption("96 Back Vision Pickup", Autos.BackVisionPickup());
     m_AutoChooser.addOption("97 Back Line Pickup", Autos.BackLinePickup());
     m_AutoChooser.addOption("98 Back Cube Untested", Autos.BackCubePickup());
