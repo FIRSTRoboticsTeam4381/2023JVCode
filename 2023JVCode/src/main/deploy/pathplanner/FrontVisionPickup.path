@@ -17,8 +17,7 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "placeTop",
-          "zero"
+          "placeTop"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -46,9 +45,7 @@
       "stopEvent": {
         "names": [
           "cubeLineup",
-          "readyGrab",
-          "grabCube",
-          "zero"
+          "grabCube"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -81,5 +78,24 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.5818181818181819,
+      "names": [
+        "readyGrab"
+      ]
+    },
+    {
+      "position": 1.0363636363636362,
+      "names": [
+        "zero"
+      ]
+    },
+    {
+      "position": 0.03636363636363636,
+      "names": [
+        "zero"
+      ]
+    }
+  ]
 }
