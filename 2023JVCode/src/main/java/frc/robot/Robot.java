@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -44,6 +45,10 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     this.addPeriodic(() -> m_robotContainer.s_Swerve.trackOdometry(), 0.002, 0.0005);
+
+    for (int port = 5800; port <= 5805; port++){
+      PortForwarder.add(port, "limelight.local", port);
+    }
   }
 
   /**

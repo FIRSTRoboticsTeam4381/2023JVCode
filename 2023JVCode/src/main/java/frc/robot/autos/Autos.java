@@ -14,10 +14,12 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.VisionLineup;
 
 public final class Autos {
 
@@ -56,13 +58,36 @@ public final class Autos {
             RobotContainer.Gripper.cubeGripper(),
             new WaitCommand(1),
             RobotContainer.Winch.goToPosition(25000, 200)
-        ))
-       /*  Map.entry("LEDFlash", new SequentialCommandGroup(
-            RobotContainer.leds.setColorsCommand(0.8, 0, 1),
+        )),
+         Map.entry("LEDFlash", new SequentialCommandGroup(
+            RobotContainer.leds.setColorsCommand(1, 0, 0),
             new WaitCommand(0.5),
-            RobotContainer.leds.setColorsCommand(0.8, 0, 1),
-        ))
-*/
+            RobotContainer.leds.setColorsCommand(0, 0, 0),
+            new WaitCommand(0.5),
+            RobotContainer.leds.setColorsCommand(1, 0, 0),
+            new WaitCommand(0.5),
+            RobotContainer.leds.setColorsCommand(0, 0, 0),
+            new WaitCommand(0.5),
+            RobotContainer.leds.setColorsCommand(1, 0, 0),
+            new WaitCommand(0.5),
+            RobotContainer.leds.setColorsCommand(0, 0, 0),
+            new WaitCommand(0.5),
+            RobotContainer.leds.setColorsCommand(0, 1, 0),
+            new WaitCommand(0.5)
+        )),
+        Map.entry("cubeLineup", new VisionLineup(RobotContainer.s_Swerve, RobotContainer.lime, RobotContainer.leds, 1, true)),
+        Map.entry("aprilLineup", new VisionLineup(RobotContainer.s_Swerve, RobotContainer.lime, RobotContainer.leds, 0, false)),
+        Map.entry("moveAndMid", new SequentialCommandGroup(
+            new ParallelCommandGroup(
+                new InstantCommand(() -> RobotContainer.s_Swerve.drive(new Translation2d(1,0), 0, false, true)),
+                new WaitCommand(0.5),
+                SpecialistPositions.midPlacement()
+            ),
+            new InstantCommand(() -> RobotContainer.s_Swerve.drive(new Translation2d(0,0), 0, false, true)),
+            RobotContainer.Gripper.cubeGripper(),
+            new WaitCommand(0.5)
+        )),
+        Map.entry("tipDown", new InstantCommand(() -> RobotContainer.Wrist.goToPosition(0.28, 0.003)))
         
     ));
 
@@ -135,6 +160,10 @@ public final class Autos {
     }
     public static Command BackLinePickup(){
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackLinePickup", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command BackVisionPickup(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackVisionPickup", 
             new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
     /**

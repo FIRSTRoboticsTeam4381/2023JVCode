@@ -45,4 +45,16 @@ public class Limelight extends SubsystemBase {
 
     }, this);
   }
+  public double getX(){
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+  }
+  public double getY(){
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+  }
+  public boolean hasTarget(){
+    return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) == 1;
+  }
+  public void pipeline(int p){
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(p);
+  }
 }

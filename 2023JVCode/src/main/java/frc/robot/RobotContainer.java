@@ -107,6 +107,7 @@ public class RobotContainer {
       new WaitCommand(0.5),
       SpecialistPositions.zero()
     ));
+    m_AutoChooser.addOption("96 Back Vision Pickup", Autos.BackVisionPickup());
     m_AutoChooser.addOption("97 Back Line Pickup", Autos.BackLinePickup());
     m_AutoChooser.addOption("98 Back Cube Untested", Autos.BackCubePickup());
     m_AutoChooser.addOption("99 BetterBalance", new SequentialCommandGroup(
@@ -213,6 +214,8 @@ public class RobotContainer {
         // This is OK, getCurrentCommand() will be null if there isn't anything running
       }
     }));
+    driveController.square().whileTrue(new VisionLineup(s_Swerve, lime, leds, 1, true));
+    driveController.triangle().whileTrue(new VisionLineup(s_Swerve, lime, leds, 0, false));
   }
 
   /**
