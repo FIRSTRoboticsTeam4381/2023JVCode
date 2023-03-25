@@ -90,7 +90,7 @@ public class RobotContainer {
     //m_AutoChooser.addOption("TopPlacementAuto", Autos.TopPlacementAuto());
 
     m_AutoChooser.addOption("1 Place & Balance", Autos.TopPlacementBalance());
-    m_AutoChooser.addOption("2 Back Cube Pickup", Autos.BackCubePickup());
+    m_AutoChooser.addOption("2 Back Cube Pickup BLUE", Autos.BackCubePickupBlue());
 
     m_AutoChooser.addOption("3 Back Cone Cube Pickup", Autos.BackConeCubePickup());
 
@@ -107,7 +107,8 @@ public class RobotContainer {
       new WaitCommand(0.5),
       SpecialistPositions.zero()
     ));
-
+    m_AutoChooser.addOption("97 Back Line Pickup", Autos.BackLinePickup());
+    m_AutoChooser.addOption("98 Back Cube Untested", Autos.BackCubePickup());
     m_AutoChooser.addOption("99 BetterBalance", new SequentialCommandGroup(
       Autos.eventMap.get("placeTop"),
       SpecialistPositions.zero(),

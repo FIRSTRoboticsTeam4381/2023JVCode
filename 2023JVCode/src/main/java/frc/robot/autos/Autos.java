@@ -57,6 +57,12 @@ public final class Autos {
             new WaitCommand(1),
             RobotContainer.Winch.goToPosition(25000, 200)
         ))
+       /*  Map.entry("LEDFlash", new SequentialCommandGroup(
+            RobotContainer.leds.setColorsCommand(0.8, 0, 1),
+            new WaitCommand(0.5),
+            RobotContainer.leds.setColorsCommand(0.8, 0, 1),
+        ))
+*/
         
     ));
 
@@ -115,12 +121,20 @@ public final class Autos {
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackCubePickup", 
             new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
+    public static Command BackCubePickupBlue(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackCubePickupBlue", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
     public static Command CubeOverBalance(){
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("CubeOverBalance", 
             new PathConstraints(1.5, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
     public static Command BackConeCubePickup(){
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackConeCubePickup", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command BackLinePickup(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackLinePickup", 
             new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
     /**
