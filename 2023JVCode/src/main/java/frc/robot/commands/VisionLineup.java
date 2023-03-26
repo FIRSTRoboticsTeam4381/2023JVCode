@@ -42,12 +42,15 @@ public class VisionLineup extends CommandBase {
   @Override
   public void initialize() {
     limelight.pipeline(pipeline);
+
+    limelight.snapshot(1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (limelight.hasTarget()){
+      limelight.snapshot(0);
         double limeX = x.calculate(limelight.getX());
         double limeY = y.calculate(limelight.getY());
         if(invertY){
@@ -66,8 +69,10 @@ public class VisionLineup extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    swerve.drive(new Translation2d(0,0), 0, false, true);
     limelight.pipeline(0);
     leds.setColors(0, 1, 0);
+    limelight.snapshot(1);
   }
 
   // Returns true when the command should end.

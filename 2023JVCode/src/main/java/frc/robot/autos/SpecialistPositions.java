@@ -114,7 +114,7 @@ public class SpecialistPositions {
     public static Command offGround(){
         return new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(0, 1),
-            RobotContainer.Winch.goToPosition(28000, 200),
+            RobotContainer.Winch.goToPosition(25000, 200),
             RobotContainer.Wrist.goToPosition(0.1842, 0.006)
         );
     }
