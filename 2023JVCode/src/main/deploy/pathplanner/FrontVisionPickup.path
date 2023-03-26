@@ -45,6 +45,7 @@
       "stopEvent": {
         "names": [
           "cubeLineup",
+          "readyGrab",
           "grabCube"
         ],
         "executionBehavior": "sequential",
@@ -79,12 +80,6 @@
     }
   ],
   "markers": [
-    {
-      "position": 0.5818181818181819,
-      "names": [
-        "readyGrab"
-      ]
-    },
     {
       "position": 1.0363636363636362,
       "names": [
