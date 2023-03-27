@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -93,8 +94,10 @@ public class RobotContainer {
       SpecialistPositions.zero(),
       upRamp,
       upRamp.overAndBack(),
-      Autos.eventMap.get("lowerArm"),
-      balanceRobot
+      new ParallelCommandGroup(
+        Autos.eventMap.get("lowerArm"),
+        balanceRobot
+        )
       ));
 
     m_AutoChooser.addOption("2 Place & Balance", Autos.TopPlacementBalance());

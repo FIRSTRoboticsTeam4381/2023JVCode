@@ -77,8 +77,9 @@ public class UpRamp extends CommandBase {
       new RunCommand(() -> swerveDrive.drive(new Translation2d(-1.5,0), 0, false, true), swerveDrive).until(() -> swerveDrive.gyro.getPitch() < -8),
       new RunCommand(() -> swerveDrive.drive(new Translation2d(-1.5,0), 0, false, true), swerveDrive).until(() -> swerveDrive.gyro.getPitch() > -1),
       new WaitCommand(.5),
-      new RunCommand(() -> swerveDrive.drive(new Translation2d(3.5,0), 0, false, true), swerveDrive).until(() -> swerveDrive.gyro.getPitch() < -8)  
-    ),
+      new RunCommand(() -> swerveDrive.drive(new Translation2d(3.5,0), 0, false, true), swerveDrive).until(() -> swerveDrive.gyro.getPitch() < -8),
+      new WaitCommand(0.25)
+      ),
     () -> retry); 
   }
 }
