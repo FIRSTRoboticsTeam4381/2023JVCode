@@ -95,9 +95,10 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "placeMid"
+          "placeMid",
+          "ejectCube"
         ],
-        "executionBehavior": "parallel",
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }

@@ -47,8 +47,10 @@ public class Wrist extends SubsystemBase {
 
     wristPivot.enableVoltageCompensation(12);
     wristPivot.setSmartCurrentLimit(20);
-    wristPivot.setSoftLimit(SoftLimitDirection.kForward, 0.4f);
-    wristPivot.setSoftLimit(SoftLimitDirection.kReverse, 0.05f);
+    //wristPivot.setSoftLimit(SoftLimitDirection.kForward, 0.4f);
+    //wristPivot.setSoftLimit(SoftLimitDirection.kReverse, 0.05f);
+    wristPivot.setSoftLimit(SoftLimitDirection.kForward, 0.7f);
+    wristPivot.setSoftLimit(SoftLimitDirection.kReverse, 0.384f);
     wristPivot.enableSoftLimit(SoftLimitDirection.kForward, true);
     wristPivot.enableSoftLimit(SoftLimitDirection.kReverse, true);
 

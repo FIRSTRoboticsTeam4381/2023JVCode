@@ -39,7 +39,7 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   /* Subsystems */
-  public static Gripper Gripper;
+  public static RollerGripper Gripper;
   public static Extender Extender;
   public static Winch Winch;
   public static Wrist Wrist;
@@ -69,7 +69,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    Gripper = new Gripper();
+    Gripper = new RollerGripper();
     Extender = new Extender();
     Winch = new Winch(); // Arm Winch/Arm Pivot
     Wrist = new Wrist();
@@ -91,13 +91,14 @@ public class RobotContainer {
     //m_AutoChooser.addOption("TopPlacementAuto", Autos.TopPlacementAuto());
     m_AutoChooser.addOption("1 Better Balance", new SequentialCommandGroup(
       Autos.eventMap.get("placeTop"),
+      Gripper.ejectCube(),
       SpecialistPositions.zero(),
       upRamp,
-      upRamp.overAndBack(),
       new ParallelCommandGroup(
         Autos.eventMap.get("lowerArm"),
+        upRamp.overAndBack()
+        ),
         balanceRobot
-        )
       ));
 
     m_AutoChooser.addOption("2 Place & Balance", Autos.TopPlacementBalance());
@@ -117,10 +118,15 @@ public class RobotContainer {
     m_AutoChooser.addOption("9 Back Cube Reverse", Autos.BackCubeReverse());
     m_AutoChooser.addOption("10 Back Cone Reverse", Autos.BackConeReverse());
     
-    m_AutoChooser.addOption("11 Place Only", new SequentialCommandGroup(
+    m_AutoChooser.addOption("11 Place Cube Only", new SequentialCommandGroup(
       SpecialistPositions.topPlacement(),
-      Gripper.cubeGripper(),
-      new WaitCommand(0.5),
+      RobotContainer.Gripper.ejectCube().asProxy(),
+      SpecialistPositions.zero()
+    ));
+
+    m_AutoChooser.addOption("12 Place Cone Only", new SequentialCommandGroup(
+      SpecialistPositions.topPlacement(),
+      RobotContainer.Gripper.ejectCone().asProxy(),
       SpecialistPositions.zero()
     ));
     
@@ -136,7 +142,7 @@ public class RobotContainer {
   
 
 
-    SmartDashboard.putData(Gripper);
+    SmartDashboard.putData("Gripper Sub", Gripper);
     SmartDashboard.putData(Wrist);
     SmartDashboard.putData(Extender);
     SmartDashboard.putData("Winch Sub", Winch);

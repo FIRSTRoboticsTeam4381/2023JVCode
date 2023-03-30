@@ -18,6 +18,7 @@
       "stopEvent": {
         "names": [
           "placeTop",
+          "ejectCone",
           "zero"
         ],
         "executionBehavior": "sequential",
@@ -52,16 +53,16 @@
     },
     {
       "anchorPoint": {
-        "x": 6.988035492658663,
-        "y": 5.736751947437544
+        "x": 7.0748499391735615,
+        "y": 5.786169767828258
       },
       "prevControl": {
-        "x": 5.988035492658663,
-        "y": 5.736751947437544
+        "x": 6.0748499391735615,
+        "y": 5.786169767828258
       },
       "nextControl": {
-        "x": 7.988035492658664,
-        "y": 5.736751947437544
+        "x": 8.07484993917356,
+        "y": 5.786169767828258
       },
       "holonomicAngle": -90.0,
       "isReversal": false,
@@ -95,9 +96,11 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "placeTop"
+          "placeTop",
+          "ejectCube",
+          "zero"
         ],
-        "executionBehavior": "parallel",
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }

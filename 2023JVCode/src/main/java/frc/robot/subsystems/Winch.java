@@ -48,7 +48,7 @@ public class Winch extends SubsystemBase {
       armWinch.set(TalonSRXControlMode.Velocity, power);
       
       //armWinch.set(TalonSRXControlMode.PercentOutput, power);
-    }, this);
+    }, this).withName("Winch Teleop");
 
   }
 
@@ -78,7 +78,7 @@ public class Winch extends SubsystemBase {
 
     winchConfig.forwardSoftLimitEnable = true;
     winchConfig.reverseSoftLimitEnable = true;
-    winchConfig.forwardSoftLimitThreshold = 33000;
+    winchConfig.forwardSoftLimitThreshold = 39000;
     winchConfig.reverseSoftLimitThreshold = 0;
 
     winchConfig.closedloopRamp = 0.05;

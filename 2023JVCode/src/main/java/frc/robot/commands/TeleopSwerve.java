@@ -63,6 +63,13 @@ public class TeleopSwerve extends CommandBase {
             rAxis /= 10;
         }
 
+        if(controller.getHID().getL1Button())
+        {
+            yAxis /= 2;
+            xAxis /= 2;
+            rAxis /= 2;
+        }
+
         /* Calculates inputs for swerve subsytem */
         translation = new Translation2d(yAxis, xAxis).times(Constants.Swerve.maxSpeed); // bassicly Drives the robot (x,y)
         rotation = rAxis * Constants.Swerve.maxAngularVelocity;
