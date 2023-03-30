@@ -50,7 +50,7 @@ public class RollerGripper extends SubsystemBase {
   private final double GRAB_CONE_POW = 1.0;
   private final double HOLD_CONE_POW = 0.1;
 
-  private final double GRAB_CUBE_POW = 1.0;
+  private final double GRAB_CUBE_POW = 0.8;
   private final double HOLD_CUBE_POW = 0.1;
 
   // Commands, which will be treated like a state machine
@@ -314,7 +314,7 @@ public class RollerGripper extends SubsystemBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-      if(!speedExceeded && gripper.Gripper.getSelectedSensorVelocity() < -1500)
+      if(!speedExceeded && gripper.Gripper.getSelectedSensorVelocity() < -5000)
       {
         speedExceeded = true;
       }
@@ -342,7 +342,7 @@ public class RollerGripper extends SubsystemBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-      return speedExceeded && gripper.Gripper.getSelectedSensorVelocity() > -1000;
+      return speedExceeded && gripper.Gripper.getSelectedSensorVelocity() > -4500;
     }
 
     @Override
