@@ -55,17 +55,18 @@ public final class Autos {
             SpecialistPositions.zero())),*/
         Map.entry("readyGrab", SpecialistPositions.offGround()),
         Map.entry("grabCube", new SequentialCommandGroup(
-            //new ParallelCommandGroup(
-                RobotContainer.Winch.goToPosition(38000, 400),
+            new ParallelCommandGroup(
+                new SequentialCommandGroup(
+                    SpecialistPositions.offGround(),
+                    RobotContainer.Winch.goToPosition(38000, 400)
+                ),
                 // Without asProxy(), when the command completes and schedules HoldCube,
                 // the entire autonomous command is cancelled!
-                RobotContainer.Gripper.new GrabCube(RobotContainer.Gripper).asProxy(),
-            //),
+                RobotContainer.Gripper.new GrabCube(RobotContainer.Gripper).asProxy()
+            ),
             //RobotContainer.Gripper.cubeGripper(),
             //new WaitCommand(1),
-            new PrintCommand("RUNNING WINCH BACK"),
-            RobotContainer.Winch.goToPosition(20000, 200).withName("Winch Returning"),
-            new PrintCommand("WINCH AT TARGET")
+            RobotContainer.Winch.goToPosition(30000, 200).withName("Winch Returning")
         ).withName("Grab Cube Group")),
          Map.entry("LEDFlash", new SequentialCommandGroup(
             RobotContainer.leds.setColorsCommand(1, 0, 0),

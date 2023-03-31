@@ -74,7 +74,7 @@ public class SpecialistPositions {
         return new SequentialCommandGroup(
             new ParallelCommandGroup(
                 RobotContainer.Extender.goToPosition(0, 0.2),
-                RobotContainer.Winch.goToPosition(12400, 100),
+                RobotContainer.Winch.goToPosition(11250, 100),
                 RobotContainer.Wrist.goToPosition(0.7, .003)
             ),
             RobotContainer.Gripper.coneGripper()
@@ -138,7 +138,7 @@ public class SpecialistPositions {
         return new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(0, 1),
             RobotContainer.Winch.goToPosition(30000, 200),
-            RobotContainer.Wrist.goToPosition(0.7, 0.006)
+            RobotContainer.Wrist.goToPosition(0.679, 0.006)
         );
     }
 

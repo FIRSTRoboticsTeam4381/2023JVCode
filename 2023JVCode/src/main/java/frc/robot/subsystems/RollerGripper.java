@@ -53,6 +53,9 @@ public class RollerGripper extends SubsystemBase {
   private final double GRAB_CUBE_POW = 0.8;
   private final double HOLD_CUBE_POW = 0.1;
 
+  private final double CUBE_DETECT_DIFF = 1500;
+  private final double CONE_DETECT_DIFF = 2000;
+
   // Commands, which will be treated like a state machine
   public Command ejectCone() {
 
@@ -120,9 +123,9 @@ public class RollerGripper extends SubsystemBase {
     gripperConfig.slot0.kP = 1;
     gripperConfig.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
     gripperConfig.clearPositionOnLimitR = false;
-    gripperConfig.continuousCurrentLimit = 5;
-    gripperConfig.peakCurrentLimit = 10;
-    gripperConfig.peakCurrentDuration = 10;
+    gripperConfig.continuousCurrentLimit = 15;
+    gripperConfig.peakCurrentLimit = 20;
+    gripperConfig.peakCurrentDuration = 1;
     gripperConfig.peakOutputReverse = -1;
     Gripper.configAllSettings(gripperConfig);
     Gripper.setSensorPhase(true);
@@ -170,7 +173,8 @@ public class RollerGripper extends SubsystemBase {
    */
   public class GrabCone extends CommandBase {
     RollerGripper gripper;
-    boolean speedExceeded = false;
+    //boolean speedExceeded = false;
+    double topSpeed;
 
     public GrabCone(RollerGripper gripper) {
       // Use addRequirements() here to declare subsystem dependencies.
@@ -183,16 +187,20 @@ public class RollerGripper extends SubsystemBase {
     @Override
     public void initialize() {
       gripper.Gripper.set(ControlMode.PercentOutput, GRAB_CONE_POW);
-      speedExceeded = false;
+      //speedExceeded = false;
+      topSpeed = 0;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-      if(!speedExceeded && gripper.Gripper.getSelectedSensorVelocity() > 1500)
+      /*if(!speedExceeded && gripper.Gripper.getSelectedSensorVelocity() > 1500)
       {
         speedExceeded = true;
-      }
+      }*/
+      double v = gripper.Gripper.getSelectedSensorVelocity();
+      if(v > topSpeed)
+        topSpeed = v;
 
       // Pulse LEDs
       double pulseLevel = (Math.sin(Timer.getFPGATimestamp()*10)+1)/2;
@@ -217,7 +225,8 @@ public class RollerGripper extends SubsystemBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-      return speedExceeded && gripper.Gripper.getSelectedSensorVelocity() < 1000;
+      //return speedExceeded && gripper.Gripper.getSelectedSensorVelocity() < 1000;
+      return gripper.Gripper.getSelectedSensorVelocity() < topSpeed - CONE_DETECT_DIFF;
     }
 
     @Override
@@ -295,7 +304,9 @@ public class RollerGripper extends SubsystemBase {
    */
   public class GrabCube extends CommandBase {
     RollerGripper gripper;
-    boolean speedExceeded = false;
+    //boolean speedExceeded = false;
+
+    double topSpeed;
 
     public GrabCube(RollerGripper gripper) {
       // Use addRequirements() here to declare subsystem dependencies.
@@ -308,16 +319,21 @@ public class RollerGripper extends SubsystemBase {
     @Override
     public void initialize() {
       gripper.Gripper.set(ControlMode.PercentOutput, -GRAB_CUBE_POW);
-      speedExceeded = false;
+      //speedExceeded = false;
+      topSpeed = 0;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-      if(!speedExceeded && gripper.Gripper.getSelectedSensorVelocity() < -5000)
+      /*if(!speedExceeded && gripper.Gripper.getSelectedSensorVelocity() < -5000)
       {
         speedExceeded = true;
-      }
+      }*/
+
+      double v = gripper.Gripper.getSelectedSensorVelocity();
+      if(v < topSpeed)
+        topSpeed = v;
 
       // Pulse LEDs
       double pulseLevel = (Math.sin(Timer.getFPGATimestamp()*10)+1)/2;
@@ -342,7 +358,8 @@ public class RollerGripper extends SubsystemBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-      return speedExceeded && gripper.Gripper.getSelectedSensorVelocity() > -4500;
+      //return speedExceeded && gripper.Gripper.getSelectedSensorVelocity() > -4500;
+      return gripper.Gripper.getSelectedSensorVelocity() > topSpeed + CUBE_DETECT_DIFF;
     }
 
     @Override

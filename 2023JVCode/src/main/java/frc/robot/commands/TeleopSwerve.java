@@ -65,9 +65,9 @@ public class TeleopSwerve extends CommandBase {
 
         if(controller.getHID().getL1Button())
         {
-            yAxis /= 2;
-            xAxis /= 2;
-            rAxis /= 2;
+            yAxis /= 4;
+            xAxis /= 4;
+            rAxis /= 4;
         }
 
         /* Calculates inputs for swerve subsytem */
