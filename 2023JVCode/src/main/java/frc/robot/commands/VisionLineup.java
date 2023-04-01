@@ -29,9 +29,17 @@ public class VisionLineup extends CommandBase {
     pipeline = p;
     invertY = i;
 
-    x = new PIDController(0.1, 0, 0);
-    y = new PIDController(0.3, 0, 0);
-    x.setTolerance(0.7);
+    if(i) 
+    {
+      x = new PIDController(0.12, 0, 0);
+      y = new PIDController(0.32, 0, 0);
+    }
+    else
+    {
+      x = new PIDController(0.1, 0, 0);
+      y = new PIDController(0.23, 0, 0);
+    }
+    x.setTolerance(1.0);
     y.setTolerance(0.7);
     x.setSetpoint(0);
     y.setSetpoint(0);

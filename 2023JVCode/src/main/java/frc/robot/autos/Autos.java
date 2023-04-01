@@ -98,7 +98,12 @@ public final class Autos {
         )),
         Map.entry("tipDown", new InstantCommand(() -> RobotContainer.Wrist.goToPosition(0.28, 0.003))),
         Map.entry("ejectCube", RobotContainer.Gripper.ejectCube().asProxy()),
-        Map.entry("ejectCone", RobotContainer.Gripper.ejectCone().asProxy())
+        Map.entry("ejectCone", RobotContainer.Gripper.ejectCone().asProxy()),
+        Map.entry("dumpLowCube", new SequentialCommandGroup(
+            RobotContainer.Wrist.goToPosition(0.7, .003),
+            RobotContainer.Gripper.ejectCube().asProxy(),
+            RobotContainer.Wrist.goToPosition(0.385, 0.04)
+        ))
         
     ));
 
@@ -179,6 +184,14 @@ public final class Autos {
     }
     public static Command FrontVisionPickUp(){
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("FrontVisionPickup", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command BackVisionDouble(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackVisionDouble", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command BackVisionDoubleDump(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackVisionDoubleDump", 
             new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
     /**

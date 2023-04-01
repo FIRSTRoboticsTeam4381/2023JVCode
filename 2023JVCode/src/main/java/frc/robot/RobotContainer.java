@@ -129,6 +129,9 @@ public class RobotContainer {
       RobotContainer.Gripper.ejectCone().asProxy(),
       SpecialistPositions.zero()
     ));
+
+    m_AutoChooser.addOption("99 Back Vision Double", Autos.BackVisionDouble());
+    m_AutoChooser.addOption("98 Back Vision Double Dump", Autos.BackVisionDoubleDump());
     
     //m_AutoChooser.addOption("97 Back Line Pickup", Autos.BackLinePickup());
     //m_AutoChooser.addOption("98 Back Cube Untested", Autos.BackCubePickup());

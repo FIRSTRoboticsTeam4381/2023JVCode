@@ -56,28 +56,24 @@
     },
     {
       "anchorPoint": {
-        "x": 2.820923280486991,
-        "y": 4.474189413495107
+        "x": 1.8876451023044232,
+        "y": 4.4165391648318835
       },
       "prevControl": {
-        "x": 3.808495203752482,
-        "y": 4.445508712126548
+        "x": 2.8752170255699148,
+        "y": 4.387858463463325
       },
       "nextControl": {
-        "x": 3.808495203752482,
-        "y": 4.445508712126548
+        "x": 2.8752170255699148,
+        "y": 4.387858463463325
       },
       "holonomicAngle": 180.0,
       "isReversal": true,
       "velOverride": null,
       "isLocked": false,
-      "isStopPoint": true,
+      "isStopPoint": false,
       "stopEvent": {
-        "names": [
-          "aprilLineup",
-          "moveAndMid",
-          "zero"
-        ],
+        "names": [],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
@@ -85,22 +81,25 @@
     },
     {
       "anchorPoint": {
-        "x": 6.000250389126371,
-        "y": 4.150597021573191
+        "x": 5.9899431077057645,
+        "y": 4.178900387875965
       },
       "prevControl": {
-        "x": 5.325897097291825,
-        "y": 5.2998469977982605
+        "x": 5.136081249606109,
+        "y": 5.012671378726217
       },
       "nextControl": null,
-      "holonomicAngle": -38.34557495399339,
+      "holonomicAngle": -39.28940686250028,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "cubeLineup"
+          "cubeLineup",
+          "readyGrab",
+          "grabCube",
+          "zero"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -108,8 +107,8 @@
       }
     }
   ],
-  "maxVelocity": 5.0,
-  "maxAcceleration": 5.0,
+  "maxVelocity": 3.0,
+  "maxAcceleration": 3.0,
   "isReversed": null,
   "markers": [
     {
@@ -122,6 +121,12 @@
       "position": 1.0363636363636366,
       "names": [
         "zero"
+      ]
+    },
+    {
+      "position": 1.7818181818181924,
+      "names": [
+        "dumpLowCube"
       ]
     }
   ]

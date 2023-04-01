@@ -20,7 +20,7 @@ public class SpecialistPositions {
             new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(49.9, .2),
             RobotContainer.Winch.goToPosition(16630, 200),
-            RobotContainer.Wrist.goToPosition(0.7, 0.003)
+            RobotContainer.Wrist.goToPosition(0.7, 0.006)
         ));
     }
     public static Command zero(){
