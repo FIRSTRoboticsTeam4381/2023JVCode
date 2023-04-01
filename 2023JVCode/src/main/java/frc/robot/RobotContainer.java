@@ -181,7 +181,7 @@ public class RobotContainer {
     specialsController.circle().onTrue(SpecialistPositions.topPlacement());
     specialsController.cross().onTrue(SpecialistPositions.midPlacement());
     specialsController.share().onTrue(SpecialistPositions.zero());
-    specialsController.povRight().onTrue(SpecialistPositions.autoGrabCone());
+    specialsController.povUp().onTrue(SpecialistPositions.autoGrabCone());
     specialsController.povLeft().onTrue(SpecialistPositions.autoGrabCube());
     specialsController.povDown().onTrue(SpecialistPositions.offGround());
     specialsController.square().onTrue(leds.setColorsCommand(0.8, 0, 1));
