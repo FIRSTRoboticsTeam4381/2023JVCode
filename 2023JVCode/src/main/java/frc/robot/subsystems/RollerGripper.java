@@ -11,6 +11,7 @@ import org.ejml.dense.row.decomposition.BaseDecomposition_DDRB_to_DDRM;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.Faults;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
@@ -85,16 +86,20 @@ public class RollerGripper extends SubsystemBase {
    */
   public Command coneGripper () {
     return new InstantCommand( () -> {
-      Command c = Map.ofEntries(
+      Command current = this.getCurrentCommand();
+      if(current != null)
+      {
+        Command c = Map.ofEntries(
         Map.entry("Gripper Idle", new GrabCone(this)),
         Map.entry("Grabbing Cone", new InstantCommand(() -> {}, this)),
         Map.entry("Grabbing Cube", new InstantCommand(() -> {}, this)),
         Map.entry("Holding Cone", ejectCone()),
         Map.entry("Holding Cube", ejectCube())
-        ).get(this.getCurrentCommand().getName());
+        ).get(current.getName());
         if(c != null)
          c.schedule();
-      });
+      }
+    });
   }
 
   /**
@@ -103,16 +108,20 @@ public class RollerGripper extends SubsystemBase {
    */
   public Command cubeGripper () {
     return new InstantCommand( () -> {
+      Command current = this.getCurrentCommand();
+      if(current != null)
+      {
       Command c = Map.ofEntries(
         Map.entry("Gripper Idle", new GrabCube(this)),
         Map.entry("Grabbing Cone", new InstantCommand(() -> {}, this)),
         Map.entry("Grabbing Cube", new InstantCommand(() -> {}, this)),
         Map.entry("Holding Cone", ejectCone()),
         Map.entry("Holding Cube", ejectCube())
-        ).get(this.getCurrentCommand().getName());
+        ).get(current.getName());
         if(c != null)
          c.schedule();
-      });
+    }
+  });
   }
 
   /** Creates a new Gripper. */
@@ -127,8 +136,9 @@ public class RollerGripper extends SubsystemBase {
     gripperConfig.peakCurrentLimit = 20;
     gripperConfig.peakCurrentDuration = 1;
     gripperConfig.peakOutputReverse = -1;
+    Gripper.setInverted(InvertType.InvertMotorOutput);
     Gripper.configAllSettings(gripperConfig);
-    Gripper.setSensorPhase(true);
+    Gripper.setSensorPhase(false);
     Gripper.setNeutralMode(NeutralMode.Brake);
     //Gripper.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
 
