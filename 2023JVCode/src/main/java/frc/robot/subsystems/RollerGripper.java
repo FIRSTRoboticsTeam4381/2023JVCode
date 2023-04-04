@@ -49,13 +49,13 @@ public class RollerGripper extends SubsystemBase {
   public boolean gripperOn;
 
   private final double GRAB_CONE_POW = 1.0;
-  private final double HOLD_CONE_POW = 0.1;
+  private final double HOLD_CONE_POW = 0.2;
 
   private final double GRAB_CUBE_POW = 0.8;
   private final double HOLD_CUBE_POW = 0.1;
 
   private final double CUBE_DETECT_DIFF = 1500;
-  private final double CONE_DETECT_DIFF = 2000;
+  private final double CONE_DETECT_DIFF = 3000;
 
   // Commands, which will be treated like a state machine
   public Command ejectCone() {
@@ -132,8 +132,8 @@ public class RollerGripper extends SubsystemBase {
     gripperConfig.slot0.kP = 1;
     gripperConfig.primaryPID.selectedFeedbackSensor = FeedbackDevice.QuadEncoder;
     gripperConfig.clearPositionOnLimitR = false;
-    gripperConfig.continuousCurrentLimit = 15;
-    gripperConfig.peakCurrentLimit = 20;
+    gripperConfig.continuousCurrentLimit = 25;
+    gripperConfig.peakCurrentLimit = 25;
     gripperConfig.peakCurrentDuration = 1;
     gripperConfig.peakOutputReverse = -1;
     Gripper.setInverted(InvertType.InvertMotorOutput);
