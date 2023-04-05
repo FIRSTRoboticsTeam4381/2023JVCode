@@ -130,7 +130,7 @@ public class RobotContainer {
       SpecialistPositions.zero()
     ));
 
-    m_AutoChooser.addOption("99 Back Vision Double", Autos.BackVisionDouble());
+    m_AutoChooser.addOption("99 Front Vision Double Dump", Autos.FrontVisionDoubleDump());
     m_AutoChooser.addOption("98 Back Vision Double Dump", Autos.BackVisionDoubleDump());
     
     //m_AutoChooser.addOption("97 Back Line Pickup", Autos.BackLinePickup());

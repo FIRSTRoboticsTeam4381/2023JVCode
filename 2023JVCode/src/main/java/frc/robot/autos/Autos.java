@@ -100,9 +100,9 @@ public final class Autos {
         Map.entry("ejectCube", RobotContainer.Gripper.ejectCube().asProxy()),
         Map.entry("ejectCone", RobotContainer.Gripper.ejectCone().asProxy()),
         Map.entry("dumpLowCube", new SequentialCommandGroup(
-            RobotContainer.Wrist.goToPosition(0.7, .003),
-            RobotContainer.Gripper.ejectCube().asProxy(),
-            RobotContainer.Wrist.goToPosition(0.385, 0.04)
+            //RobotContainer.Wrist.goToPosition(0.7, .003),
+            RobotContainer.Gripper.ejectCube().asProxy()
+            //RobotContainer.Wrist.goToPosition(0.385, 0.04)
         ))
         
     ));
@@ -192,6 +192,10 @@ public final class Autos {
     }
     public static Command BackVisionDoubleDump(){
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackVisionDoubleDump", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command FrontVisionDoubleDump(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("FrontVisionDoubleDump", 
             new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
     /**
