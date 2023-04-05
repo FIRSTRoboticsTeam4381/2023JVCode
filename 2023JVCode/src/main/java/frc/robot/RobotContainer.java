@@ -103,35 +103,38 @@ public class RobotContainer {
 
     m_AutoChooser.addOption("2 Place & Balance", Autos.TopPlacementBalance());
 
-    m_AutoChooser.addOption("3 Back Vision Pickup", Autos.BackVisionPickup());
+    m_AutoChooser.addOption("3 Back Vision Double & A Half", Autos.BackVisionDoubleDump());
 
-    m_AutoChooser.addOption("4 Front Vision Pickup", Autos.FrontVisionPickUp());
+    m_AutoChooser.addOption("4 Back Vision Double", Autos.BackVisionPickup());
+
+    m_AutoChooser.addOption("5 Front Vision Double & A Half", Autos.FrontVisionDoubleDump());
+
+    m_AutoChooser.addOption("6 Front Vision Double", Autos.FrontVisionPickUp());
     
-    m_AutoChooser.addOption("5 Back Cube Pickup", Autos.BackCubePickupBlue());
+    m_AutoChooser.addOption("7 Back Cube Double", Autos.BackCubePickupBlue());
 
-    m_AutoChooser.addOption("6 Back Cone Cube Pickup", Autos.BackConeCubePickup());
+    m_AutoChooser.addOption("8 Back Cone Cube Double", Autos.BackConeCubePickup());
 
     //m_AutoChooser.addOption("PlaceCube&Cone", Autos.PlaceCubeandCone());
         
-    m_AutoChooser.addOption("7 Front Cube Reverse", Autos.FrontCubeReverse());
-    m_AutoChooser.addOption("8 Front Cone Reverse", Autos.FrontConeReverse());
-    m_AutoChooser.addOption("9 Back Cube Reverse", Autos.BackCubeReverse());
-    m_AutoChooser.addOption("10 Back Cone Reverse", Autos.BackConeReverse());
+    m_AutoChooser.addOption("9 Front Cube Single", Autos.FrontCubeReverse());
+    m_AutoChooser.addOption("10 Front Cone Single", Autos.FrontConeReverse());
+    m_AutoChooser.addOption("11 Back Cube Single", Autos.BackCubeReverse());
+    m_AutoChooser.addOption("12 Back Cone Single", Autos.BackConeReverse());
     
-    m_AutoChooser.addOption("11 Place Cube Only", new SequentialCommandGroup(
+    m_AutoChooser.addOption("13 Place Cube Only", new SequentialCommandGroup(
       SpecialistPositions.topPlacement(),
       RobotContainer.Gripper.ejectCube().asProxy(),
       SpecialistPositions.zero()
     ));
 
-    m_AutoChooser.addOption("12 Place Cone Only", new SequentialCommandGroup(
+    m_AutoChooser.addOption("14 Place Cone Only", new SequentialCommandGroup(
       SpecialistPositions.topPlacement(),
       RobotContainer.Gripper.ejectCone().asProxy(),
       SpecialistPositions.zero()
     ));
 
-    m_AutoChooser.addOption("99 Front Vision Double Dump", Autos.FrontVisionDoubleDump());
-    m_AutoChooser.addOption("98 Back Vision Double Dump", Autos.BackVisionDoubleDump());
+    
     
     //m_AutoChooser.addOption("97 Back Line Pickup", Autos.BackLinePickup());
     //m_AutoChooser.addOption("98 Back Cube Untested", Autos.BackCubePickup());
