@@ -1,5 +1,5 @@
 {
-  "version": "2.2.2",
+  "version": "2.3.0",
   "layout": [
     {
       "type": 1,
@@ -230,6 +230,42 @@
       "title": "POWAH"
     },
     {
+      "type": 4,
+      "fields": [
+        "NT:/SmartDashboard/PowerDistribution[1]/TotalCurrent",
+        null,
+        null
+      ],
+      "selectionType": "enabled",
+      "selectionRangeMin": 0,
+      "selectionRangeMax": 10,
+      "measurementType": "independent",
+      "measurementSampling": "fixed",
+      "measurementSamplingPeriod": 20,
+      "histogramMin": 0,
+      "histogramMax": 200,
+      "histogramStep": 2,
+      "title": "Amps Stats"
+    },
+    {
+      "type": 4,
+      "fields": [
+        "NT:/SmartDashboard/PowerDistribution[1]/Voltage",
+        null,
+        null
+      ],
+      "selectionType": "enabled",
+      "selectionRangeMin": 0,
+      "selectionRangeMax": 10,
+      "measurementType": "independent",
+      "measurementSampling": "fixed",
+      "measurementSamplingPeriod": 20,
+      "histogramMin": 7,
+      "histogramMax": 13,
+      "histogramStep": 0.1,
+      "title": "Voltage Stats"
+    },
+    {
       "type": 5,
       "fields": [],
       "listFields": [
@@ -248,7 +284,7 @@
         "origin": "right",
         "size": 0.75,
         "allianceBumpers": "auto",
-        "allianceOrigin": "blue",
+        "allianceOrigin": "red",
         "orientation": "blue left, red right"
       },
       "title": "Odometry"
@@ -372,13 +408,23 @@
               "show": true
             },
             {
-              "key": "NT:/SmartDashboard/Gripper/.command",
+              "key": "DS:enabled",
+              "color": "#e48b32",
+              "show": true
+            },
+            {
+              "key": "NT:/SmartDashboard/Gripper Sub/.command",
               "color": "#80588e",
               "show": true
             },
             {
               "key": "DS:enabled",
-              "color": "#e48b32",
+              "color": "#aacaee",
+              "show": true
+            },
+            {
+              "key": "DS:autonomous",
+              "color": "#c0b487",
               "show": true
             }
           ]
@@ -391,8 +437,8 @@
           },
           "fields": [
             {
-              "key": "NT:/SmartDashboard/gripper/position",
-              "color": "#af2437",
+              "key": "NT:/SmartDashboard/gripper/velocity",
+              "color": "#858584",
               "show": true
             }
           ]
