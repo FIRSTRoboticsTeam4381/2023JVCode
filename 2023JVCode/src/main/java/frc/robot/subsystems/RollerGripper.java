@@ -70,7 +70,7 @@ public class RollerGripper extends SubsystemBase {
   public Command ejectCube() {
     return new SequentialCommandGroup(
       new InstantCommand(() -> Gripper.set(ControlMode.PercentOutput, 1), this),
-      new WaitCommand(0.5).withName("Ejecting Cube"),
+      new WaitCommand(1.0).withName("Ejecting Cube"), //was 0.5
       new InstantCommand(() ->Gripper.set(ControlMode.PercentOutput, 0), this));
   }
 
