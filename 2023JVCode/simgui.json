@@ -28,11 +28,13 @@
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Force Retract Winch": "Command",
       "/SmartDashboard/Gripper": "Subsystem",
+      "/SmartDashboard/Gripper Sub": "Subsystem",
       "/SmartDashboard/PIDTester": "Command",
       "/SmartDashboard/PositionTest": "Command",
       "/SmartDashboard/Scheduler": "Scheduler",
       "/SmartDashboard/SendableChooser[0]": "String Chooser",
       "/SmartDashboard/Swerve": "Subsystem",
+      "/SmartDashboard/Toggle Debug Dashboards": "Command",
       "/SmartDashboard/Winch Sub": "Subsystem",
       "/SmartDashboard/Wrist": "Subsystem",
       "/SmartDashboard/set colors": "Command"

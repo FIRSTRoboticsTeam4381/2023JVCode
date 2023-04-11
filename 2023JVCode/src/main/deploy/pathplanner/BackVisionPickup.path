@@ -17,7 +17,8 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "placeTop"
+          "placeTop",
+          "ejectCube"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -62,16 +63,44 @@
         "x": 3.808495203752482,
         "y": 4.445508712126548
       },
-      "nextControl": null,
+      "nextControl": {
+        "x": 3.808495203752482,
+        "y": 4.445508712126548
+      },
       "holonomicAngle": 180.0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "aprilLineup",
+          "moveAndMid",
+          "zero"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.000250389126371,
+        "y": 4.150597021573191
+      },
+      "prevControl": {
+        "x": 5.325897097291825,
+        "y": 5.2998469977982605
+      },
+      "nextControl": null,
+      "holonomicAngle": -38.34557495399339,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "aprilLineup",
-          "moveAndMid"
+          "cubeLineup"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -79,6 +108,9 @@
       }
     }
   ],
+  "maxVelocity": 5.0,
+  "maxAcceleration": 5.0,
+  "isReversed": null,
   "markers": [
     {
       "position": 0.01818181818181818,

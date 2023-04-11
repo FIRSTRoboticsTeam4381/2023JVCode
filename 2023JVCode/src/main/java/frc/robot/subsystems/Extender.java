@@ -35,7 +35,7 @@ public class Extender extends SubsystemBase {
         extenderDeadzone = true;
       } else {
         extenderDeadzone = false;
-        if (!digitalExtenderInputTop.get() && power > 0) {
+        if ((!digitalExtenderInputTop.get()) && power > 0) {
           Extender1.set(0);
         } else if (!digitalExtenderInputBottom.get() && power < 0) {
           Extender1.set(0);

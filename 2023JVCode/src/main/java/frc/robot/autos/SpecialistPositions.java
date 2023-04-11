@@ -19,8 +19,8 @@ public class SpecialistPositions {
             new ParallelDeadlineGroup(new WaitCommand(.2), RobotContainer.Extender.goToPosition(49.9, .2)),
             new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(49.9, .2),
-            RobotContainer.Winch.goToPosition(12857, 200),
-            RobotContainer.Wrist.goToPosition(0.324, 0.003)
+            RobotContainer.Winch.goToPosition(16630, 200),
+            RobotContainer.Wrist.goToPosition(0.7, 0.006)
         ));
     }
     public static Command zero(){
@@ -30,7 +30,7 @@ public class SpecialistPositions {
             new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(0, 1), 
             RobotContainer.Winch.goToPosition(0, 200),
-            RobotContainer.Wrist.goToPosition(0.05, 0.04)
+            RobotContainer.Wrist.goToPosition(0.385, 0.04)
             )
         );
     }
@@ -72,6 +72,28 @@ public class SpecialistPositions {
 
     public static Command autoGrabCone(){
         return new SequentialCommandGroup(
+            new ParallelCommandGroup(
+                RobotContainer.Extender.goToPosition(0, 0.2),
+                RobotContainer.Winch.goToPosition(11250, 100),
+                RobotContainer.Wrist.goToPosition(0.7, .003)
+            ),
+            RobotContainer.Gripper.coneGripper()
+        );
+    }
+
+    public static Command autoGrabCube(){
+        return new SequentialCommandGroup(
+            new ParallelCommandGroup(
+                RobotContainer.Extender.goToPosition(0, 0.2),
+                RobotContainer.Winch.goToPosition(12400, 100),
+                RobotContainer.Wrist.goToPosition(0.7, .003)
+            ),
+            RobotContainer.Gripper.cubeGripper()
+        );
+    }
+
+    /*public static Command autoGrabCone(){
+        return new SequentialCommandGroup(
             
             RobotContainer.Wrist.goToPosition(0, 10),
             RobotContainer.Winch.goToPosition(0, 200),    
@@ -103,20 +125,22 @@ public class SpecialistPositions {
             RobotContainer.Winch.goToPosition(0, 1)
             
         );
-    }
+    }*/
+
     public static Command midPlacement(){
         return new ParallelCommandGroup(
-            RobotContainer.Extender.goToPosition(38.166, 0.2),
-            RobotContainer.Winch.goToPosition(9523, 200),
-            RobotContainer.Wrist.goToPosition(0.1695, .003)
+            RobotContainer.Extender.goToPosition(0, 0.2),
+            RobotContainer.Winch.goToPosition(18410, 200),
+            RobotContainer.Wrist.goToPosition(0.7, .003)
         );
     }
     public static Command offGround(){
         return new ParallelCommandGroup(
             RobotContainer.Extender.goToPosition(0, 1),
-            RobotContainer.Winch.goToPosition(25000, 200),
-            RobotContainer.Wrist.goToPosition(0.1842, 0.006)
+            RobotContainer.Winch.goToPosition(30000, 200),
+            RobotContainer.Wrist.goToPosition(0.679, 0.006)
         );
     }
 
-}
+}//38000 cube off ground
+//12400 and wrist straight out for station pick

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -33,32 +34,40 @@ public final class Autos {
         Map.entry("stop", new InstantCommand(() -> RobotContainer.s_Swerve.drive(new Translation2d(0,0), 0, false, true))),
 
         Map.entry("placeTop", new SequentialCommandGroup(
-            SpecialistPositions.topPlacement(),
-            RobotContainer.Gripper.cubeGripper(),
-            new WaitCommand(0.5)
+            SpecialistPositions.topPlacement()
+            //RobotContainer.Gripper.cubeGripper()//,
+            //new WaitCommand(0.1)
             //RobotContainer.Winch.goToPosition(10000, 200) // ERROR is the RANGE -- THis is for John because he cant remember what it is.
         )),
         Map.entry("placeMid", new SequentialCommandGroup(
-            SpecialistPositions.midPlacement(),
-            RobotContainer.Gripper.cubeGripper(),
-            new WaitCommand(0.5)
+            SpecialistPositions.midPlacement()
+            //RobotContainer.Gripper.cubeGripper()//,
+            //new WaitCommand(0.1)
             //RobotContainer.Winch.goToPosition(10000, 200) // ERROR is the RANGE -- THis is for John because he cant remember what it is.
         )),
         Map.entry("zero", SpecialistPositions.zero()),
         Map.entry("balance", RobotContainer.balanceRobot),
         Map.entry("lowerArm", RobotContainer.Winch.goToPosition(10010, 200)),
-        Map.entry("grabCONE", new SequentialCommandGroup(
-            SpecialistPositions.offGround(),
-            RobotContainer.Gripper.coneGripper(),
-            new WaitCommand(0.75),
-            SpecialistPositions.zero())),
+        /*Map.entry("grabCONE", new SequentialCommandGroup(
+            RobotContainer.Winch.goToPosition(38000, 400),
+            RobotContainer.Gripper.new GrabCone(RobotContainer.Gripper),
+            //new WaitCommand(0.75),
+            SpecialistPositions.zero())),*/
         Map.entry("readyGrab", SpecialistPositions.offGround()),
         Map.entry("grabCube", new SequentialCommandGroup(
-            RobotContainer.Winch.goToPosition(33000, 200),
-            RobotContainer.Gripper.cubeGripper(),
-            new WaitCommand(1),
-            RobotContainer.Winch.goToPosition(25000, 200)
-        )),
+            new ParallelCommandGroup(
+                new SequentialCommandGroup(
+                    SpecialistPositions.offGround(),
+                    RobotContainer.Winch.goToPosition(38000, 400)
+                ),
+                // Without asProxy(), when the command completes and schedules HoldCube,
+                // the entire autonomous command is cancelled!
+                RobotContainer.Gripper.new GrabCube(RobotContainer.Gripper).asProxy()
+            ),
+            //RobotContainer.Gripper.cubeGripper(),
+            //new WaitCommand(1),
+            RobotContainer.Winch.goToPosition(30000, 200).withName("Winch Returning")
+        ).withName("Grab Cube Group")),
          Map.entry("LEDFlash", new SequentialCommandGroup(
             RobotContainer.leds.setColorsCommand(1, 0, 0),
             new WaitCommand(0.5),
@@ -84,10 +93,17 @@ public final class Autos {
                 SpecialistPositions.midPlacement()
             ),
             new InstantCommand(() -> RobotContainer.s_Swerve.drive(new Translation2d(0,0), 0, false, true)),
-            RobotContainer.Gripper.cubeGripper(),
-            new WaitCommand(0.5)
+            RobotContainer.Gripper.cubeGripper()
+            //new WaitCommand(0.5)
         )),
-        Map.entry("tipDown", new InstantCommand(() -> RobotContainer.Wrist.goToPosition(0.28, 0.003)))
+        Map.entry("tipDown", new InstantCommand(() -> RobotContainer.Wrist.goToPosition(0.28, 0.003))),
+        Map.entry("ejectCube", RobotContainer.Gripper.ejectCube().asProxy()),
+        Map.entry("ejectCone", RobotContainer.Gripper.ejectCone().asProxy()),
+        Map.entry("dumpLowCube", new SequentialCommandGroup(
+            //RobotContainer.Wrist.goToPosition(0.7, .003),
+            RobotContainer.Gripper.ejectCube().asProxy()
+            //RobotContainer.Wrist.goToPosition(0.385, 0.04)
+        ))
         
     ));
 
@@ -168,6 +184,18 @@ public final class Autos {
     }
     public static Command FrontVisionPickUp(){
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("FrontVisionPickup", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command BackVisionDouble(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackVisionDouble", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command BackVisionDoubleDump(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("BackVisionDoubleDump", 
+            new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
+    }
+    public static Command FrontVisionDoubleDump(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("FrontVisionDoubleDump", 
             new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)));
     }
     /**

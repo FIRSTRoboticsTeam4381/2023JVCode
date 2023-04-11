@@ -10,9 +10,12 @@ import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
 import frc.lib.util.SwerveModuleConstants;
 
+import java.io.ObjectInputFilter.Status;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.Faults;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -49,6 +52,9 @@ public class SwerveModule {
 
         mDriveMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 2);
         mAngleMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 2);
+
+        mDriveMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_4_AinTempVbat, 40);
+        mAngleMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_4_AinTempVbat, 40);
 
         angleEncoder.setStatusFramePeriod(CANCoderStatusFrame.SensorData, 2);
         

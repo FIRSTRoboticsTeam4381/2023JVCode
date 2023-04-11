@@ -39,7 +39,7 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   /* Subsystems */
-  public static Gripper Gripper;
+  public static RollerGripper Gripper;
   public static Extender Extender;
   public static Winch Winch;
   public static Wrist Wrist;
@@ -69,7 +69,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    Gripper = new Gripper();
+    Gripper = new RollerGripper();
     Extender = new Extender();
     Winch = new Winch(); // Arm Winch/Arm Pivot
     Wrist = new Wrist();
@@ -91,38 +91,50 @@ public class RobotContainer {
     //m_AutoChooser.addOption("TopPlacementAuto", Autos.TopPlacementAuto());
     m_AutoChooser.addOption("1 Better Balance", new SequentialCommandGroup(
       Autos.eventMap.get("placeTop"),
+      Gripper.ejectCube(),
       SpecialistPositions.zero(),
       upRamp,
-      upRamp.overAndBack(),
       new ParallelCommandGroup(
         Autos.eventMap.get("lowerArm"),
+        upRamp.overAndBack()
+        ),
         balanceRobot
-        )
       ));
 
     m_AutoChooser.addOption("2 Place & Balance", Autos.TopPlacementBalance());
 
-    m_AutoChooser.addOption("3 Back Vision Pickup", Autos.BackVisionPickup());
+    m_AutoChooser.addOption("3 Back Vision Double & A Half", Autos.BackVisionDoubleDump());
 
-    m_AutoChooser.addOption("4 Front Vision Pickup", Autos.FrontVisionPickUp());
+    m_AutoChooser.addOption("4 Back Vision Double", Autos.BackVisionPickup());
+
+    m_AutoChooser.addOption("5 Front Vision Double & A Half", Autos.FrontVisionDoubleDump());
+
+    m_AutoChooser.addOption("6 Front Vision Double", Autos.FrontVisionPickUp());
     
-    m_AutoChooser.addOption("5 Back Cube Pickup", Autos.BackCubePickupBlue());
+    m_AutoChooser.addOption("7 Back Cube Double", Autos.BackCubePickupBlue());
 
-    m_AutoChooser.addOption("6 Back Cone Cube Pickup", Autos.BackConeCubePickup());
+    m_AutoChooser.addOption("8 Back Cone Cube Double", Autos.BackConeCubePickup());
 
     //m_AutoChooser.addOption("PlaceCube&Cone", Autos.PlaceCubeandCone());
         
-    m_AutoChooser.addOption("7 Front Cube Reverse", Autos.FrontCubeReverse());
-    m_AutoChooser.addOption("8 Front Cone Reverse", Autos.FrontConeReverse());
-    m_AutoChooser.addOption("9 Back Cube Reverse", Autos.BackCubeReverse());
-    m_AutoChooser.addOption("10 Back Cone Reverse", Autos.BackConeReverse());
+    m_AutoChooser.addOption("9 Front Cube Single", Autos.FrontCubeReverse());
+    m_AutoChooser.addOption("10 Front Cone Single", Autos.FrontConeReverse());
+    m_AutoChooser.addOption("11 Back Cube Single", Autos.BackCubeReverse());
+    m_AutoChooser.addOption("12 Back Cone Single", Autos.BackConeReverse());
     
-    m_AutoChooser.addOption("11 Place Only", new SequentialCommandGroup(
+    m_AutoChooser.addOption("13 Place Cube Only", new SequentialCommandGroup(
       SpecialistPositions.topPlacement(),
-      Gripper.cubeGripper(),
-      new WaitCommand(0.5),
+      RobotContainer.Gripper.ejectCube().asProxy(),
       SpecialistPositions.zero()
     ));
+
+    m_AutoChooser.addOption("14 Place Cone Only", new SequentialCommandGroup(
+      SpecialistPositions.topPlacement(),
+      RobotContainer.Gripper.ejectCone().asProxy(),
+      SpecialistPositions.zero()
+    ));
+
+    
     
     //m_AutoChooser.addOption("97 Back Line Pickup", Autos.BackLinePickup());
     //m_AutoChooser.addOption("98 Back Cube Untested", Autos.BackCubePickup());
@@ -136,7 +148,7 @@ public class RobotContainer {
   
 
 
-    SmartDashboard.putData(Gripper);
+    SmartDashboard.putData("Gripper Sub", Gripper);
     SmartDashboard.putData(Wrist);
     SmartDashboard.putData(Extender);
     SmartDashboard.putData("Winch Sub", Winch);
@@ -175,7 +187,7 @@ public class RobotContainer {
     specialsController.circle().onTrue(SpecialistPositions.topPlacement());
     specialsController.cross().onTrue(SpecialistPositions.midPlacement());
     specialsController.share().onTrue(SpecialistPositions.zero());
-    specialsController.povRight().onTrue(SpecialistPositions.autoGrabCone());
+    specialsController.povUp().onTrue(SpecialistPositions.autoGrabCone());
     specialsController.povLeft().onTrue(SpecialistPositions.autoGrabCube());
     specialsController.povDown().onTrue(SpecialistPositions.offGround());
     specialsController.square().onTrue(leds.setColorsCommand(0.8, 0, 1));
