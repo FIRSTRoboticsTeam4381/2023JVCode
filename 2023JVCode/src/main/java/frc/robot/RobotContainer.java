@@ -165,7 +165,7 @@ public class RobotContainer {
     SmartDashboard.putData("set colors", new InstantCommand( () -> {
       leds.setColors(SmartDashboard.getNumber("red", 0), SmartDashboard.getNumber("green", 0), SmartDashboard.getNumber("blue", 0));
     }));
-    PIDTest = Wrist.goToPosition(0.3, 0.003);
+    PIDTest = Wrist.goToPosition(0.5, 0.003);
     SmartDashboard.putData("PIDTester", PIDTest);
 
     forceRetractWinch = Winch.WinchResetOverride();

@@ -6,10 +6,12 @@ package frc.robot.subsystems;
 
 import java.util.function.Supplier;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.MotorFeedbackSensor;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxAlternateEncoder;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxLimitSwitch.Type;
@@ -26,8 +28,10 @@ public class Wrist extends SubsystemBase {
 
   public Command JoystickWrist ( Supplier <Double> wristIn, Supplier <Double> wristOut) {
     return new RunCommand(() -> {
-      double power = (wristIn.get()*-1 + wristOut.get()) / 2; // Fast math does things
-      wristPivot.set(power);
+      double power = (wristIn.get()*-1 + wristOut.get()) / 2 * -5600; // Fast math does things
+      wristPivot.getPIDController().setReference(power, ControlType.kVelocity, 0);
+      LogOrDash.logNumber("wrist/velocitysetpoint", power);
+      LogOrDash.logNumber("wrist/iaccum", wristPivot.getPIDController().getIAccum());
     }, this);
   }
 
@@ -56,7 +60,14 @@ public class Wrist extends SubsystemBase {
 
     wristPivot.getPIDController().setFeedbackDevice(wristPivot.getAbsoluteEncoder(com.revrobotics.SparkMaxAbsoluteEncoder.Type.kDutyCycle));
 
-    wristPivot.getPIDController().setP(12, 1);
+    wristPivot.getPIDController().setP(0.00009, 0);
+    wristPivot.getPIDController().setI(0.003,0);
+    wristPivot.getPIDController().setD(0.0, 0);
+    wristPivot.getPIDController().setIAccum(0);
+    wristPivot.getPIDController().setIMaxAccum(0.035, 0);
+    wristPivot.getPIDController().setIZone(60, 0);
+
+    wristPivot.getPIDController().setP(9.5, 1);
     wristPivot.getPIDController().setI(0, 1);
     wristPivot.getPIDController().setD(0, 1);
   }
