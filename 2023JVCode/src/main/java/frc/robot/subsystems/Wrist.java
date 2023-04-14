@@ -67,7 +67,7 @@ public class Wrist extends SubsystemBase {
     wristPivot.getPIDController().setIMaxAccum(0.035, 0);
     wristPivot.getPIDController().setIZone(60, 0);
 
-    wristPivot.getPIDController().setP(9.5, 1);
+    wristPivot.getPIDController().setP(9, 1);
     wristPivot.getPIDController().setI(0, 1);
     wristPivot.getPIDController().setD(0, 1);
   }
