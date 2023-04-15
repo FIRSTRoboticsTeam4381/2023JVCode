@@ -39,7 +39,7 @@ public class LogOrDash {
         booleans = new HashMap<String, BooleanLogEntry>();
         strings = new HashMap<String, StringLogEntry>();
 
-        sendToDash = true;
+        sendToDash = false;
 
         
     }
