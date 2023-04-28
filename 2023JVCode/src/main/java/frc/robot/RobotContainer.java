@@ -100,6 +100,18 @@ public class RobotContainer {
         ),
         balanceRobot
       ));
+      
+      m_AutoChooser.addOption("99 Different Better Balance", new SequentialCommandGroup(
+        SpecialistPositions.topPlacement(),
+        Gripper.ejectCube(),
+        SpecialistPositions.zero(),
+        new UpRamp(s_Swerve),
+        new ParallelCommandGroup(
+          Winch.goToPosition(10010, 200),
+          new Balance(s_Swerve)
+          )
+        
+      ));
 
     m_AutoChooser.addOption("2 Place & Balance", Autos.TopPlacementBalance());
 
