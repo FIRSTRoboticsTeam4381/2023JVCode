@@ -247,8 +247,8 @@ public class RobotContainer {
         // This is OK, getCurrentCommand() will be null if there isn't anything running
       }
     }));
-    driveController.square().whileTrue(new VisionLineup(s_Swerve, lime, leds, 1, true));
-    driveController.triangle().whileTrue(new VisionLineup(s_Swerve, lime, leds, 0, false));
+    //driveController.square().whileTrue(new VisionLineup(s_Swerve, lime, leds, 1, true));
+    //driveController.triangle().whileTrue(new VisionLineup(s_Swerve, lime, leds, 0, false));
   }
 
   /**
