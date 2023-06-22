@@ -17,9 +17,36 @@ public class LEDs extends SubsystemBase {
     canifier = new CANifier(9);
   }
 
+  double red = 1;
+  double green = 0;
+  double blue = 0;
+  int phase = 1;
+  final double DELTA = 0.01;
   @Override
-  public void periodic() {
+    public void periodic() {
     // This method will be called once per scheduler run
+      if (phase == 1){
+        red -= DELTA;
+        green += DELTA;
+        if (green >= 1){
+          phase += 1;
+        }
+      }
+      if (phase == 2){
+        green -= DELTA;
+        blue += DELTA;
+        if (blue >= 1){
+          phase += 1;
+        }
+      }
+      if (phase == 3){
+        blue -= DELTA;
+        red += DELTA;
+        if (red >= 1){
+          phase = 1;
+        }
+      }
+      setColors(red, green, blue);
   }
   public void setColors(double red, double green, double blue){
     canifier.setLEDOutput(red, LEDChannel.LEDChannelA);
