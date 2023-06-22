@@ -34,6 +34,7 @@ public class Extender extends SubsystemBase {
         LogOrDash.logNumber("extender/m1/velocitysetpoint", 0);
         extenderDeadzone = true;
       } else {
+        power = power / 2;
         extenderDeadzone = false;
         if ((!digitalExtenderInputTop.get()) && power > 0) {
           Extender1.set(0);

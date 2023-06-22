@@ -196,12 +196,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
     specialsController.L1().onTrue(Gripper.cubeGripper());
     specialsController.R1().onTrue(Gripper.coneGripper());
-    specialsController.circle().onTrue(SpecialistPositions.topPlacement());
-    specialsController.cross().onTrue(SpecialistPositions.midPlacement());
-    specialsController.share().onTrue(SpecialistPositions.zero());
-    specialsController.povUp().onTrue(SpecialistPositions.autoGrabCone());
-    specialsController.povLeft().onTrue(SpecialistPositions.autoGrabCube());
-    specialsController.povDown().onTrue(SpecialistPositions.offGround());
+    //specialsController.circle().onTrue(SpecialistPositions.topPlacement());
+    //specialsController.cross().onTrue(SpecialistPositions.midPlacement());
+    //specialsController.share().onTrue(SpecialistPositions.zero());
+    //specialsController.povUp().onTrue(SpecialistPositions.autoGrabCone());
+    //specialsController.povLeft().onTrue(SpecialistPositions.autoGrabCube());
+    //specialsController.povDown().onTrue(SpecialistPositions.offGround());
     specialsController.square().onTrue(leds.setColorsCommand(0.8, 0, 1));
     specialsController.triangle().onTrue(leds.setColorsCommand(1, 0.12, 0));
     specialsController.options().onTrue(leds.setColorsCommand(0, 0, 0));

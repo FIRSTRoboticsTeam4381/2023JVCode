@@ -29,6 +29,7 @@ public class Wrist extends SubsystemBase {
   public Command JoystickWrist ( Supplier <Double> wristIn, Supplier <Double> wristOut) {
     return new RunCommand(() -> {
       double power = (wristIn.get()*-1 + wristOut.get()) / 2 * 5600; // Fast math does things
+      power = power / 2;
       wristPivot.getPIDController().setReference(power, ControlType.kVelocity, 0);
       LogOrDash.logNumber("wrist/velocitysetpoint", power);
       LogOrDash.logNumber("wrist/iaccum", wristPivot.getPIDController().getIAccum());

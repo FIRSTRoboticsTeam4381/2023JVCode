@@ -42,9 +42,9 @@ public class Winch extends SubsystemBase {
         power = 0;
       }
 
-      if(buttonStatus.get() == false) {
+      //if(buttonStatus.get() == false) {
         power = power/4;
-      }
+      //}
       armWinch.set(TalonSRXControlMode.Velocity, power);
       
       //armWinch.set(TalonSRXControlMode.PercentOutput, power);

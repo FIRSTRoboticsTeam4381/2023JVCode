@@ -56,6 +56,10 @@ public class TeleopSwerve extends CommandBase {
         xAxis = (Math.abs(xAxis) < Constants.stickDeadband) ? 0 : xAxis; // Return 0 if less than deadband : reutrn Axis if more
         rAxis = (Math.abs(rAxis) < Constants.stickDeadband) ? 0 : rAxis;
 
+        yAxis /= 2;
+        xAxis /= 2;
+        rAxis /= 2;
+
         if(controller.getHID().getR1Button())
         {
             yAxis /= 10;
